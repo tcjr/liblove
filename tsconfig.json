@@ -1,16 +1,20 @@
 {
   "extends": "@ember/app-tsconfig",
   "include": ["app", "tests", "types"],
-  "glint": {
-    "environment": ["ember-loose", "ember-template-imports"]
-  },
   "compilerOptions": {
     "allowJs": true,
     "paths": {
       "liblove/tests/*": ["./tests/*"],
       "liblove/*": ["./app/*"],
+      "#app/*": ["./app/*"],
       "*": ["./types/*"]
     },
-    "types": ["ember-source/types", "@embroider/core/virtual", "vite/client"]
+    "types": [
+      "ember-source/types",
+      "node",
+      "@embroider/core/virtual",
+      "vite/client"
+    ],
+    "allowImportingTsExtensions": true
   }
 }
