@@ -1,0 +1,731 @@
+[
+  {
+    "name": "Albany Park",
+    "address": "3401 W. Foster Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": "60625-4808",
+    "phone": "773-539-5450",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/58ec941b5062a381a83ac677cc56ffa6/albany-park.jpg"
+  },
+  {
+    "name": "Altgeld",
+    "address": "955 E. 131st Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60827,
+    "phone": "312-747-3270",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/2460157156dd73cbb32e2b3d0b3f0ddc/altgeld-2020.jpg"
+  },
+  {
+    "name": "Archer Heights",
+    "address": "5055 S. Archer Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60632,
+    "phone": "312-747-9241",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/873e7fb7e18d86dbeef4d156d143a97c/archer-heights.jpg"
+  },
+  {
+    "name": "Austin",
+    "address": "5615 W. Race Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60644,
+    "phone": "312-746-5038",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/201ec746cf57849f02390efc8dcdadbe/AustinBranchLibrary2022.jpg"
+  },
+  {
+    "name": "Austin-Irving",
+    "address": "6100 W. Irving Park Road",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60634,
+    "phone": "312-744-6222",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/82cbef9880726067fee61e76f19fc220/austin-irving.jpg"
+  },
+  {
+    "name": "Avalon",
+    "address": "8148 S. Stony Island Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60617,
+    "phone": "312-747-5234",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/6c717d2b2dcf80f82d19a7c3d1860187/avalon.jpg"
+  },
+  {
+    "name": "Back of the Yards",
+    "address": "2111 W. 47th Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60609,
+    "phone": "312-747-9595",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/0166be7f5c2cb8722edd389d796d7818/back-of-the-yards.jpg"
+  },
+  {
+    "name": "Beverly",
+    "address": "1962 W. 95th Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60643,
+    "phone": "312-747-9673",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/ce2c6dbf498aa9b09dd4d02ccd55763e/beverly.jpg"
+  },
+  {
+    "name": "Bezazian",
+    "address": "1226 W. Ainslie Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60640,
+    "phone": "312-744-0019",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/d1cfe145c6820d8d41f7905c2a5b09d5/bezazian.jpg"
+  },
+  {
+    "name": "Blackstone",
+    "address": "4904 S. Lake Park Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60615,
+    "phone": "312-747-0511",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/cb34d2637e0df883ae4694767e085190/blackstone.jpg"
+  },
+  {
+    "name": "Brainerd",
+    "address": "1350 W. 89th Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60620,
+    "phone": "312-747-6291",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/f87f17b95ad2945180224129ac1d6359/brainerd.jpg"
+  },
+  {
+    "name": "Brighton Park",
+    "address": "4314 S. Archer Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60632,
+    "phone": "312-747-0666",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/0edf755dd3eeab987e715fe215a94ee2/brighton-park.jpg"
+  },
+  {
+    "name": "Bucktown-Wicker Park",
+    "address": "1701 N. Milwaukee Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60647,
+    "phone": "312-744-6022",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/07594a5acc3e578e02ccedbd840fa9dc/bucktown-wicker-park.jpg"
+  },
+  {
+    "name": "Budlong Woods",
+    "address": "5630 N. Lincoln Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60659,
+    "phone": "312-742-9590",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/ed95387ad770572523fbc5e1fee4a43b/budlong-woods.jpg"
+  },
+  {
+    "name": "Canaryville",
+    "address": "642 W. 43rd Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60609,
+    "phone": "312-747-0644",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/13867612b0b488ada55e144593b845dc/canaryville.jpg"
+  },
+  {
+    "name": "Chicago Bee",
+    "address": "3647 S. State Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60609,
+    "phone": "312-747-6872",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/3d0ca587cda491bd176fc4b5aebb7486/chicago-bee.jpg"
+  },
+  {
+    "name": "Chicago Lawn",
+    "address": "6120 S. Kedzie Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60629,
+    "phone": "312-747-0639",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/cdc3e2b937c9afe9c023d08a3e01258a/chicago-lawn.jpg"
+  },
+  {
+    "name": "Chinatown",
+    "address": "2100 S. Wentworth Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60616,
+    "phone": "312-747-8013",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/b4c2f1ea58572c02e4ed70cd0bb1a18f/chinatown.jpg"
+  },
+  {
+    "name": "Clearing",
+    "address": "6423 W. 63rd Place",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60638,
+    "phone": "312-747-5657",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/7bbbbe2b28100478a6ac3218b919eaba/clearing.jpg"
+  },
+  {
+    "name": "Coleman",
+    "address": "731 E. 63rd Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60637,
+    "phone": "312-747-7760",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/3f242eab041e779f2f842cc4b906777a/Coleman-2020.jpg"
+  },
+  {
+    "name": "Daley, Richard J.-Bridgeport",
+    "address": "3400 S. Halsted Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60608,
+    "phone": "312-747-8990",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/7ac8638149750c9ae862d1afc9fb4122/daley-richard-j.jpg"
+  },
+  {
+    "name": "Daley, Richard M.-W Humboldt",
+    "address": "733 N. Kedzie Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60612,
+    "phone": "312-743-0555",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/676bc85bac3954a3f03c6128d36ff339/daley-richard-m.jpg"
+  },
+  {
+    "name": "Douglass",
+    "address": "3353 W. 13th Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60623,
+    "phone": "312-747-3725",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/2037dc200d2a7b837a144c2aa1d6a731/douglass.jpg"
+  },
+  {
+    "name": "Dunning",
+    "address": "7455 W. Cornelia Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60634,
+    "phone": "312-743-0480",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/11470b1a302baa17b33b548f2cf396ba/dunning.jpg"
+  },
+  {
+    "name": "Edgebrook",
+    "address": "5331 W. Devon Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60646,
+    "phone": "312-744-8313",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/80c82ef730d8bc1b8ddc624d5ad427c1/edgebrook.jpg"
+  },
+  {
+    "name": "Edgewater",
+    "address": "6000 N. Broadway",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60660,
+    "phone": "312-742-1945",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/b0558259c11301b3233d436d9453c296/edgewater.jpg"
+  },
+  {
+    "name": "Gage Park",
+    "address": "2807 W. 55th Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60632,
+    "phone": "312-747-0032",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/acb0b63949530b6c89acb7d4de625b40/gage-park.jpg"
+  },
+  {
+    "name": "Galewood-Mont Clare",
+    "address": "6871 W. Belden Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60707,
+    "phone": "312-746-0165",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/119c2a3066b23c0c713ea621f89596bd/galewood-mont-clare.jpg"
+  },
+  {
+    "name": "Garfield Ridge",
+    "address": "6348 S. Archer Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60638,
+    "phone": "312-747-6094",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/b6e193b42c839fc14aad73ad92c3742c/garfield-ridge.jpg"
+  },
+  {
+    "name": "Greater Grand Crossing",
+    "address": "1000 E. 73rd Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60619,
+    "phone": "312-745-1608",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/de290856e342cd6c4ac398c041e352f9/greater-grand-crossing.jpg"
+  },
+  {
+    "name": "Hall",
+    "address": "4801 S. Michigan Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60615,
+    "phone": "312-747-2541",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/9b95806142d4ce6dda8b0d25056e82e1/hall.jpg"
+  },
+  {
+    "name": "Harold Washington Library Center",
+    "address": "400 S. State Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60605,
+    "phone": "312-747-4300",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/6314ef45d17ac782240765bc7e5489b8/harold-washington-library-center.jpg"
+  },
+  {
+    "name": "Hegewisch",
+    "address": "3048 E. 130th Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60633,
+    "phone": "312-747-0046",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/3f84f39df22bab51d3c10e875af4b8e6/hegewisch.jpg"
+  },
+  {
+    "name": "Humboldt Park",
+    "address": "1605 N. Troy Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60647,
+    "phone": "312-744-2244",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/8145068cb0ef11720e17ae0f9ab2e5bb/humboldt-park.jpg"
+  },
+  {
+    "name": "Independence",
+    "address": "4024 N. Elston Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60618,
+    "phone": "312-744-0900",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/7ca40030507c730652869ead35df55b3/Independence.jpg"
+  },
+  {
+    "name": "Jefferson Park",
+    "address": "5363 W. Lawrence Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60630,
+    "phone": "312-744-1998",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/0e3c4a5eeeb7781c65b54f0a356d1e6f/jefferson-park.jpg"
+  },
+  {
+    "name": "Jeffery Manor",
+    "address": "2401 E. 100th Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60617,
+    "phone": "312-747-6479",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/2a75e879898299aee8248838efb9bf9b/jeffery-manor.jpg"
+  },
+  {
+    "name": "Kelly",
+    "address": "6151 S. Normal Boulevard",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60621,
+    "phone": "312-747-8418",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/3024cae52f672d22e0fcd6696e8dbb8d/kelly.jpg"
+  },
+  {
+    "name": "King",
+    "address": "3436 S. King Drive",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60616,
+    "phone": "312-747-7543",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/a98aec05fed22f8f59963dcd9f0506f2/king.jpg"
+  },
+  {
+    "name": "Legler Regional",
+    "address": "115 S. Pulaski Road",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60624,
+    "phone": "312-746-7730",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/77e53a51666c1a3201845b840ad60666/legler.jpg"
+  },
+  {
+    "name": "Lincoln Belmont",
+    "address": "1659 W. Melrose Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60657,
+    "phone": "312-744-0166",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/a020eb11de164bc32b5287e06cd2ee68/lincoln-belmont.jpg"
+  },
+  {
+    "name": "Lincoln Park",
+    "address": "1150 W. Fullerton Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60614,
+    "phone": "312-744-1926",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/0e9ce94399a8807505f0c119a04b9d93/lincoln-park.jpg"
+  },
+  {
+    "name": "Little Italy",
+    "address": "1336 W. Taylor Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60607,
+    "phone": "312-746-5656",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/7a6ac351955e50eec3914a6c6727a2eb/little-italy.jpg"
+  },
+  {
+    "name": "Little Village",
+    "address": "2311 S. Kedzie Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60623,
+    "phone": "312-745-1862",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/6c52211c6c58abf12308daec7553f94d/little-village.jpg"
+  },
+  {
+    "name": "Logan Square",
+    "address": "3030 W. Fullerton Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60647,
+    "phone": "312-744-5295",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/fdc407ed8160e0c1ec0372387489af73/logan-square.jpg"
+  },
+  {
+    "name": "Lozano",
+    "address": "1805 S. Loomis Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60608,
+    "phone": "312-746-4329",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/a95d24377f1699afcbde763d4ab2a391/lozano.jpg"
+  },
+  {
+    "name": "Manning",
+    "address": "6 S. Hoyne Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60612,
+    "phone": "312-746-6800",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/4652b9502871f0cbdf7df926b7a3b2d7/manning.jpg"
+  },
+  {
+    "name": "Mayfair",
+    "address": "4400 W. Lawrence Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60630,
+    "phone": "312-744-1254",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/82c722d4ae356664f5723b6959da814d/mayfair.jpg"
+  },
+  {
+    "name": "McKinley Park",
+    "address": "1915 W. 35th Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60609,
+    "phone": "312-747-6082",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/4e561efa3a4ea5ee88493205cdb48fe0/mckinley-park.jpg"
+  },
+  {
+    "name": "Merlo",
+    "address": "644 W. Belmont Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60657,
+    "phone": "312-744-1139",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/06608876f5527bb92a2900b878194f6b/merlo-2020.jpg"
+  },
+  {
+    "name": "Mount Greenwood",
+    "address": "11010 S. Kedzie Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60655,
+    "phone": "312-747-2805",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/db9dd433814038a6046515dbd1671944/mount-greenwood.jpg"
+  },
+  {
+    "name": "Near North",
+    "address": "310 W. Division Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60610,
+    "phone": "312-744-0991",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/794a9599b7be0d2c894fa48d422e8553/near-north.jpg"
+  },
+  {
+    "name": "North Austin",
+    "address": "5724 W. North Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60639,
+    "phone": "312-746-4233",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/114ef9bd444af1d91206154b69bddb7b/north-austin.jpg"
+  },
+  {
+    "name": "North Pulaski",
+    "address": "4300 W. North Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60639,
+    "phone": "312-744-9573",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/84de18fa7adc6a1a713a33fa4b2117f2/north-pulaski.jpg"
+  },
+  {
+    "name": "Northtown",
+    "address": "6800 N. Western Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60645,
+    "phone": "312-744-2292",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/940c175a11501207cfa9ad9c5f8e61f1/Northtown.jpg"
+  },
+  {
+    "name": "Oriole Park",
+    "address": "7454 W. Balmoral Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60656,
+    "phone": "312-744-1965",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/20ec2cf070b46eaa976341ae6517eadc/oriole-park.jpg"
+  },
+  {
+    "name": "Portage-Cragin",
+    "address": "5108 W. Belmont Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60641,
+    "phone": "312-744-0152",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/115f03a192b7f8341b3b55d0ef1e2677/portage-cragin.jpg"
+  },
+  {
+    "name": "Pullman",
+    "address": "11001 S. Indiana Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60628,
+    "phone": "312-747-2033",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/a2936130abb2cedd2ef6e853796eeef9/pullman.jpg"
+  },
+  {
+    "name": "Roden",
+    "address": "6083 N. Northwest Highway",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60631,
+    "phone": "312-744-1478",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/824a25ff22c0ed5da0c105ab4ba14008/100.jpg"
+  },
+  {
+    "name": "Rogers Park",
+    "address": "6907 N. Clark Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60626,
+    "phone": "312-744-0156",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/c8ba3e16f4beb4d876fe8203ded58f07/rogers-park.jpg"
+  },
+  {
+    "name": "Scottsdale",
+    "address": "4101 W. 79th Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60652,
+    "phone": "312-747-0193",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/9eebc6a34dee192cbecd6ea82177f0e7/scottsdale.jpg"
+  },
+  {
+    "name": "Sherman Park",
+    "address": "5440 S. Racine Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60609,
+    "phone": "312-747-0477",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/bdc2ab6a98deae21070a6aaae4eafa1d/sherman-park.jpg"
+  },
+  {
+    "name": "South Chicago",
+    "address": "9055 S. Houston Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60617,
+    "phone": "312-747-8065",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/56276079706fa349f49e7f2e91f0afcd/south-chicago.jpg"
+  },
+  {
+    "name": "South Shore",
+    "address": "2505 E. 73rd Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60649,
+    "phone": "312-747-5281",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/a892fa689f84639b5d3fd542026435cc/south-shore.jpg"
+  },
+  {
+    "name": "Sulzer Regional",
+    "address": "4455 N. Lincoln Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60625,
+    "phone": "312-744-7616",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/543815b06bfa88fe2b5c2b625129d718/sulzer-regional.jpg"
+  },
+  {
+    "name": "Thurgood Marshall",
+    "address": "7506 S. Racine Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60620,
+    "phone": "312-747-5927",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/9e3d9e98518d8f54e387f1db7bc3625c/thurgood-marshall.jpg"
+  },
+  {
+    "name": "Toman",
+    "address": "2708 S. Pulaski Road",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60623,
+    "phone": "312-745-1660",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/e8b729f5b5c8a4694df90d979cbd0fc2/toman.jpg"
+  },
+  {
+    "name": "Uptown",
+    "address": "929 W. Buena Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60613,
+    "phone": "312-744-8400",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/6a0f23aa82ebe503b07a15894dfc7fdc/uptown.jpg"
+  },
+  {
+    "name": "Vodak-East Side",
+    "address": "3710 E. 106th Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60617,
+    "phone": "312-747-5500",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/7b7f677c2a1aece901b54e923dbbfe09/vodak-east-side.jpg"
+  },
+  {
+    "name": "Walker",
+    "address": "11071 S. Hoyne Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60643,
+    "phone": "312-747-1920",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/3af48f3585332c463c3dc3ad1ae3a09b/walker.jpg"
+  },
+  {
+    "name": "Water Works",
+    "address": "163 E. Pearson Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60611,
+    "phone": "312-742-8811",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/bafe884658d6ee17284bb7ceb8ce4a72/water-works.jpg"
+  },
+  {
+    "name": "West Belmont",
+    "address": "3104 N. Narragansett Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60634,
+    "phone": "312-746-5142",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/7c22c0d321075d03e192e912e688d97d/WBELMOfrontexterior.jpg"
+  },
+  {
+    "name": "West Chicago Avenue",
+    "address": "4856 W. Chicago Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60651,
+    "phone": "312-743-0260",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/02f311f959ad36f105df15d407429334/west-chicago-avenue.jpg"
+  },
+  {
+    "name": "West Englewood",
+    "address": "1745 W. 63rd Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60636,
+    "phone": "312-747-3481",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/fc12aa898c3600f63ae1761880db0edb/west-englewood.jpg"
+  },
+  {
+    "name": "West Lawn (Closed)",
+    "address": "4020 W. 63rd Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60629,
+    "phone": "312-747-7381",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/cebdd3e0fe6023788f424b44d9661d53/west-lawn.jpg"
+  },
+  {
+    "name": "West Loop",
+    "address": "122 N. Aberdeen Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60607,
+    "phone": "312-744-2995",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/6f4318cb886ccc68bfc30ce6142cf894/CPL-West-Loop-Branch-Tom-Harris-web.jpg"
+  },
+  {
+    "name": "West Pullman",
+    "address": "830 W. 119th Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60643,
+    "phone": "312-747-1425",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/fef3f7d9e52d5f9a578b733d5799b13e/west-pullman.jpg"
+  },
+  {
+    "name": "West Town",
+    "address": "1625 W. Chicago Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60622,
+    "phone": "312-743-0450",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/d8363c027650685edad363d8a5326676/WestTown2023.jpg"
+  },
+  {
+    "name": "Whitney M. Young, Jr.",
+    "address": "415 E. 79th Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60619,
+    "phone": "312-747-0039",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/07c6a172f0083e700676668d34b70bb3/Whitney-Young-2018.jpg"
+  },
+  {
+    "name": "Woodson Regional",
+    "address": "9525 S. Halsted Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60628,
+    "phone": "312-747-6900",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/f82300776fe43f7b03519f73adddbab0/woodson-regional-library.jpg"
+  },
+  {
+    "name": "Wrightwood-Ashburn",
+    "address": "8530 S. Kedzie Avenue",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": 60652,
+    "phone": "312-747-2696",
+    "img": "https://chipublib.bibliocommons.com/events/uploads/images/full/31eb297fb71d31174a8ee2dfeb1d363b/wrightwood-ashburn.jpg"
+  }
+]
