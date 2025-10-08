@@ -24,3 +24,6 @@
 
 # broccoli-debug
 /DEBUG/
+
+# Local Netlify folder
+.netlify

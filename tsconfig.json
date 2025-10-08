@@ -11,7 +11,7 @@
     },
     "types": [
       "ember-source/types",
-      "node",
+      // "node",
       "@embroider/core/virtual",
       "vite/client"
     ],
