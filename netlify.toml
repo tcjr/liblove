@@ -1,11 +1,9 @@
-# example netlify.toml
 [build]
   command = "pnpm build"
   publish = "dist"
   # functions = "netlify/functions"
 
-  ## Uncomment to use this redirect for Single Page Applications like create-react-app.
-  ## Not needed for static site generators.
+  # Redirects all traffic to index.html for SPAs like Ember
   [[redirects]]
     from = "/*"
     to = "/index.html"
