@@ -1,0 +1,27 @@
+# example netlify.toml
+[build]
+  command = "pnpm build"
+  publish = "dist"
+  # functions = "netlify/functions"
+
+  ## Uncomment to use this redirect for Single Page Applications like create-react-app.
+  ## Not needed for static site generators.
+  [[redirects]]
+    from = "/*"
+    to = "/index.html"
+    status = 200
+
+  ## Settings for Netlify Dev
+  ## https://github.com/netlify/cli/blob/main/docs/netlify-dev.md#project-detection
+  # Enable these if we want to use netlify functions/db/etc.
+  #[dev]
+  #  # We use the special value of '#custom' to let `netlify dev` know not to make
+  #  # any assumptions
+  #  framework = "#custom"
+  #
+  #  # `netlify dev` runs this command and waits for the targetPort below to be ready.
+  #  # In our Ember app, that happens when Vite does it's thing.
+  #  command = "pnpm run start"
+  #  targetPort = 4200
+
+  ## more info on configuring this file: https://ntl.fyi/file-based-build-config
