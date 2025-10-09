@@ -23,7 +23,8 @@
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "lint:types": "ember-tsc --noEmit",
-    "start": "vite",
+    "start": "netlify dev",
+    "start:ember": "vite",
     "test": "vite build --mode development && ember test --path dist"
   },
   "exports": {
@@ -69,6 +70,7 @@
     "ember-page-title": "^9.0.3",
     "ember-qunit": "^9.0.3",
     "ember-resolver": "^13.1.1",
+    "ember-resources": "^7.0.7",
     "ember-source": "~6.8.0-beta.4",
     "ember-template-lint": "^7.9.3",
     "eslint": "^9.34.0",
@@ -81,6 +83,7 @@
     "prettier-plugin-ember-template-tag": "^2.1.0",
     "qunit": "^2.24.1",
     "qunit-dom": "^3.5.0",
+    "reactiveweb": "^1.9.0",
     "stylelint": "^16.23.1",
     "stylelint-config-standard": "^38.0.0",
     "tailwindcss": "^4.0.0",
@@ -95,5 +98,9 @@
   },
   "ember": {
     "edition": "octane"
+  },
+  "dependencies": {
+    "@netlify/functions": "^4.2.7",
+    "@netlify/neon": "^0.1.0"
   }
 }
