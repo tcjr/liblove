@@ -1,8 +1,10 @@
 import { pageTitle } from 'ember-page-title';
+import Component from '@glimmer/component';
 
-<template>
-  {{pageTitle "Lib Love"}}
-  <h2>Welcome</h2>
+export default class ApplicationComponent extends Component {
+  <template>
+    {{pageTitle "Lib Love"}}
 
-  {{outlet}}
-</template>
+    {{outlet}}
+  </template>
+}
