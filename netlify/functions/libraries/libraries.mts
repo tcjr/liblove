@@ -15,6 +15,7 @@ const sql = neon();
 //       city    TEXT NOT NULL,
 //       state   TEXT NOT NULL,
 //       zip     TEXT NOT NULL,
+//       phone   TEXT NOT NULL,
 //       img     TEXT NOT NULL
 //     )
 

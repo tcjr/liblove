@@ -14,11 +14,15 @@ type Library = {
   img: string;
 };
 
-export default class ApplicationComponent extends Component {
+export default class LibraryComponent extends Component {
   @use loadingLibraries = RemoteData<Library[]>('/api/libraries');
 
   <template>
     {{pageTitle "Libraries"}}
+
+    {{#if this.loadingLibraries.isPending}}
+      <p>Loading libraries...</p>
+    {{/if}}
 
     {{#if this.loadingLibraries.isResolved}}
       <h2>Libraries ({{this.loadingLibraries.value.length}})</h2>
@@ -31,7 +35,7 @@ export default class ApplicationComponent extends Component {
 
     {{#if this.loadingLibraries.isError}}
       <h2>Error loading libraries</h2>
-      {{log "loadingLibraries" this.loadingLibraries}}
+      {{!log "loadingLibraries" this.loadingLibraries}}
     {{/if}}
   </template>
 }
