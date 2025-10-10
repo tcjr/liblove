@@ -2,12 +2,9 @@
 	"name": "Liblove Dev Container",
 	"image": "mcr.microsoft.com/devcontainers/universal:2",
 	"features": {
-		"ghcr.io/devcontainers/features/node:1": {
-			"version": "22",
-			"installPnpm": true
-		},
 		"ghcr.io/devcontainers-extra/features/ember-cli:1": {},
-		"ghcr.io/kreemer/features/chrometesting:1": {}
+		"ghcr.io/kreemer/features/chrometesting:1": {},
+		"ghcr.io/devcontainers-extra/features/netlify-cli:1": {}
 	},
 	"forwardPorts": [4200],
 	"postCreateCommand": "pnpm install"
