@@ -1,0 +1,9 @@
+{
+  "data": {
+    "id": "m123",
+    "type": "misc",
+    "attributes": {
+      "name": "Misc thing (static)"
+    }
+  }
+}
