@@ -1,11 +1,12 @@
-import Application from 'liblove/app';
-import config from 'liblove/config/environment';
+import Application from '#app/app';
+import config, { enterTestMode } from '#app/config/environment';
 import * as QUnit from 'qunit';
 import { setApplication } from '@ember/test-helpers';
 import { setup } from 'qunit-dom';
 import { start as qunitStart, setupEmberOnerrorValidation } from 'ember-qunit';
 
 export function start() {
+  enterTestMode();
   setApplication(Application.create(config.APP));
 
   setup(QUnit.assert);

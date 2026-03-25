@@ -14,16 +14,14 @@
  */
 import globals from 'globals';
 import js from '@eslint/js';
-
+import { defineConfig, globalIgnores } from 'eslint/config';
 import ts from 'typescript-eslint';
-
 import ember from 'eslint-plugin-ember/recommended';
-
 import eslintConfigPrettier from 'eslint-config-prettier';
 import qunit from 'eslint-plugin-qunit';
+// import vitest from '@vitest/eslint-plugin';
 import n from 'eslint-plugin-n';
-
-import babelParser from '@babel/eslint-parser';
+import babelParser from '@babel/eslint-parser/experimental-worker';
 
 const parserOptions = {
   esm: {
@@ -38,19 +36,13 @@ const parserOptions = {
   },
 };
 
-export default ts.config(
+export default defineConfig([
+  globalIgnores(['dist/', 'coverage/', '.netlify/*', '!**/.*']),
   js.configs.recommended,
   ember.configs.base,
   ember.configs.gjs,
   ember.configs.gts,
   eslintConfigPrettier,
-  /**
-   * Ignores must be in their own object
-   * https://eslint.org/docs/latest/use/configure/ignore
-   */
-  {
-    ignores: ['dist/', 'node_modules/', 'coverage/', '.netlify/*', '!**/.*'],
-  },
   /**
    * https://eslint.org/docs/latest/use/configure/configuration-files#configuring-linter-options
    */
@@ -79,29 +71,59 @@ export default ts.config(
     languageOptions: {
       parser: ember.parser,
       parserOptions: parserOptions.esm.ts,
+      globals: {
+        ...globals.browser,
+      },
     },
     extends: [...ts.configs.recommendedTypeChecked, ember.configs.gts],
+    rules: {
+      'ember/no-empty-glimmer-component-classes': 'off',
+    },
   },
+
+  // TESTING (qunit)
   {
     files: ['tests/**/*-test.{js,gjs,ts,gts}'],
     plugins: {
       qunit,
     },
   },
+
+  // TESTING (vitest)
+  // {
+  //   files: ['tests/**/*-test.{js,gjs,ts,gts}'],
+  //   plugins: { vitest },
+  //   rules: {
+  //     ...vitest.configs.recommended.rules,
+  //     // When using testing-library-ember, the types for the event triggers are
+  //     // not correctly typed; the calls are wrapped in promises, but the types
+  //     // do not reflect this. So we turn this rule off to allow us to await
+  //     // the trigger calls.
+  //     '@typescript-eslint/await-thenable': 'off',
+
+  //     // ember-vitest adds applicationTest() and renderingTest() alternatives to
+  //     // the default test() function. This registers these functions, so this
+  //     // rule won't flag the usage of `expect`.
+  //     'vitest/no-standalone-expect': [
+  //       'error',
+  //       {
+  //         additionalTestBlockFunctions: ['renderingTest'],
+  //       },
+  //     ],
+
+  //     // ember-vitest's recommended way to provide the app container is with
+  //     // code like this:
+  //     //   renderingTest.scoped({ app: ({}, use) => use(App) });
+  //     // Relaxing the no-empty-pattern rule allows this code.
+  //     'no-empty-pattern': ['error', { allowObjectPatternsAsParameters: true }],
+  //   },
+  // },
+
   /**
    * CJS node files
    */
   {
-    files: [
-      '**/*.cjs',
-      'config/**/*.js',
-      'testem.js',
-      'testem*.js',
-      '.prettierrc.js',
-      '.stylelintrc.js',
-      '.template-lintrc.js',
-      'ember-cli-build.js',
-    ],
+    files: ['**/*.cjs', 'config/**/*.js', 'ember-cli-build.js'],
     plugins: {
       n,
     },
@@ -132,4 +154,4 @@ export default ts.config(
       },
     },
   },
-);
+]);
