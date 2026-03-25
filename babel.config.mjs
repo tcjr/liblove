@@ -1,8 +1,15 @@
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildMacros } from '@embroider/macros/babel';
+import { setConfig } from '@warp-drive/core/build-config';
 
-const macros = buildMacros();
+const macros = buildMacros({
+  configure: (config) => {
+    setConfig(config, {
+      compatWith: '5.6',
+    });
+  },
+});
 
 export default {
   plugins: [
