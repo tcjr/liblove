@@ -4,16 +4,16 @@
   "compilerOptions": {
     "allowJs": true,
     "paths": {
-      "liblove/tests/*": ["./tests/*"],
-      "liblove/*": ["./app/*"],
       "#app/*": ["./app/*"],
+      "#tests/*": ["./tests/*"],
       "*": ["./types/*"]
     },
     "types": [
       "ember-source/types",
       // "node",
       "@embroider/core/virtual",
-      "vite/client"
+      "vite/client",
+      "@glint/ember-tsc/types"
     ],
     "allowImportingTsExtensions": true
   }

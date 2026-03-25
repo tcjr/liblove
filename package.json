@@ -27,6 +27,10 @@
     "start:ember": "vite",
     "test": "vite build --mode development && ember test --path dist"
   },
+  "imports": {
+    "#app/*": "./app/*",
+    "#tests/*": "./tests/*"
+  },
   "exports": {
     "./tests/*": "./tests/*",
     "./*": "./app/*"
@@ -51,8 +55,9 @@
     "@embroider/vite": "^1.2.0",
     "@eslint/js": "^9.34.0",
     "@glimmer/component": "^2.0.0",
-    "@glint/ember-tsc": "^1.0.0",
-    "@glint/template": "^1.6.0",
+    "@glint/ember-tsc": "^1.2.2",
+    "@glint/template": "^1.7.7",
+    "@glint/tsserver-plugin": "^2.2.3",
     "@rollup/plugin-babel": "^6.0.4",
     "@tailwindcss/vite": "^4.0.0",
     "@types/qunit": "^2.19.13",
