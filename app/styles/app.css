@@ -1,3 +1,4 @@
 @import 'tailwindcss';
 
+/* eslint-disable-next-line css/no-invalid-at-rules */
 @plugin "daisyui";
