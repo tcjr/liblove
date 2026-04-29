@@ -23,7 +23,28 @@ export default async (req: Request, _context: Context) => {
   if (req.method === 'GET') {
     // get all libraries
     const rows = await sql('SELECT * FROM libraries ORDER BY name ASC');
-    return new Response(JSON.stringify(rows), {
+
+    // Convert the response to JSON:API spec with type and attributes.
+
+    const libObjs = rows.map((row) => ({
+      type: 'library',
+      id: row.id.toString(),
+      attributes: {
+        name: row.name,
+        address: row.address,
+        city: row.city,
+        state: row.state,
+        zip: row.zip,
+        phone: row.phone,
+        img: row.img,
+      },
+    }));
+
+    const data = {
+      data: libObjs,
+    };
+
+    return new Response(JSON.stringify(data), {
       headers: { 'Content-Type': 'application/json' },
     });
   } else {

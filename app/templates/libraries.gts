@@ -1,41 +1,37 @@
 import { pageTitle } from 'ember-page-title';
 import Component from '@glimmer/component';
-import { use } from 'ember-resources';
-import { RemoteData } from 'reactiveweb/remote-data';
+import { Request } from '@warp-drive/ember';
+import { getLibraries } from '#app/data/api';
 
-type Library = {
-  id: string;
-  name: string;
-  address: string;
-  city: string;
-  state: string;
-  zip: string;
-  phone: string;
-  img: string;
-};
-
-export default class LibraryComponent extends Component {
-  @use loadingLibraries = RemoteData<Library[]>('/api/libraries');
-
+export default class LibrariesComponent extends Component {
   <template>
     {{pageTitle "Libraries"}}
 
-    {{#if this.loadingLibraries.isPending}}
-      <p>Loading libraries...</p>
-    {{/if}}
+    <Request @query={{(getLibraries)}}>
+      <:content as |response|>
+        {{!log ":content response" response}}
+        <h2>Libraries ({{response.data.length}})</h2>
+        <ul>
+          {{#each response.data as |lib|}}
+            <li>{{lib.name}} ({{lib.id}})</li>
+          {{/each}}
+        </ul>
+      </:content>
 
-    {{#if this.loadingLibraries.isResolved}}
-      <h2>Libraries ({{this.loadingLibraries.value.length}})</h2>
-      <ul>
-        {{#each this.loadingLibraries.value as |lib|}}
-          <li>{{lib.name}} ({{lib.id}})</li>
-        {{/each}}
-      </ul>
-    {{/if}}
+      <:loading>
+        <p>Loading libraries...</p>
 
-    {{#if this.loadingLibraries.isError}}
-      <h2>Error loading libraries</h2>
-      {{!log "loadingLibraries" this.loadingLibraries}}
-    {{/if}}
+      </:loading>
+
+      <:error as |e|>
+        <h2>Error loading libraries</h2>
+        <p>
+          {{e.message}}
+        </p>
+        {{! template-lint-disable no-log }}
+        {{log "error" e}}
+      </:error>
+
+    </Request>
   </template>
 }

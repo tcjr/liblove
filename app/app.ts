@@ -3,6 +3,7 @@ import compatModules from '@embroider/virtual/compat-modules';
 import Resolver from 'ember-resolver';
 import config from '#app/config/environment';
 import setupInspector from '@embroider/legacy-inspector-support/ember-source-4.12';
+import '@warp-drive/ember/install';
 import './styles/app.css';
 
 export default class App extends Application {

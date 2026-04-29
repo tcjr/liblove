@@ -3,6 +3,24 @@
   publish = "dist"
   functions = "netlify/functions"
 
+  # This is how we can make some data at build and/or deploy-time and have it look
+  # like a regular API call to the client. In this case, the client GET /api/misc
+  # is returned the static JSON file without going through a function.
+
+  [[redirects]]
+    from = "/api/misc"
+    to = "/static-api/misc.json"
+    status = 200
+    headers = {"Content-Type" = "application/json"}
+    force = true
+
+  [[redirects]]
+    from = "/api/misc/:id"
+    to = "/static-api/misc/:id.json"
+    status = 200
+    headers = {"Content-Type" = "application/json"}
+    force = true
+
   # Redirects all traffic to index.html for SPAs like Ember
   [[redirects]]
     from = "/*"
