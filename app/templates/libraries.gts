@@ -28,6 +28,7 @@ export default class LibrariesComponent extends Component {
         <p>
           {{e.message}}
         </p>
+        {{! template-lint-disable no-log }}
         {{log "error" e}}
       </:error>
 
