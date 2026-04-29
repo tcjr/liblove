@@ -17,6 +17,7 @@ import js from '@eslint/js';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import ts from 'typescript-eslint';
 import ember from 'eslint-plugin-ember/recommended';
+import templateConfig from 'eslint-plugin-ember/configs/template-lint-migration';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import vitest from '@vitest/eslint-plugin';
 import n from 'eslint-plugin-n';
@@ -79,6 +80,9 @@ export default defineConfig([
       'ember/no-empty-glimmer-component-classes': 'off',
     },
   },
+
+  // GJS/GTS template part
+  ...templateConfig,
 
   // TESTING (vitest)
   {
