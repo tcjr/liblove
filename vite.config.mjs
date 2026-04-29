@@ -9,7 +9,7 @@ const isCI = process.env.CI === 'true';
 
 export default defineConfig({
   test: {
-    include: ['tests/**/*.test.{gjs,gts,ts}'],
+    include: ['tests/**/*.test.{gjs,gts,js,ts}'],
     maxConcurrency: 1,
     browser: {
       provider: isCI ? playwright() : preview(),
