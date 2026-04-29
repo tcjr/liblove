@@ -1,7 +1,7 @@
 import { pageTitle } from 'ember-page-title';
 import Component from '@glimmer/component';
 import { Request } from '@warp-drive/ember';
-import { getLibraries } from '#app/data/api.ts';
+import { getLibraries } from '#app/data/api';
 
 export default class LibrariesComponent extends Component {
   <template>
