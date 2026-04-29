@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <title>Liblove</title>
-    <meta name="description" content="">
+    <meta name="description" content="Libraries and the folks who love them.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body class="bg-base-100 text-base-content">
     <script type="module">
-      import Application from './app/app';
-      import environment from './app/config/environment';
+      import Application from './app/app.ts';
+      import config from './app/config.ts';
 
-      Application.create(environment.APP);
+      Application.create(config.APP);
     </script>
   </body>
 </html>
