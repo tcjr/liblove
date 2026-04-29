@@ -13,41 +13,25 @@ concurrency:
 
 jobs:
   lint:
-    name: "Lint"
+    name: Lint
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@v4
+      - uses: wyvox/action-setup-pnpm@v3
         with:
-          version: 10
-      - name: Install Node
-        uses: actions/setup-node@v6
-        with:
-          node-version: 22
-          cache: pnpm
-      - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
-      - name: Lint
-        run: pnpm lint
+          node-version: "25.9.0"
+          pnpm-version: "10.33.2"
+      - run: pnpm lint
 
   test:
-    name: "Test"
+    name: Test
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@v4
+      - uses: wyvox/action-setup-pnpm@v3
         with:
-          version: 10
-      - name: Install Node
-        uses: actions/setup-node@v6
-        with:
-          node-version: 22
-          cache: pnpm
-      - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
-      - name: Run Tests
-        run: pnpm test
+          node-version: "25.9.0"
+          pnpm-version: "10.33.2"
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:ci

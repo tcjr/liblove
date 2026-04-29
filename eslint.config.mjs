@@ -18,8 +18,7 @@ import { defineConfig, globalIgnores } from 'eslint/config';
 import ts from 'typescript-eslint';
 import ember from 'eslint-plugin-ember/recommended';
 import eslintConfigPrettier from 'eslint-config-prettier';
-import qunit from 'eslint-plugin-qunit';
-// import vitest from '@vitest/eslint-plugin';
+import vitest from '@vitest/eslint-plugin';
 import n from 'eslint-plugin-n';
 import babelParser from '@babel/eslint-parser/experimental-worker';
 
@@ -81,43 +80,35 @@ export default defineConfig([
     },
   },
 
-  // TESTING (qunit)
+  // TESTING (vitest)
   {
-    files: ['tests/**/*-test.{js,gjs,ts,gts}'],
-    plugins: {
-      qunit,
+    files: ['tests/**/*.test.{js,gjs,ts,gts}'],
+    plugins: { vitest },
+    rules: {
+      ...vitest.configs.recommended.rules,
+      // When using testing-library-ember, the types for the event triggers are
+      // not correctly typed; the calls are wrapped in promises, but the types
+      // do not reflect this. So we turn this rule off to allow us to await
+      // the trigger calls.
+      '@typescript-eslint/await-thenable': 'off',
+
+      // ember-vitest adds applicationTest() and renderingTest() alternatives to
+      // the default test() function. This registers these functions, so this
+      // rule won't flag the usage of `expect`.
+      'vitest/no-standalone-expect': [
+        'error',
+        {
+          additionalTestBlockFunctions: ['renderingTest'],
+        },
+      ],
+
+      // ember-vitest's recommended way to provide the app container is with
+      // code like this:
+      //   renderingTest.scoped({ app: ({}, use) => use(App) });
+      // Relaxing the no-empty-pattern rule allows this code.
+      'no-empty-pattern': ['error', { allowObjectPatternsAsParameters: true }],
     },
   },
-
-  // TESTING (vitest)
-  // {
-  //   files: ['tests/**/*-test.{js,gjs,ts,gts}'],
-  //   plugins: { vitest },
-  //   rules: {
-  //     ...vitest.configs.recommended.rules,
-  //     // When using testing-library-ember, the types for the event triggers are
-  //     // not correctly typed; the calls are wrapped in promises, but the types
-  //     // do not reflect this. So we turn this rule off to allow us to await
-  //     // the trigger calls.
-  //     '@typescript-eslint/await-thenable': 'off',
-
-  //     // ember-vitest adds applicationTest() and renderingTest() alternatives to
-  //     // the default test() function. This registers these functions, so this
-  //     // rule won't flag the usage of `expect`.
-  //     'vitest/no-standalone-expect': [
-  //       'error',
-  //       {
-  //         additionalTestBlockFunctions: ['renderingTest'],
-  //       },
-  //     ],
-
-  //     // ember-vitest's recommended way to provide the app container is with
-  //     // code like this:
-  //     //   renderingTest.scoped({ app: ({}, use) => use(App) });
-  //     // Relaxing the no-empty-pattern rule allows this code.
-  //     'no-empty-pattern': ['error', { allowObjectPatternsAsParameters: true }],
-  //   },
-  // },
 
   /**
    * CJS node files
