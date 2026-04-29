@@ -1,14 +1,13 @@
-import Application from '@ember/application';
-import compatModules from '@embroider/virtual/compat-modules';
-import Resolver from 'ember-resolver';
-import config from '#app/config/environment';
-import setupInspector from '@embroider/legacy-inspector-support/ember-source-4.12';
+import Application from 'ember-strict-application-resolver';
+import PageTitleService from 'ember-page-title/services/page-title';
 import '@warp-drive/ember/install';
 import './styles/app.css';
 
 export default class App extends Application {
-  modulePrefix = config.modulePrefix;
-  podModulePrefix = config.podModulePrefix;
-  Resolver = Resolver.withModules(compatModules);
-  inspector = setupInspector(this);
+  modules = {
+    ...import.meta.glob('./router.*', { eager: true }),
+    ...import.meta.glob('./templates/**/*', { eager: true }),
+    ...import.meta.glob('./services/**/*', { eager: true }),
+    './services/page-title': PageTitleService,
+  };
 }

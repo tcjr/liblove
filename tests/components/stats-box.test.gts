@@ -1,7 +1,7 @@
 import { describe, test, expect } from 'vitest';
 import { setupRenderingContext } from 'ember-vitest';
 import App from '#app/app';
-import StatsBox from '#app/components/stats-box';
+import StatsBox from '#app/components/stats-box.gts';
 
 describe('StatsBox', () => {
   test('renders the count', async () => {

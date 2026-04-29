@@ -1,6 +1,9 @@
 {
   "extends": "@ember/app-tsconfig",
+  "include": ["app", "tests", "types"],
   "compilerOptions": {
+    "lib": ["ESNext", "DOM"],
+    "target": "ESNext",
     "allowJs": true,
     "paths": {
       "#app/*": ["./app/*"],
