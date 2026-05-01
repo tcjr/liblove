@@ -10,7 +10,7 @@
 
 - **Language**: TypeScript with Ember.js (Octane edition), Glimmer components
 - **Templates**: Use `.gts` files for components
-- **Imports**: Use subpaths (`#app/services/clerk`) not relative paths
+- **Imports**: Use subpaths (`#app/services/auth`) not relative paths
 - **Formatting**: Prettier with single quotes for JS/TS, double quotes for templates
 - **Services**: Inject with `@service declare serviceName: ServiceType;`
 - **Tracking**: Use `@tracked` for reactive properties
@@ -18,3 +18,11 @@
 - **Naming**: PascalCase for components/classes, camelCase for methods/properties
 - **Error handling**: Throw descriptive errors with proper validation
 - **Comments**: Minimal - add for clarity
+- **Logging**: Verbose - new code should have console logging to aid debugging
+
+## Tech Stack
+
+- **Web app**: Modern Ember
+- **Authentication**: Netlify Identity
+- **API**: Netlify functions; JSONAPI; Warp Drive
+- **Database**: Netlify Database (postgresql); Drizzle ORM
