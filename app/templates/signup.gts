@@ -50,11 +50,6 @@ export default class SignupComponent extends Component {
       <div class="card-body">
         <h2 class="card-title justify-center text-2xl mb-4">Sign Up</h2>
 
-        {{!-- {{#if this.success}}
-          <div class="alert alert-success">
-            <span>Check your email to confirm your account and start using Lib Love!</span>
-          </div>
-        {{else}} --}}
         <form {{on "submit" this.handleSubmit}} class="flex flex-col gap-4">
           <label class="form-control w-full">
             <div class="label">
@@ -66,7 +61,6 @@ export default class SignupComponent extends Component {
               class="input input-bordered w-full"
               required
               name="name"
-              {{!on "input" (fn (mut this.name) value="target.value")}}
             />
           </label>
 
@@ -80,7 +74,6 @@ export default class SignupComponent extends Component {
               class="input input-bordered w-full"
               required
               name="email"
-              {{!on "input" (fn (mut this.email) value="target.value")}}
             />
           </label>
 
@@ -93,7 +86,6 @@ export default class SignupComponent extends Component {
               class="input input-bordered w-full"
               required
               name="password"
-              {{!on "input" (fn (mut this.password) value="target.value")}}
             />
           </label>
 
@@ -116,7 +108,6 @@ export default class SignupComponent extends Component {
             </button>
           </div>
         </form>
-        {{!-- {{/if}} --}}
       </div>
     </div>
   </template>

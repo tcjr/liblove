@@ -7,8 +7,8 @@ import type AuthService from '#app/services/auth';
 import { dataFromEvent } from 'ember-primitives/components/form';
 
 export default class LoginComponent extends Component {
-  @service auth!: AuthService;
-  @service router!: RouterService;
+  @service declare auth: AuthService;
+  @service declare router: RouterService;
 
   @tracked email = '';
   @tracked password = '';
@@ -53,7 +53,6 @@ export default class LoginComponent extends Component {
               class="input input-bordered w-full"
               required
               name="email"
-              {{!on "input" (fn (mut this.email) value="target.value")}}
             />
           </label>
 
@@ -66,7 +65,6 @@ export default class LoginComponent extends Component {
               class="input input-bordered w-full"
               required
               name="password"
-              {{!on "input" (fn (mut this.password) value="target.value")}}
             />
           </label>
 

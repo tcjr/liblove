@@ -9,5 +9,6 @@ export default class App extends Application {
     ...import.meta.glob('./templates/**/*', { eager: true }),
     ...import.meta.glob('./services/**/*', { eager: true }),
     './services/page-title': PageTitleService,
+    ...import.meta.glob('./routes/**/*', { eager: true }),
   };
 }
