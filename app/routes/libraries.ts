@@ -1,3 +1,3 @@
-import AuthenticatedRoute from './authenticated';
+import Route from '@ember/routing/route';
 
-export default class LibrariesRoute extends AuthenticatedRoute {}
+export default class LibrariesRoute extends Route {}
