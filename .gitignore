@@ -28,3 +28,4 @@
 # Local Netlify folder
 .netlify
 deno.lock
+.DS_Store

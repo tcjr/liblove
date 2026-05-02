@@ -38,7 +38,15 @@ const parserOptions = {
 };
 
 export default defineConfig([
-  globalIgnores(['dist/', 'coverage/', '.netlify/*', '!**/.*']),
+  globalIgnores([
+    'dist/',
+    'coverage/',
+    '.netlify/*',
+    '!**/.*',
+    // I don't really want to ignore these, but don't know how to get them to work:
+    'db/',
+    'drizzle.config.ts',
+  ]),
   js.configs.recommended,
   ember.configs.base,
   ember.configs.gjs,
