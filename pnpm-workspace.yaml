@@ -1,0 +1,10 @@
+ignoredBuiltDependencies:
+  - esbuild@0.25.10
+
+onlyBuiltDependencies:
+  - '@tailwindcss/oxide'
+  - '@tailwindcss/oxide@4.1.14'
+  - core-js
+  - core-js@2.6.12
+  - esbuild
+  - esbuild@0.27.4

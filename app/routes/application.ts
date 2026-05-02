@@ -6,7 +6,7 @@ export default class ApplicationRoute extends Route {
   @service declare auth: AuthService;
 
   async beforeModel() {
-    console.log('[route/application] beforeModel()');
-    await this.auth.initialize();
+    //console.log('[route/application] beforeModel()');
+    //await this.auth.initialize();
   }
 }
