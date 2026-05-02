@@ -4,6 +4,9 @@
 # compiled output
 /dist/
 
+# generated
+/netlify/database/migrations/
+
 # misc
 /coverage/
 !.*
