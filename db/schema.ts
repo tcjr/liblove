@@ -15,5 +15,5 @@ export const users = pgTable('users', {
   id: serial().primaryKey(),
   netlifyId: varchar('netlify_id', { length: 255 }).notNull().unique(),
   email: varchar({ length: 255 }).notNull().unique(),
-  createdAt: timestamp('created_at').defaultNow(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
 });
