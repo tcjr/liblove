@@ -22,7 +22,11 @@ export default class ApplicationComponent extends Component {
         <div></div>
         <span>You are logged in.</span>
         <div>
-          <button class="btn btn-sm" {{on "click" this.auth.logout}}>
+          <button
+            class="btn btn-sm"
+            {{on "click" this.auth.logout}}
+            type="button"
+          >
             Logout
           </button>
         </div>
