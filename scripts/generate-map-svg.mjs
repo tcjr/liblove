@@ -7,17 +7,25 @@ import simplify from 'simplify-js';
 // Configuration based on map-svg-spec.md
 const WIDTH = 800;
 const LNG_MIN = -87.95;
-const LNG_MAX = -87.50;
+const LNG_MAX = -87.5;
 const LAT_MIN = 41.63;
 const LAT_MAX = 42.05;
 
 // Dynamic height calculation to match geographic aspect ratio at 41.8° N
 // 1 degree latitude is approx 111.1 km
 // 1 degree longitude at 41.8° N is approx 111.1 * cos(41.8°) ≈ 82.8 km
-const ASPECT_RATIO = (LAT_MAX - LAT_MIN) / ((LNG_MAX - LNG_MIN) * Math.cos(41.8 * Math.PI / 180));
+const ASPECT_RATIO =
+  (LAT_MAX - LAT_MIN) /
+  ((LNG_MAX - LNG_MIN) * Math.cos((41.8 * Math.PI) / 180));
 const HEIGHT = Math.round(WIDTH * ASPECT_RATIO);
 
-console.log(`Canvas: ${WIDTH}x${HEIGHT} (Aspect Ratio: ${ASPECT_RATIO.toFixed(3)})`);
+// Douglas-Peucker simplification tolerance. Higher numbers make the map smoother.
+// const SIMPLIFICATION_TOLERANCE = 1.5;
+const SIMPLIFICATION_TOLERANCE = 40;
+
+console.log(
+  `Canvas: ${WIDTH}x${HEIGHT} (Aspect Ratio: ${ASPECT_RATIO.toFixed(3)})`,
+);
 
 // Coordinate projection functions
 function projectX(lng) {
@@ -31,52 +39,74 @@ function projectY(lat) {
 
 // 20-color categorical palette
 const PALETTE = [
-  '#1f77b4', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c',
-  '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5',
-  '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f',
-  '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5'
+  '#1f77b4',
+  '#aec7e8',
+  '#ff7f0e',
+  '#ffbb78',
+  '#2ca02c',
+  '#98df8a',
+  '#d62728',
+  '#ff9896',
+  '#9467bd',
+  '#c5b0d5',
+  '#8c564b',
+  '#c49c94',
+  '#e377c2',
+  '#f7b6d2',
+  '#7f7f7f',
+  '#c7c7c7',
+  '#bcbd22',
+  '#dbdb8d',
+  '#17becf',
+  '#9edae5',
 ];
 
 async function generateMap() {
   const libsData = JSON.parse(fs.readFileSync('libs-geo.json', 'utf8'));
-  const boundaryData = JSON.parse(fs.readFileSync('data/chicago-boundary.geojson', 'utf8'));
+  const boundaryData = JSON.parse(
+    fs.readFileSync('data/chicago-boundary.geojson', 'utf8'),
+  );
 
   // 1. Extract and simplify city boundary
   // Structure: MultiPolygon = [Polygon, Polygon, ...]
   // Polygon = [OuterRing, Hole, Hole, ...]
   // Ring = [[x,y], [x,y], ...]
   let cityPolygon = [];
-  boundaryData.features.forEach(feature => {
+  boundaryData.features.forEach((feature) => {
     if (feature.geometry.type === 'Polygon') {
-      cityPolygon.push(feature.geometry.coordinates.map(ring => 
-        ring.map(coord => [projectX(coord[0]), projectY(coord[1])])
-      ));
+      cityPolygon.push(
+        feature.geometry.coordinates.map((ring) =>
+          ring.map((coord) => [projectX(coord[0]), projectY(coord[1])]),
+        ),
+      );
     } else if (feature.geometry.type === 'MultiPolygon') {
-      feature.geometry.coordinates.forEach(poly => {
-        cityPolygon.push(poly.map(ring => 
-          ring.map(coord => [projectX(coord[0]), projectY(coord[1])])
-        ));
+      feature.geometry.coordinates.forEach((poly) => {
+        cityPolygon.push(
+          poly.map((ring) =>
+            ring.map((coord) => [projectX(coord[0]), projectY(coord[1])]),
+          ),
+        );
       });
     }
   });
 
   // Simplify boundary for performance and "stylized" look
-  cityPolygon = cityPolygon.map(poly => {
-    return poly.map(ring => {
-      const points = ring.map(p => ({ x: p[0], y: p[1] }));
-      const simplified = simplify(points, 1.5, true);
-      return simplified.map(p => [p.x, p.y]);
+  cityPolygon = cityPolygon.map((poly) => {
+    return poly.map((ring) => {
+      const points = ring.map((p) => ({ x: p[0], y: p[1] }));
+      const simplified = simplify(points, SIMPLIFICATION_TOLERANCE, true);
+      return simplified.map((p) => [p.x, p.y]);
     });
   });
 
   // 2. Prepare library points for Voronoi
-  const points = libsData.map(lib => [projectX(lib.lon), projectY(lib.lat)]);
+  const points = libsData.map((lib) => [projectX(lib.lon), projectY(lib.lat)]);
   const delaunay = Delaunay.from(points);
   const voronoi = delaunay.voronoi([0, 0, WIDTH, HEIGHT]);
 
   // 3. Generate clipped Voronoi cells
   let cellsHtml = '';
-  
+
   libsData.forEach((lib, i) => {
     const cellPolygon = voronoi.cellPolygon(i);
     if (!cellPolygon) {
@@ -89,15 +119,20 @@ async function generateMap() {
       // polygonClipping.intersection expects [MultiPolygon, MultiPolygon]
       // voronoi.cellPolygon returns [[x,y], [x,y]...] which is a single Polygon ring
       const clipped = polygonClipping.intersection([cellPolygon], cityPolygon);
-      
+
       if (clipped.length > 0) {
         // clipped is a MultiPolygon: [Polygon, Polygon, ...]
         // where each Polygon is [Ring, Ring, ...]
-        clipped.forEach(poly => {
-          poly.forEach(ring => {
-            const pathData = ring.map((p, j) => (j === 0 ? `M${p[0]},${p[1]}` : `L${p[0]},${p[1]}`)).join(' ') + ' Z';
+        clipped.forEach((poly) => {
+          poly.forEach((ring) => {
+            const pathData =
+              ring
+                .map((p, j) =>
+                  j === 0 ? `M${p[0]},${p[1]}` : `L${p[0]},${p[1]}`,
+                )
+                .join(' ') + ' Z';
             const color = PALETTE[i % PALETTE.length];
-            
+
             cellsHtml += `    <path 
       class="voronoi-cell" 
       data-name="${lib.name}" 
@@ -118,16 +153,22 @@ async function generateMap() {
 
   // 4. Generate library markers
   let markersHtml = '';
-  libsData.forEach(lib => {
+  libsData.forEach((lib) => {
     markersHtml += `    <circle class="lib-marker" cx="${projectX(lib.lon)}" cy="${projectY(lib.lat)}" r="3" fill="red" />\n`;
   });
 
   // 5. Generate city outline path
   // We only draw the outer ring (index 0) of each polygon in the MultiPolygon
-  const outlinePathData = cityPolygon.map(poly => {
-    const outerRing = poly[0];
-    return outerRing.map((p, j) => (j === 0 ? `M${p[0]},${p[1]}` : `L${p[0]},${p[1]}`)).join(' ') + ' Z';
-  }).join(' ');
+  const outlinePathData = cityPolygon
+    .map((poly) => {
+      const outerRing = poly[0];
+      return (
+        outerRing
+          .map((p, j) => (j === 0 ? `M${p[0]},${p[1]}` : `L${p[0]},${p[1]}`))
+          .join(' ') + ' Z'
+      );
+    })
+    .join(' ');
 
   // 6. Assemble final SVG
   const svg = `<?xml version="1.0" encoding="UTF-8"?>
@@ -145,8 +186,14 @@ ${markersHtml}  </g>
   <path id="city-outline" class="city-outline" fill="none" stroke="black" stroke-width="2" vector-effect="non-scaling-stroke" d="${outlinePathData}" />
 </svg>`;
 
-  fs.writeFileSync('public/library-map.svg', svg);
-  console.log('Successfully generated public/library-map.svg');
+  const outputDir = path.join(process.cwd(), 'public');
+  const filename = path.join(
+    outputDir,
+    `library-map-${SIMPLIFICATION_TOLERANCE}.svg`,
+  );
+
+  fs.writeFileSync(filename, svg);
+  console.log(`Successfully generated ${filename}`);
 }
 
 generateMap().catch(console.error);
