@@ -42,27 +42,32 @@ async function generateMap() {
   const boundaryData = JSON.parse(fs.readFileSync('data/chicago-boundary.geojson', 'utf8'));
 
   // 1. Extract and simplify city boundary
-  let boundaryPolygons = [];
+  // Structure: MultiPolygon = [Polygon, Polygon, ...]
+  // Polygon = [OuterRing, Hole, Hole, ...]
+  // Ring = [[x,y], [x,y], ...]
+  let cityPolygon = [];
   boundaryData.features.forEach(feature => {
     if (feature.geometry.type === 'Polygon') {
-      boundaryPolygons.push([feature.geometry.coordinates[0].map(coord => [projectX(coord[0]), projectY(coord[1])])]);
+      cityPolygon.push(feature.geometry.coordinates.map(ring => 
+        ring.map(coord => [projectX(coord[0]), projectY(coord[1])])
+      ));
     } else if (feature.geometry.type === 'MultiPolygon') {
       feature.geometry.coordinates.forEach(poly => {
-        boundaryPolygons.push(poly.map(ring => ring.map(coord => [projectX(coord[0]), projectY(coord[1])])));
+        cityPolygon.push(poly.map(ring => 
+          ring.map(coord => [projectX(coord[0]), projectY(coord[1])])
+        ));
       });
     }
   });
 
   // Simplify boundary for performance and "stylized" look
-  boundaryPolygons = boundaryPolygons.map(poly => {
+  cityPolygon = cityPolygon.map(poly => {
     return poly.map(ring => {
       const points = ring.map(p => ({ x: p[0], y: p[1] }));
       const simplified = simplify(points, 1.5, true);
       return simplified.map(p => [p.x, p.y]);
     });
   });
-
-  const cityPolygon = boundaryPolygons; // Multi-polygon format for polygon-clipping
 
   // 2. Prepare library points for Voronoi
   const points = libsData.map(lib => [projectX(lib.lon), projectY(lib.lat)]);
@@ -105,8 +110,6 @@ async function generateMap() {
     </path>\n`;
           });
         });
-      } else {
-        // console.log(`Cell for ${lib.name} was clipped away entirely.`);
       }
     } catch (e) {
       console.error(`Error clipping cell for ${lib.name}:`, e.message);
@@ -120,8 +123,10 @@ async function generateMap() {
   });
 
   // 5. Generate city outline path
-  const outlinePathData = boundaryPolygons.map(poly => {
-    return poly.map((p, j) => (j === 0 ? `M${p[0]},${p[1]}` : `L${p[0]},${p[1]}`)).join(' ') + ' Z';
+  // We only draw the outer ring (index 0) of each polygon in the MultiPolygon
+  const outlinePathData = cityPolygon.map(poly => {
+    const outerRing = poly[0];
+    return outerRing.map((p, j) => (j === 0 ? `M${p[0]},${p[1]}` : `L${p[0]},${p[1]}`)).join(' ') + ' Z';
   }).join(' ');
 
   // 6. Assemble final SVG
@@ -137,7 +142,7 @@ async function generateMap() {
 ${cellsHtml}  </g>
   <g id="library-points">
 ${markersHtml}  </g>
-  <path id="city-outline" class="city-outline" fill="none" stroke="black" stroke-width="2" d="${outlinePathData}" />
+  <path id="city-outline" class="city-outline" fill="none" stroke="black" stroke-width="2" vector-effect="non-scaling-stroke" d="${outlinePathData}" />
 </svg>`;
 
   fs.writeFileSync('public/library-map.svg', svg);
