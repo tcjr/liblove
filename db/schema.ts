@@ -1,4 +1,11 @@
-import { doublePrecision, pgTable, serial, text, timestamp, varchar } from 'drizzle-orm/pg-core';
+import {
+  doublePrecision,
+  pgTable,
+  serial,
+  text,
+  timestamp,
+  varchar,
+} from 'drizzle-orm/pg-core';
 
 export const libraries = pgTable('libraries', {
   id: serial().primaryKey(),
