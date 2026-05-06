@@ -22,6 +22,11 @@
   }
 
   .voronoi-cell.visited:hover {
-    fill: var(--color-secondary);
+    /* fill: var(--color-secondary); */
+    fill: color-mix(
+      in oklab,
+      var(--color-primary) 50%,
+      var(--color-secondary) 50%
+    );
   }
 }
