@@ -20,6 +20,7 @@
     "start:ember": "vite",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "netlify database migrations apply",
+    "generate:map-data": "node scripts/generate-map-data.mjs",
     "test": "vitest",
     "test:ci": "CI=true vitest run"
   },
