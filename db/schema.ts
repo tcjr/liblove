@@ -1,4 +1,4 @@
-import { pgTable, serial, text, timestamp, varchar } from 'drizzle-orm/pg-core';
+import { doublePrecision, pgTable, serial, text, timestamp, varchar } from 'drizzle-orm/pg-core';
 
 export const libraries = pgTable('libraries', {
   id: serial().primaryKey(),
@@ -9,6 +9,8 @@ export const libraries = pgTable('libraries', {
   zip: text().notNull(),
   phone: text().notNull(),
   img: text().notNull(),
+  lat: doublePrecision(),
+  lon: doublePrecision(),
 });
 
 export const users = pgTable('users', {
