@@ -158,7 +158,7 @@ async function generateMap() {
   console.log('Generating library points...');
   let markersHtml = '';
   libsData.forEach((lib) => {
-    markersHtml += `    <circle class="lib-marker" cx="${projectX(lib.lon)}" cy="${projectY(lib.lat)}" r="3" fill="red" />\n`;
+    markersHtml += `    <circle class="lib-marker" cx="${projectX(lib.lon)}" cy="${projectY(lib.lat)}" r="3" fill="red" data-library-id="${lib.id}" />\n`;
   });
 
   // 5. Generate city outline path

@@ -8,6 +8,8 @@ import { pageTitle } from 'ember-page-title';
     <LinkTo @route="index">Home</LinkTo>
     |
     <LinkTo @route="libraries">Libraries</LinkTo>
+    |
+    <LinkTo @route="map">Map</LinkTo>
   </nav>
 
   {{outlet}}

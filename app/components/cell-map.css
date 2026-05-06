@@ -1,0 +1,15 @@
+.cell-map {
+  .voronoi-cell {
+    stroke: var(--color-base-100);
+    fill: var(--color-base-300);
+  }
+
+  .item-marker {
+    fill: currentColor;
+  }
+
+  .city-outline {
+    fill: none;
+    stroke: currentColor;
+  }
+}
