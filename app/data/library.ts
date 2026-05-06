@@ -10,6 +10,8 @@ export interface Library {
   zip: string;
   phone: string;
   img: string;
+  lat: number;
+  lon: number;
   $type: 'library';
   [Type]: 'library';
 }
@@ -24,5 +26,7 @@ export const LibrarySchema = withDefaults({
     { name: 'zip', kind: 'field' },
     { name: 'phone', kind: 'field' },
     { name: 'img', kind: 'field' },
+    { name: 'lat', kind: 'field' },
+    { name: 'lon', kind: 'field' },
   ],
 });

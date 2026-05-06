@@ -25,6 +25,8 @@ export default async (req: Request, _context: Context) => {
         zip: row.zip,
         phone: row.phone,
         img: row.img,
+        lat: row.lat,
+        lon: row.lon,
       },
     }));
 

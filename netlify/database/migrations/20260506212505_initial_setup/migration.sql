@@ -6,12 +6,14 @@ CREATE TABLE "libraries" (
 	"state" text NOT NULL,
 	"zip" text NOT NULL,
 	"phone" text NOT NULL,
-	"img" text NOT NULL
+	"img" text NOT NULL,
+	"lat" double precision,
+	"lon" double precision
 );
 --> statement-breakpoint
 CREATE TABLE "users" (
 	"id" serial PRIMARY KEY,
 	"netlify_id" varchar(255) NOT NULL UNIQUE,
 	"email" varchar(255) NOT NULL UNIQUE,
-	"created_at" timestamp DEFAULT now()
+	"created_at" timestamp with time zone DEFAULT now()
 );
