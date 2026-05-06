@@ -15,11 +15,16 @@ export interface CellMapSignature {
     cells: MappableCell[];
     viewBox: string;
     outlinePath?: string;
+    visited?: string[];
   };
   Element: SVGElement;
 }
 
 export default class CellMap extends Component<CellMapSignature> {
+  hasVisited = (id: string) => {
+    return Boolean(this.args.visited?.includes(id));
+  };
+
   <template>
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -31,7 +36,7 @@ export default class CellMap extends Component<CellMapSignature> {
       <g>
         {{#each @cells as |cell|}}
           <path
-            class="voronoi-cell"
+            class="voronoi-cell {{if (this.hasVisited cell.id) 'visited'}}"
             data-item-id={{cell.id}}
             fill="gray"
             stroke="black"

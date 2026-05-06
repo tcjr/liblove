@@ -5,6 +5,7 @@ import MAP_DATA from '#app/data/library-map-data.json';
 
 export default class MapComponent extends Component {
   data = MAP_DATA;
+  visited = ['17', '8', '15', '34', '38', '31'];
 
   <template>
     {{pageTitle "Map"}}
@@ -14,6 +15,7 @@ export default class MapComponent extends Component {
         @viewBox="0 0 {{this.data.svg.width}} {{this.data.svg.height}}"
         @cells={{this.data.libraryCells}}
         @outlinePath={{this.data.city.outlinePath}}
+        @visited={{this.visited}}
       />
     </div>
   </template>
