@@ -21,7 +21,7 @@ const HEIGHT = Math.round(WIDTH * ASPECT_RATIO);
 
 // Douglas-Peucker simplification tolerance. Higher numbers make the map smoother.
 // const SIMPLIFICATION_TOLERANCE = 1.5;
-const SIMPLIFICATION_TOLERANCE = 40;
+const SIMPLIFICATION_TOLERANCE = 10;
 
 console.log(
   `Canvas: ${WIDTH}x${HEIGHT} (Aspect Ratio: ${ASPECT_RATIO.toFixed(3)})`,
@@ -62,7 +62,7 @@ const PALETTE = [
 ];
 
 async function generateMap() {
-  const libsData = JSON.parse(fs.readFileSync('libs-geo.json', 'utf8'));
+  const libsData = JSON.parse(fs.readFileSync('scripts/libs-geo.json', 'utf8'));
   const boundaryData = JSON.parse(
     fs.readFileSync('data/chicago-boundary.geojson', 'utf8'),
   );
@@ -71,6 +71,7 @@ async function generateMap() {
   // Structure: MultiPolygon = [Polygon, Polygon, ...]
   // Polygon = [OuterRing, Hole, Hole, ...]
   // Ring = [[x,y], [x,y], ...]
+  console.log('Simplifying city boundry...');
   let cityPolygon = [];
   boundaryData.features.forEach((feature) => {
     if (feature.geometry.type === 'Polygon') {
@@ -100,11 +101,13 @@ async function generateMap() {
   });
 
   // 2. Prepare library points for Voronoi
+  console.log('Generating Voronoi points...');
   const points = libsData.map((lib) => [projectX(lib.lon), projectY(lib.lat)]);
   const delaunay = Delaunay.from(points);
   const voronoi = delaunay.voronoi([0, 0, WIDTH, HEIGHT]);
 
   // 3. Generate clipped Voronoi cells
+  console.log('Generating Voronoi cells...');
   let cellsHtml = '';
 
   libsData.forEach((lib, i) => {
@@ -152,6 +155,7 @@ async function generateMap() {
   });
 
   // 4. Generate library markers
+  console.log('Generating library points...');
   let markersHtml = '';
   libsData.forEach((lib) => {
     markersHtml += `    <circle class="lib-marker" cx="${projectX(lib.lon)}" cy="${projectY(lib.lat)}" r="3" fill="red" />\n`;
@@ -159,6 +163,7 @@ async function generateMap() {
 
   // 5. Generate city outline path
   // We only draw the outer ring (index 0) of each polygon in the MultiPolygon
+  console.log('Generating city outline...');
   const outlinePathData = cityPolygon
     .map((poly) => {
       const outerRing = poly[0];
@@ -171,6 +176,7 @@ async function generateMap() {
     .join(' ');
 
   // 6. Assemble final SVG
+  console.log('Assembling SVG...');
   const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${WIDTH} ${HEIGHT}">
   <style>
