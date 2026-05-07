@@ -1,3 +1,5 @@
+/* eslint css/no-invalid-properties: ["error", { allowUnknownVariables: true }] */
+/* The daisy color variables are not known here, so turning off that rule */
 .cell-map {
   .voronoi-cell {
     stroke: var(--color-base-100);

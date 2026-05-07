@@ -83,6 +83,7 @@ export default class CellMap extends Component<CellMapSignature> {
       {{! voronoi cells }}
       <g {{on "mouseleave" this.unhighlight}}>
         {{#each @cells as |cell|}}
+          {{! eslint-disable-next-line ember/template-no-invalid-interactive }}
           <path
             class="voronoi-cell
               {{if (this.hasVisited cell.id) 'visited'}}

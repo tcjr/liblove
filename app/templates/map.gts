@@ -26,7 +26,6 @@ export default class MapComponent extends Component {
   };
 
   <template>
-    {{log "MAP_DATA" MAP_DATA}}
     {{pageTitle "Map"}}
     <div class="flex flex-row">
       <div class="w-1/2 px-10">
