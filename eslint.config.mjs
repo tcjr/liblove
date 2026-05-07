@@ -167,6 +167,7 @@ export default defineConfig([
     extends: ['css/recommended'],
     rules: {
       'no-irregular-whitespace': 'off',
+      'css/use-baseline': ['error', { available: 'newly' }],
     },
   },
 ]);

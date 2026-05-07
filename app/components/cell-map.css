@@ -1,0 +1,48 @@
+/* eslint css/no-invalid-properties: ["error", { allowUnknownVariables: true }] */
+/* The daisy color variables are not known here, so turning off that rule */
+.cell-map {
+  .voronoi-cell {
+    stroke: var(--color-base-100);
+    fill: var(--color-base-300);
+
+    &:hover {
+      fill: var(--color-secondary);
+    }
+
+    &.visited {
+      fill: var(--color-primary);
+    }
+
+    &.visited:hover {
+      /* fill: var(--color-secondary); */
+      fill: color-mix(
+        in oklch,
+        var(--color-primary) 50%,
+        var(--color-secondary) 50%
+      );
+    }
+
+    &.selected {
+      fill: var(--color-accent);
+    }
+  }
+
+  .item-marker {
+    fill: currentColor;
+
+    &.visited {
+      fill: var(--color-primary-content);
+      stroke: var(--color-primary-content);
+    }
+
+    &.selected {
+      fill: var(--color-accent-conent);
+      stroke: var(--color-accent-conent);
+    }
+  }
+
+  .city-outline {
+    fill: none;
+    stroke: currentColor;
+  }
+}
