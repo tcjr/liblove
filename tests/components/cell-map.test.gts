@@ -26,13 +26,13 @@ describe('CellMap', () => {
     expect(svg.getAttribute('viewBox')).toBe('0 0 100 100');
 
     expect(svg.querySelectorAll('path.voronoi-cell').length).toBe(1);
-    const cell = svg.querySelectorAll('.voronoi-cell')[0];
+    const cell = svg.querySelectorAll('.voronoi-cell')[0]!;
     expect(cell).not.toBeNull();
     expect(cell.getAttribute('d')).toBe('');
     expect(cell.getAttribute('data-item-id')).toBe('1');
 
     expect(svg.querySelectorAll('circle.item-marker').length).toBe(1);
-    const circle = svg.querySelectorAll('circle')[0];
+    const circle = svg.querySelectorAll('circle')[0]!;
     expect(circle.getAttribute('cx')).toBe('50');
     expect(circle.getAttribute('cy')).toBe('50');
     expect(circle.getAttribute('r')).toBe('3');
