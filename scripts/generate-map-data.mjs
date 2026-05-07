@@ -147,8 +147,8 @@ async function generateData() {
     libraryCells: libraryCells,
   };
 
-  const outputDir = path.join(process.cwd(), 'public');
-  const filename = path.join(outputDir, 'library-map-data.json');
+  const outputDir = path.join(process.cwd(), 'app', 'data');
+  const filename = path.join(outputDir, 'chicago-library-map-data.json');
 
   fs.writeFileSync(filename, JSON.stringify(result, null, 2));
   console.log(`Successfully generated ${filename}`);

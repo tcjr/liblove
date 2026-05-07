@@ -17,22 +17,45 @@ export interface CellMapSignature {
     cells: MappableCell[];
     viewBox: string;
     outlinePath?: string;
-    /** The ids of the cells that have been visited. */
-    visited?: string[];
-    /** Called when a cell is selected/clicked. */
+    /**
+     * The ids of the cells that have been visited.
+     */
+    visited?: Set<string>;
+    /**
+     * The id of the cell that is currently selected.
+     */
+    selected?: string;
+    /**
+     * Called when a cell is selected/clicked. The caller is responsible for
+     * updating `@selected` if desired. This component does not own any state.
+     */
     onSelect?: (id: string) => void;
     /**
      * Called when a cell is hovered over. It is called with `null` when the
      * mouse leaves the map.
      */
-    onHighlight?: (id: string) => void;
+    onHighlight?: (id: string | null) => void;
   };
   Element: SVGElement;
 }
 
+/**
+ * Display an SVG of points on a map and regions (or "cells") representing the
+ * voronoi areas around those points.
+ *
+ * The cells are identified by `id` and the id is used in the event interface.
+ * Currently, it supports marking cells as `visited` (multiple) and `selected`
+ * (single). This component will add add the corresponding css class and/or
+ * data-* attributes, but it does not maintain any state outside the DOM. The
+ * caller is responsible for the data down.
+ */
 export default class CellMap extends Component<CellMapSignature> {
   hasVisited = (id: string) => {
-    return Boolean(this.args.visited?.includes(id));
+    return Boolean(this.args.visited?.has(id));
+  };
+
+  isSelected = (id: string) => {
+    return Boolean(this.args.selected === id);
   };
 
   selectCell = (id: string) => {
@@ -45,6 +68,11 @@ export default class CellMap extends Component<CellMapSignature> {
     this.args.onHighlight?.(id);
   };
 
+  unhighlight = () => {
+    console.log('[CellMap] unhighlight ');
+    this.args.onHighlight?.(null);
+  };
+
   <template>
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -53,14 +81,14 @@ export default class CellMap extends Component<CellMapSignature> {
       ...attributes
     >
       {{! voronoi cells }}
-      <g {{on "mouseout" (fn this.highlightCell null)}}>
+      <g {{on "mouseleave" this.unhighlight}}>
         {{#each @cells as |cell|}}
           <path
-            class="voronoi-cell {{if (this.hasVisited cell.id) 'visited'}}"
+            class="voronoi-cell
+              {{if (this.hasVisited cell.id) 'visited'}}
+              {{if (this.isSelected cell.id) 'selected'}}
+              fill-base-300 stroke-base-100 stroke-1"
             data-item-id={{cell.id}}
-            fill="gray"
-            stroke="black"
-            stroke-width="1"
             d={{cell.outlinePath}}
             {{on "click" (fn this.selectCell cell.id)}}
             {{on "mouseover" (fn this.highlightCell cell.id)}}
@@ -75,7 +103,10 @@ export default class CellMap extends Component<CellMapSignature> {
       <g>
         {{#each @cells as |cell|}}
           <circle
-            class="item-marker"
+            class="item-marker
+              {{if (this.hasVisited cell.id) 'visited'}}
+              {{if (this.isSelected cell.id) 'selected'}}
+              pointer-events-none fill-current stroke-current"
             cx={{cell.markerX}}
             cy={{cell.markerY}}
             r="3"
@@ -86,10 +117,7 @@ export default class CellMap extends Component<CellMapSignature> {
       {{#if @outlinePath}}
         <path
           id="city-outline"
-          class="city-outline"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
+          class="city-outline stroke-current fill-none stroke-2 pointer-events-none"
           vector-effect="non-scaling-stroke"
           d={{@outlinePath}}
         />
