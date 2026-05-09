@@ -1,9 +1,8 @@
 import { withDefaults } from '@warp-drive/core/reactive';
 import type { Type } from '@warp-drive/core/types/symbols';
 
-interface City {
+interface Metro {
   name: string;
-  state: string;
   outlinePath: string;
 }
 
@@ -20,20 +19,20 @@ interface Svg {
   height: number;
 }
 
-export interface CityLibraryMap {
+export interface MetroLibraryMap {
   id: string;
-  city: City;
+  metro: Metro;
   svg: Svg;
   libraryCells: Cell[];
 
-  $type: 'city-library-map';
-  [Type]: 'city-library-map';
+  $type: 'metro-library-map';
+  [Type]: 'metro-library-map';
 }
 
-export const CityLibraryMapSchema = withDefaults({
-  type: 'city-library-map',
+export const MetroLibraryMapSchema = withDefaults({
+  type: 'metro-library-map',
   fields: [
-    { name: 'city', kind: 'field' },
+    { name: 'metro', kind: 'field' },
     { name: 'svg', kind: 'field' },
     { name: 'libraryCells', kind: 'field' },
   ],

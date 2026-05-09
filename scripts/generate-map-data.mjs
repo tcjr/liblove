@@ -41,19 +41,19 @@ async function generateData() {
     fs.readFileSync('data/chicago-boundary.geojson', 'utf8'),
   );
 
-  // 1. Extract and simplify city boundary
-  console.log('Simplifying city boundary...');
-  let cityPolygons = [];
+  // 1. Extract and simplify metro boundary
+  console.log('Simplifying metro boundary...');
+  let metroPolygons = [];
   boundaryData.features.forEach((feature) => {
     if (feature.geometry.type === 'Polygon') {
-      cityPolygons.push(
+      metroPolygons.push(
         feature.geometry.coordinates.map((ring) =>
           ring.map((coord) => [projectX(coord[0]), projectY(coord[1])]),
         ),
       );
     } else if (feature.geometry.type === 'MultiPolygon') {
       feature.geometry.coordinates.forEach((poly) => {
-        cityPolygons.push(
+        metroPolygons.push(
           poly.map((ring) =>
             ring.map((coord) => [projectX(coord[0]), projectY(coord[1])]),
           ),
@@ -63,7 +63,7 @@ async function generateData() {
   });
 
   // Simplify boundary
-  cityPolygons = cityPolygons.map((poly) => {
+  metroPolygons = metroPolygons.map((poly) => {
     return poly.map((ring) => {
       const points = ring.map((p) => ({ x: p[0], y: p[1] }));
       const simplified = simplify(points, SIMPLIFICATION_TOLERANCE, true);
@@ -88,9 +88,12 @@ async function generateData() {
       return;
     }
 
-    // Intersect Voronoi cell with city boundary
+    // Intersect Voronoi cell with metro boundary
     try {
-      const clipped = polygonClipping.intersection([cellPolygon], cityPolygons);
+      const clipped = polygonClipping.intersection(
+        [cellPolygon],
+        metroPolygons,
+      );
 
       if (clipped.length > 0) {
         // combine all rings into a single path string
@@ -119,9 +122,9 @@ async function generateData() {
     }
   });
 
-  // 4. Generate city outline path
-  console.log('Generating city outline path...');
-  const cityOutlinePath = cityPolygons
+  // 4. Generate metro outline path
+  console.log('Generating metro outline path...');
+  const metroOutlinePath = metroPolygons
     .map((poly) => {
       const outerRing = poly[0];
       return (
@@ -139,10 +142,9 @@ async function generateData() {
       width: WIDTH,
       height: HEIGHT,
     },
-    city: {
+    metro: {
       name: 'Chicago',
-      state: 'IL',
-      outlinePath: cityOutlinePath,
+      outlinePath: metroOutlinePath,
     },
     libraryCells: libraryCells,
   };

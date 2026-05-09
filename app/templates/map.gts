@@ -4,7 +4,7 @@ import CellMap from '#app/components/cell-map.gts';
 import { trackedSet } from '@ember/reactive/collections';
 import { tracked } from '@glimmer/tracking';
 const PREFILL_VISITED = ['17', '8', '15', '34', '38', '31'];
-import { getCityLibraryMap } from '#app/data/api';
+import { getMetroLibraryMap } from '#app/data/api';
 import { Request } from '@warp-drive/ember';
 
 export default class MapComponent extends Component {
@@ -25,7 +25,7 @@ export default class MapComponent extends Component {
     this.highlightedId = id;
   };
 
-  query = getCityLibraryMap('chicago');
+  query = getMetroLibraryMap('chicago');
 
   <template>
     {{pageTitle "Map"}}
@@ -39,7 +39,7 @@ export default class MapComponent extends Component {
             <CellMap
               @viewBox="0 0 {{response.data.svg.width}} {{response.data.svg.height}}"
               @cells={{response.data.libraryCells}}
-              @outlinePath={{response.data.city.outlinePath}}
+              @outlinePath={{response.data.metro.outlinePath}}
               @visited={{this.visited}}
               @selected={{this.selectedId}}
               @onSelect={{this.selectLibrary}}

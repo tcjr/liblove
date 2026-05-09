@@ -1,6 +1,6 @@
 import { withResponseType } from '@warp-drive/core/request';
 import type { Library } from '#app/data/library';
-import type { CityLibraryMap } from '#app/data/city-library-map';
+import type { MetroLibraryMap } from '#app/data/metro-library-map';
 import type { ReactiveDataDocument } from '@warp-drive/core/reactive';
 
 /** Builds a request to fetch all libraries. */
@@ -11,9 +11,9 @@ export function getLibraries() {
   });
 }
 
-export function getCityLibraryMap(cityId: string) {
-  return withResponseType<ReactiveDataDocument<CityLibraryMap>>({
-    url: `/api/maps/${cityId}`,
+export function getMetroLibraryMap(metroId: string) {
+  return withResponseType<ReactiveDataDocument<MetroLibraryMap>>({
+    url: `/api/maps/${metroId}`,
     method: 'GET',
   });
 }

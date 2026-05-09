@@ -1,5 +1,5 @@
 import { LibrarySchema } from '#app/data/library';
-import { CityLibraryMapSchema } from '#app/data/city-library-map';
+import { MetroLibraryMapSchema } from '#app/data/metro-library-map';
 import { useLegacyStore } from '@warp-drive/legacy';
 import { JSONAPICache } from '@warp-drive/json-api';
 
@@ -7,7 +7,7 @@ const Store = useLegacyStore({
   linksMode: true,
   cache: JSONAPICache,
   handlers: [],
-  schemas: [LibrarySchema, CityLibraryMapSchema],
+  schemas: [LibrarySchema, MetroLibraryMapSchema],
 });
 
 type Store = InstanceType<typeof Store>;
