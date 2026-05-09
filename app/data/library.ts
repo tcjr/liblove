@@ -12,6 +12,7 @@ export interface Library {
   img: string;
   lat: number;
   lon: number;
+  metro: string;
   $type: 'library';
   [Type]: 'library';
 }
@@ -28,5 +29,6 @@ export const LibrarySchema = withDefaults({
     { name: 'img', kind: 'field' },
     { name: 'lat', kind: 'field' },
     { name: 'lon', kind: 'field' },
+    { name: 'metro', kind: 'field' },
   ],
 });
