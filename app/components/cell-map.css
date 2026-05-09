@@ -36,8 +36,8 @@
     }
 
     &.selected {
-      fill: var(--color-accent-conent);
-      stroke: var(--color-accent-conent);
+      fill: var(--color-accent-content);
+      stroke: var(--color-accent-content);
     }
   }
 
