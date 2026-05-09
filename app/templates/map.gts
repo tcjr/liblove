@@ -3,9 +3,51 @@ import Component from '@glimmer/component';
 import CellMap from '#app/components/cell-map.gts';
 import { trackedSet } from '@ember/reactive/collections';
 import { tracked } from '@glimmer/tracking';
-const PREFILL_VISITED = ['17', '8', '15', '34', '38', '31'];
+
 import { getMetroLibraryMap } from '#app/data/api';
 import { Request } from '@warp-drive/ember';
+
+const PREFILL_VISITED = [
+  '31',
+  '8',
+  '56',
+  '50',
+  '10',
+  '37',
+  '17',
+  '9',
+  '2',
+  '12',
+  '21',
+  '64',
+  '79',
+  '19',
+  '52',
+  '42',
+  '30',
+  '15',
+  '28',
+  '41',
+  '80',
+  '54',
+  '45',
+  '35',
+  '16',
+  '69',
+  '18',
+  '33',
+  '11',
+  '40',
+  '1',
+  '6',
+  '34',
+  '77',
+  '38',
+  '74',
+  '44',
+  '43',
+  '67',
+];
 
 export default class MapComponent extends Component {
   visited = trackedSet(PREFILL_VISITED);

@@ -15,7 +15,10 @@ export default class LibrariesComponent extends Component {
         <h2>Libraries ({{response.data.length}})</h2>
         <ul>
           {{#each response.data as |lib|}}
-            <li>{{lib.name}} ({{lib.id}})</li>
+            <li>
+              {{lib.name}}
+              ({{lib.id}})
+            </li>
           {{/each}}
         </ul>
       </:content>
