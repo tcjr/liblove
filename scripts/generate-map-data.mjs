@@ -147,7 +147,12 @@ async function generateData() {
     libraryCells: libraryCells,
   };
 
-  const outputDir = path.join(process.cwd(), 'app', 'data');
+  const outputDir = path.join(
+    process.cwd(),
+    'netlify',
+    'functions',
+    'static-data',
+  );
   const filename = path.join(outputDir, 'chicago-library-map-data.json');
 
   fs.writeFileSync(filename, JSON.stringify(result, null, 2));
