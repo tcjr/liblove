@@ -2,7 +2,7 @@ import { withDefaults } from '@warp-drive/core/reactive';
 import type { Type } from '@warp-drive/core/types/symbols';
 
 interface Metro {
-  name: string;
+  id: string;
   outlinePath: string;
 }
 
