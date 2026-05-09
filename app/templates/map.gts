@@ -113,7 +113,7 @@ export default class MapComponent extends Component {
       <:loading>
         <p>Loading ...</p>
       </:loading>
-      <:error as |e state|>
+      <:error as |e|>
         <h2>Error loading data</h2>
         <p>
           {{e.message}}
