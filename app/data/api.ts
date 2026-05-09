@@ -4,9 +4,9 @@ import type { MetroLibraryMap } from '#app/data/metro-library-map';
 import type { ReactiveDataDocument } from '@warp-drive/core/reactive';
 
 /** Builds a request to fetch all libraries. */
-export function getLibraries() {
+export function getLibraries(metroId: string) {
   return withResponseType<ReactiveDataDocument<Library[]>>({
-    url: `/api/libraries`,
+    url: `/api/libraries/${metroId}`,
     method: 'GET',
   });
 }

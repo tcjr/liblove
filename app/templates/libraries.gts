@@ -4,10 +4,12 @@ import { Request } from '@warp-drive/ember';
 import { getLibraries } from '#app/data/api';
 
 export default class LibrariesComponent extends Component {
+  query = getLibraries('chicago');
+
   <template>
     {{pageTitle "Libraries"}}
 
-    <Request @query={{(getLibraries)}}>
+    <Request @query={{this.query}}>
       <:content as |response|>
         {{!log ":content response" response}}
         <h2>Libraries ({{response.data.length}})</h2>

@@ -143,7 +143,7 @@ async function generateData() {
       height: HEIGHT,
     },
     metro: {
-      name: 'Chicago',
+      id: 'chicago',
       outlinePath: metroOutlinePath,
     },
     libraryCells: libraryCells,

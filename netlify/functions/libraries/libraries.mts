@@ -4,39 +4,54 @@ import { asc } from 'drizzle-orm';
 import type { Context, Config } from '@netlify/functions';
 
 export const config: Config = {
-  path: '/api/libraries',
+  path: '/api/libraries/:metroId',
 };
 
-export default async (req: Request, _context: Context) => {
+export default async (req: Request, context: Context) => {
   if (req.method === 'GET') {
-    // get all libraries
-    const rows = await db.select().from(libraries).orderBy(asc(libraries.name));
+    if (context.params) {
+      const metroId = context.params.metroId;
+      // hard-code chicago until we update the db schema
+      if (metroId !== 'chicago') {
+        return new Response('Not found', { status: 404 });
+      }
 
-    // Convert the response to JSON:API spec with type and attributes.
+      // get all libraries for metro
+      const rows = await db
+        .select()
+        .from(libraries)
+        .orderBy(asc(libraries.name));
 
-    const libObjs = rows.map((row) => ({
-      type: 'library',
-      id: row.id.toString(),
-      attributes: {
-        name: row.name,
-        address: row.address,
-        city: row.city,
-        state: row.state,
-        zip: row.zip,
-        phone: row.phone,
-        img: row.img,
-        lat: row.lat,
-        lon: row.lon,
-      },
-    }));
+      // Convert the response to JSON:API spec with type and attributes.
 
-    const data = {
-      data: libObjs,
-    };
+      const libObjs = rows.map((row) => ({
+        type: 'library',
+        id: row.id.toString(),
+        attributes: {
+          name: row.name,
+          address: row.address,
+          city: row.city,
+          state: row.state,
+          zip: row.zip,
+          phone: row.phone,
+          img: row.img,
+          lat: row.lat,
+          lon: row.lon,
+        },
+      }));
 
-    return new Response(JSON.stringify(data), {
-      headers: { 'Content-Type': 'application/json' },
-    });
+      const data = {
+        data: libObjs,
+      };
+
+      return new Response(JSON.stringify(data), {
+        headers: { 'Content-Type': 'application/json' },
+      });
+    } else {
+      // GET /api/libraries
+      // Not allowed to get all libraries across metros
+      return new Response('Not found', { status: 404 });
+    }
   } else {
     return new Response('Method not allowed', { status: 405 });
   }
