@@ -73,9 +73,7 @@ export default class MapComponent extends Component {
     {{pageTitle "Map"}}
 
     <Request @query={{this.query}}>
-      <:content as |response state|>
-        {{!JSON.stringify state}}
-        {{!JSON.stringify response}}
+      <:content as |response|>
         <div class="flex flex-row">
           <div class="w-1/2 px-10">
             <CellMap
@@ -120,8 +118,6 @@ export default class MapComponent extends Component {
         <p>
           {{e.message}}
         </p>
-        {{!JSON.stringify state}}
-        {{log "state" state}}
         {{! eslint-disable-next-line ember/template-no-log }}
         {{log "error" e}}
       </:error>
