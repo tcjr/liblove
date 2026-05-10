@@ -18,7 +18,7 @@ export const libraries = pgTable('libraries', {
   img: text().notNull(),
   lat: doublePrecision(),
   lon: doublePrecision(),
-  metro: text('metro'),
+  metro: text('metro').notNull(),
 });
 
 export const users = pgTable('users', {
