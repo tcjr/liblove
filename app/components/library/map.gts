@@ -8,6 +8,9 @@ export interface LibraryMapSignature {
     metroId: string;
     selectedId?: string;
     onSelect?: (id: string) => void;
+
+    highlightedId?: string | null;
+    onHighlight?: (id: string | null) => void;
   };
 
   Element: HTMLDivElement;
@@ -27,6 +30,8 @@ export default class LibraryMap extends Component<LibraryMapSignature> {
             @outlinePath={{response.data.metro.outlinePath}}
             @selected={{@selectedId}}
             @onSelect={{@onSelect}}
+            @highlighted={{@highlightedId}}
+            @onHighlight={{@onHighlight}}
           />
         </:content>
         <:loading>
