@@ -37,6 +37,8 @@
     "@embroider/router": "^3.0.6",
     "@netlify/database": "^1.0.0",
     "@netlify/functions": "^4.2.7",
+    "@responsive-image/cdn": "^2.0.0",
+    "@responsive-image/ember": "^3.0.0",
     "decorator-transforms": "^2.3.0",
     "drizzle-orm": "1.0.0-beta.22",
     "ember-modifier": "^4.3.0",
