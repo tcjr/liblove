@@ -17,19 +17,28 @@ export interface CellMapSignature {
     cells: MappableCell[];
     viewBox: string;
     outlinePath?: string;
+
     /**
      * The ids of the cells that have been visited.
      */
     visited?: Set<string>;
+
     /**
      * The id of the cell that is currently selected.
      */
     selected?: string;
+
     /**
      * Called when a cell is selected/clicked. The caller is responsible for
      * updating `@selected` if desired. This component does not own any state.
      */
     onSelect?: (id: string) => void;
+
+    /**
+     * The id of the cell that is currently highlighted.
+     */
+    highlighted?: string | null;
+
     /**
      * Called when a cell is hovered over. It is called with `null` when the
      * mouse leaves the map.
@@ -63,6 +72,10 @@ export default class CellMap extends Component<CellMapSignature> {
     this.args.onSelect?.(id);
   };
 
+  isHighlighted = (id: string) => {
+    return Boolean(this.args.highlighted === id);
+  };
+
   highlightCell = (id: string) => {
     console.log('[CellMap] highlight cell ', id);
     this.args.onHighlight?.(id);
@@ -85,9 +98,10 @@ export default class CellMap extends Component<CellMapSignature> {
         {{#each @cells as |cell|}}
           {{! eslint-disable-next-line ember/template-no-invalid-interactive }}
           <path
-            class="voronoi-cell
+            class="voronoi-cell cursor-pointer
               {{if (this.hasVisited cell.id) 'visited'}}
               {{if (this.isSelected cell.id) 'selected'}}
+              {{if (this.isHighlighted cell.id) 'highlighted'}}
               fill-base-300 stroke-base-100 stroke-1"
             data-item-id={{cell.id}}
             d={{cell.outlinePath}}
@@ -107,6 +121,7 @@ export default class CellMap extends Component<CellMapSignature> {
             class="item-marker
               {{if (this.hasVisited cell.id) 'visited'}}
               {{if (this.isSelected cell.id) 'selected'}}
+              {{if (this.isHighlighted cell.id) 'highlighted'}}
               pointer-events-none fill-current stroke-current"
             cx={{cell.markerX}}
             cy={{cell.markerY}}

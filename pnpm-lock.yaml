@@ -210,6 +210,9 @@ importers:
       simplify-js:
         specifier: ^1.2.4
         version: 1.2.4
+      tailwind-csstree:
+        specifier: ^0.3.1
+        version: 0.3.1(@eslint/css@1.1.0)
       tailwindcss:
         specifier: ^4.0.0
         version: 4.1.14
@@ -7039,6 +7042,15 @@ packages:
 
   tabster@8.8.0:
     resolution: {integrity: sha512-eGFXgtvKOQP5BywDI9Ngs+Atm6TRj45epAAqWKyVoi+HmOmdamEB//1H/FttLdNly/+Cz+GJ4RN8TnXTw0KwfA==}
+
+  tailwind-csstree@0.3.1:
+    resolution: {integrity: sha512-v147gLOR+E+9H4dNaP9rBeS/S/CTQJMRItlX9jLOXjdBGfSRauLwiz7LBCViaQmn6URXIlOdN6iMzSzOaeoUUw==}
+    engines: {node: '>=18.18'}
+    peerDependencies:
+      '@eslint/css': '>=1.0.0'
+    peerDependenciesMeta:
+      '@eslint/css':
+        optional: true
 
   tailwindcss@4.1.14:
     resolution: {integrity: sha512-b7pCxjGO98LnxVkKjaZSDeNuljC4ueKUddjENJOADtubtdo8llTaJy7HwBMeLNSSo2N5QIAgklslK1+Ir8r6CA==}
@@ -15717,6 +15729,10 @@ snapshots:
     dependencies:
       keyborg: 2.14.1
       tslib: 2.8.1
+
+  tailwind-csstree@0.3.1(@eslint/css@1.1.0):
+    optionalDependencies:
+      '@eslint/css': 1.1.0
 
   tailwindcss@4.1.14: {}
 
