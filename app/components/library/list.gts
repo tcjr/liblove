@@ -35,7 +35,7 @@ export default class LibraryList extends Component<LibraryListSignature> {
 
   <template>
     <ul
-      class="flex flex-wrap gap-1 justify-center"
+      class="flex flex-wrap gap-1 justify-center content-start"
       ...attributes
       {{on "mouseleave" (fn this.highlightLibrary null)}}
     >
@@ -45,7 +45,7 @@ export default class LibraryList extends Component<LibraryListSignature> {
             type="button"
             {{on "click" (fn this.chooseLibrary lib)}}
             {{on "mouseenter" (fn this.highlightLibrary lib)}}
-            class="text-sm inline-block border border-primary px-2 rounded cursor-pointer
+            class="text-sm inline-block border border-base-content px-2 rounded cursor-pointer
               {{if
                 (this.isHighlighted lib)
                 'highlighted bg-secondary text-secondary-content'
