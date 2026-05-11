@@ -68,7 +68,6 @@ export default class CellMap extends Component<CellMapSignature> {
   };
 
   selectCell = (id: string) => {
-    console.log('[CellMap] select cell ', id);
     this.args.onSelect?.(id);
   };
 
@@ -77,12 +76,10 @@ export default class CellMap extends Component<CellMapSignature> {
   };
 
   highlightCell = (id: string) => {
-    console.log('[CellMap] highlight cell ', id);
     this.args.onHighlight?.(id);
   };
 
   unhighlight = () => {
-    console.log('[CellMap] unhighlight ');
     this.args.onHighlight?.(null);
   };
 

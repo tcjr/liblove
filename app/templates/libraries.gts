@@ -7,6 +7,9 @@ import { getRequestState, Request } from '@warp-drive/ember';
 import { getLibraries } from '#app/data/api';
 import LibraryList from '#app/components/library/list.gts';
 import LibraryMap from '#app/components/library/map.gts';
+import { ResponsiveImage } from '@responsive-image/ember';
+import { netlify } from '@responsive-image/cdn';
+import { concat } from '@ember/helper';
 
 /**
  * This page is a demonstration of integrating the primary building blocks:
@@ -22,13 +25,11 @@ export default class LibrariesComponent extends Component {
 
   @tracked selectedId?: string;
   selectLibrary = (id: string) => {
-    // console.log('selectLibrary', id);
     this.selectedId = id;
   };
 
   @tracked highlightedId: string | null = null;
   highlightLibrary = (id: string | null) => {
-    // console.log('highlightLibrary', id);
     this.highlightedId = id;
   };
 
@@ -91,13 +92,15 @@ export default class LibrariesComponent extends Component {
                 {{this.selectedLibrary.state}}
                 {{this.selectedLibrary.zip}}
               </address>
-              <img
-                class="w-full"
-                alt={{this.selectedLibrary.name}}
-                src="/images/{{this.selectedLibrary.img}}"
-              />
-              {{! eslint-disable-next-line ember/template-no-log }}
-              {{log "selected" (JSON.stringify this.selectedLibrary)}}
+              <div>
+                <ResponsiveImage
+                  alt={{this.selectedLibrary.name}}
+                  @src={{netlify
+                    (concat "/images/" this.selectedLibrary.img)
+                    aspectRatio=1.5
+                  }}
+                />
+              </div>
             {{/if}}
           </div>
 
@@ -106,11 +109,16 @@ export default class LibrariesComponent extends Component {
         <div>
           {{#if this.highlightedId}}
             <h3 class="font-bold text-2xl">{{this.highlightedLibrary.name}}</h3>
-            <img
-              class="w-48"
-              alt={{this.highlightedLibrary.name}}
-              src="/images/{{this.highlightedLibrary.img}}"
-            />
+            <div class="w-48">
+              <ResponsiveImage
+                alt={{this.highlightedLibrary.name}}
+                @src={{netlify
+                  (concat "/images/" this.highlightedLibrary.img)
+                  aspectRatio=1.5
+                  quality=5
+                }}
+              />
+            </div>
           {{/if}}
         </div>
 
