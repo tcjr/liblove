@@ -23,6 +23,7 @@ import vitest from '@vitest/eslint-plugin';
 import n from 'eslint-plugin-n';
 import babelParser from '@babel/eslint-parser/experimental-worker';
 import css from '@eslint/css';
+import { tailwind4 } from 'tailwind-csstree';
 
 const parserOptions = {
   esm: {
@@ -165,6 +166,19 @@ export default defineConfig([
     language: 'css/css',
     plugins: { css },
     extends: ['css/recommended'],
+    languageOptions: {
+      customSyntax: {
+        ...tailwind4,
+        atrules: {
+          plugin: {
+            prelude: '<string>',
+            descriptors: {
+              themes: '<any-value>',
+            },
+          },
+        },
+      },
+    },
     rules: {
       'no-irregular-whitespace': 'off',
       'css/use-baseline': ['error', { available: 'newly' }],

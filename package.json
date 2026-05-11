@@ -102,6 +102,7 @@
     "prettier-plugin-ember-template-tag": "^2.1.0",
     "reactiveweb": "^1.9.0",
     "simplify-js": "^1.2.4",
+    "tailwind-csstree": "^0.3.1",
     "tailwindcss": "^4.0.0",
     "tracked-built-ins": "^4.0.0",
     "typescript": "^5.9.3",

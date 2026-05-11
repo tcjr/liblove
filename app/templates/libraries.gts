@@ -22,13 +22,13 @@ export default class LibrariesComponent extends Component {
 
   @tracked selectedId?: string;
   selectLibrary = (id: string) => {
-    console.log('selectLibrary', id);
+    // console.log('selectLibrary', id);
     this.selectedId = id;
   };
 
   @tracked highlightedId: string | null = null;
   highlightLibrary = (id: string | null) => {
-    console.log('highlightLibrary', id);
+    // console.log('highlightLibrary', id);
     this.highlightedId = id;
   };
 
@@ -105,7 +105,7 @@ export default class LibrariesComponent extends Component {
 
         <div>
           {{#if this.highlightedId}}
-            <h3 class="font-bold text-3x">{{this.highlightedLibrary.name}}</h3>
+            <h3 class="font-bold text-2xl">{{this.highlightedLibrary.name}}</h3>
             <img
               class="w-48"
               alt={{this.highlightedLibrary.name}}
