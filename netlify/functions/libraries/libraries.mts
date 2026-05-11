@@ -1,6 +1,6 @@
 import { db } from '../../../db/index';
 import { libraries } from '../../../db/schema';
-import { asc } from 'drizzle-orm';
+import { asc, eq } from 'drizzle-orm';
 import type { Context, Config } from '@netlify/functions';
 
 export const config: Config = {
@@ -11,15 +11,12 @@ export default async (req: Request, context: Context) => {
   if (req.method === 'GET') {
     if (context.params) {
       const metroId = context.params.metroId;
-      // hard-code chicago until we update the db schema
-      if (metroId !== 'chicago') {
-        return new Response('Not found', { status: 404 });
-      }
 
       // get all libraries for metro
       const rows = await db
         .select()
         .from(libraries)
+        .where(eq(libraries.metro, metroId))
         .orderBy(asc(libraries.name));
 
       // Convert the response to JSON:API spec with type and attributes.
@@ -37,6 +34,7 @@ export default async (req: Request, context: Context) => {
           img: row.img,
           lat: row.lat,
           lon: row.lon,
+          metro: row.metro,
         },
       }));
 
