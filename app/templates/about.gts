@@ -15,7 +15,7 @@ export default class About extends Component {
 
       {{#if this.auth.isAuthenticated}}
         <div class="alert alert-success">
-          You are logged in.
+          You are logged in. ({{this.auth.authUser.email}})
         </div>
         <div>
           <button
@@ -31,7 +31,7 @@ export default class About extends Component {
           You are not logged in.
         </div>
         <div class="flex w-full">
-          <div>
+          <div class="flex flex-col">
             <button
               class="btn btn-sm"
               {{on
@@ -55,7 +55,7 @@ export default class About extends Component {
 
           </div>
           <div class="divider divider-horizontal">OR</div>
-          <div>
+          <div class="flex flex-col">
             <button
               class="btn btn-sm"
               {{on
