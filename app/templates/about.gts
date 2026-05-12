@@ -42,6 +42,17 @@ export default class About extends Component {
             >
               Login (fake user)
             </button>
+            <button
+              class="btn btn-sm"
+              {{on
+                "click"
+                (fn this.auth.login "fakeuser2@tcjr.org" "FAKEPASSWORD2")
+              }}
+              type="button"
+            >
+              Login (different fake user)
+            </button>
+
           </div>
           <div class="divider divider-horizontal">OR</div>
           <div>
@@ -56,6 +67,22 @@ export default class About extends Component {
               type="button"
             >
               Sign Up (fake user)
+            </button>
+
+            <button
+              class="btn btn-sm"
+              {{on
+                "click"
+                (fn
+                  this.auth.signup
+                  "fakeuser2@tcjr.org"
+                  "FAKEPASSWORD2"
+                  undefined
+                )
+              }}
+              type="button"
+            >
+              Sign Up (different fake user)
             </button>
 
           </div>

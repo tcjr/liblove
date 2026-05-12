@@ -9,6 +9,7 @@ export default async (req: Request, context: Context) => {
   console.log('user', JSON.stringify(user, null, 2));
 
   if (user.email === 'fakeuser@tcjr.org') {
+    console.log('DISALLOWING LOGIN FOR FAKE USER, returning a 403');
     return new Response(
       'This fake user is not allowed to log in. Sorry, pal.',
       { status: 403 },
