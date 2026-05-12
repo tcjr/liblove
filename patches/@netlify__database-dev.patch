@@ -1,0 +1,15 @@
+diff --git a/dist/main.js b/dist/main.js
+index ffb1f6fab7bff5081112657333ab03bc4d1a6123..bc8a063b61226a99f7289c3d36e4bd24ff57bb34 100644
+--- a/dist/main.js
++++ b/dist/main.js
+@@ -188,8 +188,8 @@ var NetlifyDB = class {
+       this.server.listen(this.port ?? 0, DEFAULT_HOST, () => {
+         this.server?.off("error", reject);
+         const { address, port } = this.server?.address();
+-        const host = address === "::1" || address === "127.0.0.1" ? "localhost" : address;
+-        resolve(`postgres://${host}:${String(port)}/postgres`);
++        const host = "localhost";
++        resolve(`postgres://postgres@${host}:${String(port)}/postgres`);
+       });
+     });
+   }
