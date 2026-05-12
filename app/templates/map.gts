@@ -83,6 +83,7 @@ export default class MapComponent extends Component {
               @visited={{this.visited}}
               @selected={{this.selectedId}}
               @onSelect={{this.selectLibrary}}
+              @highlighted={{this.highlightedId}}
               @onHighlight={{this.highlightLibrary}}
             />
           </div>

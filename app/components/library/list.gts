@@ -33,6 +33,18 @@ export default class LibraryList extends Component<LibraryListSignature> {
     return lib.id === this.args.highlightedId;
   };
 
+  buttonClasses = (lib: Library) => {
+    if (this.isSelected(lib) && this.isHighlighted(lib)) {
+      return 'bg-(--chicago-blue) text-white border-(--chicago-blue)';
+    } else if (this.isSelected(lib)) {
+      return 'bg-(--chicago-blue) text-white border-(--chicago-blue)';
+    } else if (this.isHighlighted(lib)) {
+      return 'bg-(--chicago-blue) text-white border-(--chicago-blue)';
+    } else {
+      return 'bg-white text-(--chicago-blue-darker) border-(--chicago-blue)';
+    }
+  };
+
   <template>
     <ul
       class="flex flex-wrap gap-1 justify-center content-start"
@@ -43,17 +55,10 @@ export default class LibraryList extends Component<LibraryListSignature> {
         <li data-library-id={{lib.id}}>
           <button
             type="button"
+            class="text-sm inline-block px-2 rounded cursor-pointer border border-2
+              {{this.buttonClasses lib}}"
             {{on "click" (fn this.chooseLibrary lib)}}
             {{on "mouseenter" (fn this.highlightLibrary lib)}}
-            class="text-sm inline-block border border-base-content px-2 rounded cursor-pointer
-              {{if
-                (this.isHighlighted lib)
-                'highlighted bg-secondary text-secondary-content'
-              }}
-              {{if
-                (this.isSelected lib)
-                'selected bg-accent text-accent-content'
-              }}"
           >
             {{lib.name}}
           </button>

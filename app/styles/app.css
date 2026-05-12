@@ -3,3 +3,10 @@
 @plugin "daisyui" {
   themes: nord --default;
 }
+
+:root {
+  --chicago-blue: oklch(0.7312 0.1233 229.5);
+  --chicago-red: oklch(0.5794 0.2343 23.93);
+  --chicago-blue-lighter: oklch(from var(--chicago-blue) calc(l + 0.05) c h);
+  --chicago-blue-darker: oklch(from var(--chicago-blue) calc(l - 0.25) c h);
+}

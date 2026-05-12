@@ -122,7 +122,7 @@ export default class CellMap extends Component<CellMapSignature> {
               pointer-events-none fill-current stroke-current"
             cx={{cell.markerX}}
             cy={{cell.markerY}}
-            r="3"
+            r="2"
           />
         {{/each}}
       </g>
