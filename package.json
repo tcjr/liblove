@@ -41,7 +41,7 @@
     "@responsive-image/cdn": "^2.0.0",
     "@responsive-image/ember": "^3.0.0",
     "decorator-transforms": "^2.3.0",
-    "drizzle-orm": "1.0.0-beta.22",
+    "drizzle-orm": "1.0.0-rc.2",
     "ember-modifier": "^4.3.0",
     "ember-source": "~6.12.0",
     "ember-strict-application-resolver": "^0.1.1"
@@ -99,6 +99,7 @@
     "eslint-plugin-ember": "^13.2.0",
     "eslint-plugin-n": "^17.21.3",
     "globals": "^16.3.0",
+    "netlify-cli": "26.0.1",
     "playwright": "^1.59.1",
     "polygon-clipping": "^0.15.7",
     "prettier": "^3.6.2",

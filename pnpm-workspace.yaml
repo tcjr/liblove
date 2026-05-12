@@ -1,3 +1,11 @@
+allowBuilds:
+  '@parcel/watcher': true
+  '@tailwindcss/oxide': true
+  core-js: true
+  esbuild: true
+  netlify-cli: true
+  sharp: true
+  unix-dgram: true
 onlyBuiltDependencies:
   - '@tailwindcss/oxide'
   - core-js
