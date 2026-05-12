@@ -16,5 +16,6 @@ export default async (req: Request, context: Context) => {
     );
   }
 
-  return new Response('OK', { status: 200 });
+  console.log('ALLOWING LOGIN FOR USER, returning JSON with a 200');
+  return Response.json({});
 };
