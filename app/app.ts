@@ -8,6 +8,7 @@ export default class App extends Application {
     ...import.meta.glob('./router.*', { eager: true }),
     ...import.meta.glob('./templates/**/*', { eager: true }),
     ...import.meta.glob('./services/**/*', { eager: true }),
+    ...import.meta.glob('./routes/**/*', { eager: true }),
     './services/page-title': PageTitleService,
   };
 }

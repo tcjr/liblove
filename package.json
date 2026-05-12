@@ -37,6 +37,7 @@
     "@embroider/router": "^3.0.6",
     "@netlify/database": "^1.0.0",
     "@netlify/functions": "^4.2.7",
+    "@netlify/identity": "^1.1.0",
     "@responsive-image/cdn": "^2.0.0",
     "@responsive-image/ember": "^3.0.0",
     "decorator-transforms": "^2.3.0",

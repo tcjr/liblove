@@ -1,14 +1,30 @@
 import { LinkTo } from '@ember/routing';
 import { pageTitle } from 'ember-page-title';
+import Component from '@glimmer/component';
+import type AuthService from '#app/services/auth.ts';
+import { service } from '@ember/service';
 
-<template>
-  {{pageTitle "Lib Love"}}
+export default class ApplicationComponent extends Component {
+  @service declare auth: AuthService;
 
-  <nav>
-    <LinkTo @route="index">Home</LinkTo>
-    |
-    <LinkTo @route="libraries">Libraries</LinkTo>
-  </nav>
+  <template>
+    {{pageTitle "Lib Love"}}
 
-  {{outlet}}
-</template>
+    <nav class="flex flex-row gap-2 items-center">
+      <LinkTo
+        @route="about"
+        aria-label="status"
+        class="status status-xl
+          {{if this.auth.isAuthenticated 'status-success' 'status-warning'}}"
+      />
+
+      <div>
+        <LinkTo @route="index">Home</LinkTo>
+        |
+        <LinkTo @route="libraries">Libraries</LinkTo>
+      </div>
+    </nav>
+
+    {{outlet}}
+  </template>
+}
