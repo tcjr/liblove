@@ -23,6 +23,12 @@ export default defineConfig({
       'ember-source/@ember/routing/index.js',
       '@warp-drive/core/reactive',
       '@warp-drive/core/request',
+      'ember-source/@ember/reactive/collections.js',
+      'ember-source/@glimmer/tracking/index.js',
+      '@responsive-image/ember',
+      '@responsive-image/cdn',
+      '@netlify/identity',
+      'ember-source/@ember/routing/route.js',
     ],
   },
   test: {

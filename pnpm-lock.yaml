@@ -20,6 +20,9 @@ importers:
       '@netlify/functions':
         specifier: ^4.2.7
         version: 4.2.7(rollup@4.52.4)
+      '@netlify/identity':
+        specifier: ^1.1.0
+        version: 1.1.0
       '@responsive-image/cdn':
         specifier: ^2.0.0
         version: 2.0.0
@@ -1667,6 +1670,10 @@ packages:
   '@netlify/functions@4.2.7':
     resolution: {integrity: sha512-TN2sijuyrEejhLfataxAKSFjFi8ZC0IMqrubg3Rz3ROBBwk54vdLwxibHxnKexou75MXsrpCotsEzm/V0xZwBA==}
     engines: {node: '>=18.0.0'}
+
+  '@netlify/identity@1.1.0':
+    resolution: {integrity: sha512-sZdw2a6kVlJcBHJSNcaOs1C++DSWQGnZhOkLHlrpf1gEoC494CE/IYPv8/BXp3JUltf/sI21HCiu5lSgm4Ycow==}
+    engines: {node: '>=22'}
 
   '@netlify/runtime-utils@2.1.0':
     resolution: {integrity: sha512-z1h+wjB7IVYUsFZsuIYyNxiw5WWuylseY+eXaUDHBxNeLTlqziy+lz03QkR67CUR4Y790xGIhaHV00aOR2KAtw==}
@@ -4797,6 +4804,9 @@ packages:
   gopd@1.2.0:
     resolution: {integrity: sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg==}
     engines: {node: '>= 0.4'}
+
+  gotrue-js@1.0.1:
+    resolution: {integrity: sha512-ZynwwM4bEo2y5yNWO3/Ynbx1AvQz9ONJSM9tB1jpooAvDPevGdvgeFP3NwM59FAlkd0szSkQRAhjINMkJSDfAQ==}
 
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
@@ -9615,6 +9625,10 @@ snapshots:
       - rollup
       - supports-color
 
+  '@netlify/identity@1.1.0':
+    dependencies:
+      gotrue-js: 1.0.1
+
   '@netlify/runtime-utils@2.1.0': {}
 
   '@netlify/runtime-utils@2.3.0': {}
@@ -13410,6 +13424,8 @@ snapshots:
       minimist: 1.2.8
 
   gopd@1.2.0: {}
+
+  gotrue-js@1.0.1: {}
 
   graceful-fs@4.2.11: {}
 
