@@ -55,7 +55,7 @@ export default class LibraryList extends Component<LibraryListSignature> {
         <li data-library-id={{lib.id}}>
           <button
             type="button"
-            class="text-sm inline-block px-2 rounded cursor-pointer border border-2
+            class="text-sm inline-block px-2 rounded cursor-pointer border-2
               {{this.buttonClasses lib}}"
             {{on "click" (fn this.chooseLibrary lib)}}
             {{on "mouseenter" (fn this.highlightLibrary lib)}}

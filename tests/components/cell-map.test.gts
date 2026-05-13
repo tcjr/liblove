@@ -35,6 +35,6 @@ describe('CellMap', () => {
     const circle = svg.querySelectorAll('circle')[0]!;
     expect(circle.getAttribute('cx')).toBe('50');
     expect(circle.getAttribute('cy')).toBe('50');
-    expect(circle.getAttribute('r')).toBe('3');
+    expect(circle.getAttribute('r')).toBe('2');
   });
 });
