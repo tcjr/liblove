@@ -59,17 +59,16 @@ export default class LibraryTabber extends Component<LibraryTabberSignature> {
 
       while (libs.length > 0) {
         let nearestIdx = 0;
-        let minDistance = Infinity;
+        let minDistanceSq = Infinity;
 
         for (let i = 0; i < libs.length; i++) {
           const lib = libs[i];
           if (!lib) continue;
-          const distance = Math.sqrt(
+          const distanceSq =
             Math.pow(lib.lat - current.lat, 2) +
-              Math.pow(lib.lon - current.lon, 2)
-          );
-          if (distance < minDistance) {
-            minDistance = distance;
+            Math.pow(lib.lon - current.lon, 2);
+          if (distanceSq < minDistanceSq) {
+            minDistanceSq = distanceSq;
             nearestIdx = i;
           }
         }
@@ -140,9 +139,10 @@ export default class LibraryTabber extends Component<LibraryTabberSignature> {
     if (!this.args.selectedId) {
       return 0;
     }
-    return this.sortedLibraries.findIndex(
+    const index = this.sortedLibraries.findIndex(
       (lib) => lib.id === this.args.selectedId
     );
+    return index === -1 ? 0 : index;
   }
 
   /**
