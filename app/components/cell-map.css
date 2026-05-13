@@ -2,46 +2,45 @@
 /* The daisy color variables are not known here, so turning off that rule */
 .cell-map {
   .voronoi-cell {
-    stroke: var(--color-base-100);
-    fill: var(--color-base-300);
+    stroke: var(--chicago-blue-lighter);
+    fill: #ffffff;
 
     &.visited {
-      fill: var(--color-primary);
+      stroke: var(--chicago-blue);
+      fill: var(--chicago-blue);
     }
 
     &.visited.highlighted {
-      fill: color-mix(
-        in oklch,
-        var(--color-primary) 50%,
-        var(--color-secondary) 50%
-      );
+      stroke: var(--chicago-blue);
+      fill: var(--chicago-blue-lighter);
     }
 
     &.selected {
-      fill: var(--color-accent);
+      fill: var(--chicago-blue);
     }
 
     &.highlighted {
-      fill: var(--color-secondary);
+      fill: var(--chicago-blue-lighter);
     }
   }
 
   .item-marker {
-    fill: currentColor;
+    fill: var(--chicago-red);
+    stroke: var(--chicago-red);
 
     &.visited {
-      fill: var(--color-primary-content);
-      stroke: var(--color-primary-content);
+      fill: #ffffff;
+      stroke: #ffffff;
     }
 
     &.selected {
-      fill: var(--color-accent-content);
-      stroke: var(--color-accent-content);
+      fill: #ffffff;
+      stroke: #ffffff;
     }
   }
 
   .city-outline {
     fill: none;
-    stroke: currentColor;
+    stroke: var(--chicago-blue);
   }
 }
