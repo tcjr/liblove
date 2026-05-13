@@ -9,8 +9,15 @@ export interface LibraryTabberSignature {
     libraries: Library[];
     /** The ID of the currently selected library. */
     selectedId?: string;
-    /** Configures the paging order of the libraries. */
-    sort?: 'name' | 'geo';
+    /**
+     * Configures the paging order of the libraries.
+     * - `name`: Alphabetical by name.
+     * - `geo`: Geographic proximity (nearest neighbor, starting top-left).
+     * - `lat`: Latitude, north to south.
+     * - `lon`: Longitude, west to east.
+     * - undefined: No sorting; original array order is preserved.
+     */
+    sort?: 'name' | 'geo' | 'lat' | 'lon';
     /** Callback triggered when a new library is selected via the Next/Prev buttons. */
     onSelect?: (id: string) => void;
   };
@@ -33,6 +40,14 @@ export default class LibraryTabber extends Component<LibraryTabberSignature> {
 
     if (sort === 'name') {
       return [...libraries].sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    if (sort === 'lat') {
+      return [...libraries].sort((a, b) => b.lat - a.lat);
+    }
+
+    if (sort === 'lon') {
+      return [...libraries].sort((a, b) => a.lon - b.lon);
     }
 
     if (sort === 'geo') {
