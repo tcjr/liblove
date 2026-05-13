@@ -9,6 +9,8 @@ export interface LibraryTabberSignature {
     libraries: Library[];
     /** The ID of the currently selected library. */
     selectedId?: string;
+    /** Configures the paging order of the libraries. */
+    sort?: 'name' | 'geo';
     /** Callback triggered when a new library is selected via the Next/Prev buttons. */
     onSelect?: (id: string) => void;
   };
@@ -22,6 +24,66 @@ export interface LibraryTabberSignature {
  * the start or end of the list.
  */
 export default class LibraryTabber extends Component<LibraryTabberSignature> {
+  @cached
+  get sortedLibraries() {
+    const { libraries, sort } = this.args;
+    if (!libraries || libraries.length === 0) {
+      return [];
+    }
+
+    if (sort === 'name') {
+      return [...libraries].sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    if (sort === 'geo') {
+      const libs = [...libraries];
+      let startIdx = 0;
+      let maxTopLeft = -Infinity;
+
+      // Find top-left-most library (maximize lat - lon)
+      // Note: Typically in US, lon is negative. Max lat is north, min lon is west.
+      // So maximize latitude - longitude
+      for (let i = 0; i < libs.length; i++) {
+        const lib = libs[i];
+        if (!lib) continue;
+        const val = lib.lat - lib.lon;
+        if (val > maxTopLeft) {
+          maxTopLeft = val;
+          startIdx = i;
+        }
+      }
+
+      const sorted: Library[] = [];
+      let current = libs.splice(startIdx, 1)[0] as Library;
+      sorted.push(current);
+
+      while (libs.length > 0) {
+        let nearestIdx = 0;
+        let minDistance = Infinity;
+
+        for (let i = 0; i < libs.length; i++) {
+          const lib = libs[i];
+          if (!lib) continue;
+          const distance = Math.sqrt(
+            Math.pow(lib.lat - current.lat, 2) +
+              Math.pow(lib.lon - current.lon, 2)
+          );
+          if (distance < minDistance) {
+            minDistance = distance;
+            nearestIdx = i;
+          }
+        }
+
+        current = libs.splice(nearestIdx, 1)[0] as Library;
+        sorted.push(current);
+      }
+
+      return sorted;
+    }
+
+    return libraries;
+  }
+
   /** Checks if a given library is currently selected. */
   isSelected = (lib: Library) => {
     return lib.id === this.args.selectedId;
@@ -39,12 +101,12 @@ export default class LibraryTabber extends Component<LibraryTabberSignature> {
     const currentIndex = this.selectedIndex;
     let newIndex = 0;
     if (currentIndex === 0) {
-      newIndex = this.args.libraries.length - 1;
+      newIndex = this.sortedLibraries.length - 1;
     } else {
       newIndex = currentIndex - 1;
     }
 
-    const newLibrary = this.args.libraries[newIndex] as Library;
+    const newLibrary = this.sortedLibraries[newIndex] as Library;
     this.args.onSelect(newLibrary.id);
   };
 
@@ -59,13 +121,13 @@ export default class LibraryTabber extends Component<LibraryTabberSignature> {
 
     const currentIndex = this.selectedIndex;
     let newIndex = 0;
-    if (currentIndex === this.args.libraries.length - 1) {
+    if (currentIndex === this.sortedLibraries.length - 1) {
       newIndex = 0;
     } else {
       newIndex = currentIndex + 1;
     }
 
-    const newLibrary = this.args.libraries[newIndex] as Library;
+    const newLibrary = this.sortedLibraries[newIndex] as Library;
     this.args.onSelect(newLibrary.id);
   };
 
@@ -78,7 +140,7 @@ export default class LibraryTabber extends Component<LibraryTabberSignature> {
     if (!this.args.selectedId) {
       return 0;
     }
-    return this.args.libraries.findIndex(
+    return this.sortedLibraries.findIndex(
       (lib) => lib.id === this.args.selectedId
     );
   }
@@ -94,7 +156,7 @@ export default class LibraryTabber extends Component<LibraryTabberSignature> {
     }
 
     // return this.args.libraries.find((lib) => this.args.selectedId === lib.id);
-    return this.args.libraries[this.selectedIndex];
+    return this.sortedLibraries[this.selectedIndex];
   }
 
   <template>
