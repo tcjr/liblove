@@ -10,6 +10,7 @@ import LibraryMap from '#app/components/library/map.gts';
 import { ResponsiveImage } from '@responsive-image/ember';
 import { netlify } from '@responsive-image/cdn';
 import { concat } from '@ember/helper';
+import LibraryTabber from '#app/components/library/tabber.gts';
 
 /**
  * This page is a demonstration of integrating the primary building blocks:
@@ -71,14 +72,22 @@ export default class LibrariesComponent extends Component {
             class="text-center w-1/3"
           />
 
-          <LibraryMap
-            @metroId="chicago"
-            @selectedId={{this.selectedId}}
-            @onSelect={{this.selectLibrary}}
-            @highlightedId={{this.highlightedId}}
-            @onHighlight={{this.highlightLibrary}}
-            class="w-1/3"
-          />
+          <div class="w-1/3">
+            <LibraryTabber
+              @libraries={{response.data}}
+              @selectedId={{this.selectedId}}
+              @onSelect={{this.selectLibrary}}
+            />
+            <hr />
+            <LibraryMap
+              @metroId="chicago"
+              @selectedId={{this.selectedId}}
+              @onSelect={{this.selectLibrary}}
+              @highlightedId={{this.highlightedId}}
+              @onHighlight={{this.highlightLibrary}}
+              class="w-full"
+            />
+          </div>
 
           <div class="w-1/3 flex-1">
             {{#if this.selectedLibrary}}
