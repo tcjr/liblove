@@ -77,7 +77,7 @@ export default class LibrariesComponent extends Component {
               @libraries={{response.data}}
               @selectedId={{this.selectedId}}
               @onSelect={{this.selectLibrary}}
-              @sort="lat"
+              @sort="name"
             />
             <hr />
             <LibraryMap

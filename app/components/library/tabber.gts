@@ -2,6 +2,7 @@ import type { Library } from '#app/data/library.ts';
 import { on } from '@ember/modifier';
 import Component from '@glimmer/component';
 import { cached } from '@glimmer/tracking';
+import './tabber.css';
 
 export interface LibraryTabberSignature {
   Args: {
@@ -121,7 +122,19 @@ export default class LibraryTabber extends Component<LibraryTabberSignature> {
     }
 
     const newLibrary = this.sortedLibraries[newIndex] as Library;
-    this.args.onSelect(newLibrary.id);
+    const onSelect = this.args.onSelect;
+
+    if (document.startViewTransition) {
+      document.documentElement.classList.add('transition-prev');
+      const transition = document.startViewTransition(() => {
+        onSelect(newLibrary.id);
+      });
+      transition.finished.finally(() => {
+        document.documentElement.classList.remove('transition-prev');
+      });
+    } else {
+      onSelect(newLibrary.id);
+    }
   };
 
   /** Selects the next library in the list, wrapping to the start if necessary. */
@@ -142,7 +155,15 @@ export default class LibraryTabber extends Component<LibraryTabberSignature> {
     }
 
     const newLibrary = this.sortedLibraries[newIndex] as Library;
-    this.args.onSelect(newLibrary.id);
+    const onSelect = this.args.onSelect;
+
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        onSelect(newLibrary.id);
+      });
+    } else {
+      onSelect(newLibrary.id);
+    }
   };
 
   /**
@@ -177,15 +198,18 @@ export default class LibraryTabber extends Component<LibraryTabberSignature> {
   <template>
     <div class="flex flex-row justify-between" ...attributes>
       <button type="button" {{on "click" this.choosePrev}} class="btn">
-        PREV
+        &larr;
       </button>
       {{#let this.selectedLibrary as |lib|}}
-        <div data-library-id={{lib.id}} class="text-center text-balance">
+        <div
+          data-library-id={{lib.id}}
+          class="flex-1 self-center px-4 text-center text-balance library-name-transition"
+        >
           {{lib.name}}
         </div>
       {{/let}}
       <button type="button" {{on "click" this.chooseNext}} class="btn">
-        NEXT
+        &rarr;
       </button>
     </div>
   </template>
