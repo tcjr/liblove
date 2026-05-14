@@ -11,4 +11,5 @@ Router.map(function () {
   this.route('libraries');
   this.route('map');
   this.route('about');
+  this.route('my-visits');
 });

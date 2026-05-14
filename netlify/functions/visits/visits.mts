@@ -87,9 +87,25 @@ export default async (req: Request, context: Context) => {
           type: 'visit',
           id: String(v.id),
           attributes: {
-            libraryId: v.libraryId,
             visitedAt: v.visitedAt,
           },
+          relationships: {
+            library: {
+              links: {
+                related: `/api/libraries/${v.libraryId}`,
+              },
+              data: {
+                type: 'library',
+                id: String(v.libraryId),
+              },
+            },
+          },
+        })),
+        included: userVisits.map((v) => ({
+          type: 'library',
+          id: String(v.libraryId),
+          // NOTE: we could add attributes here, but we don't need to since
+          // we only care about the ids. This causes a warning in the console.
         })),
       }),
       {
@@ -99,109 +115,18 @@ export default async (req: Request, context: Context) => {
   }
 
   if (req.method === 'POST') {
-    let payload: VisitPayload | undefined;
-    try {
-      payload = (await req.json()) as VisitPayload;
-    } catch {
-      return new Response(
-        JSON.stringify({
-          errors: [
-            {
-              status: '400',
-              title: 'Bad Request',
-              detail: 'Invalid JSON payload',
-            },
-          ],
-        }),
-        {
-          status: 400,
-          headers: { 'Content-Type': 'application/vnd.api+json' },
-        },
-      );
-    }
-
-    const libraryId = payload?.data?.attributes?.libraryId;
-
-    if (!libraryId) {
-      return new Response(
-        JSON.stringify({
-          errors: [
-            {
-              status: '400',
-              title: 'Bad Request',
-              detail: 'Missing libraryId in attributes',
-            },
-          ],
-        }),
-        {
-          status: 400,
-          headers: { 'Content-Type': 'application/vnd.api+json' },
-        },
-      );
-    }
-
-    try {
-      // Upsert pattern using onConflictDoNothing + fetch
-      let [visit] = await db
-        .insert(visits)
-        .values({
-          userId,
-          libraryId: parseInt(libraryId, 10),
-        })
-        .onConflictDoNothing()
-        .returning();
-
-      if (!visit) {
-        [visit] = await db
-          .select()
-          .from(visits)
-          .where(
-            and(
-              eq(visits.userId, userId),
-              eq(visits.libraryId, parseInt(libraryId, 10)),
-            ),
-          )
-          .limit(1);
-      }
-
-      if (!visit) {
-        throw new Error('Failed to retrieve or create visit');
-      }
-
-      return new Response(
-        JSON.stringify({
-          data: {
-            type: 'visit',
-            id: String(visit.id),
-            attributes: {
-              libraryId: visit.libraryId,
-              visitedAt: visit.visitedAt,
-            },
+    // The JSONAPI format is in flux, so wait to implment this
+    return new Response(
+      JSON.stringify({
+        errors: [
+          {
+            status: '400',
+            title: 'Not Implemented',
+            detail: 'POST is not implemented yet',
           },
-        }),
-        {
-          status: 201,
-          headers: { 'Content-Type': 'application/vnd.api+json' },
-        },
-      );
-    } catch (error) {
-      console.error('[visits] Error recording visit:', error);
-      return new Response(
-        JSON.stringify({
-          errors: [
-            {
-              status: '500',
-              title: 'Internal Server Error',
-              detail: 'Failed to record visit',
-            },
-          ],
-        }),
-        {
-          status: 500,
-          headers: { 'Content-Type': 'application/vnd.api+json' },
-        },
-      );
-    }
+        ],
+      }),
+    );
   }
 
   if (req.method === 'DELETE') {

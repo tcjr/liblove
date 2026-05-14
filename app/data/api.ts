@@ -1,6 +1,7 @@
 import { withResponseType } from '@warp-drive/core/request';
 import type { Library } from '#app/data/library';
 import type { MetroLibraryMap } from '#app/data/metro-library-map';
+import type { Visit } from '#app/data/visit';
 import type { ReactiveDataDocument } from '@warp-drive/core/reactive';
 
 /** Builds a request to fetch all libraries. */
@@ -14,6 +15,14 @@ export function getLibraries(metroId: string) {
 export function getMetroLibraryMap(metroId: string) {
   return withResponseType<ReactiveDataDocument<MetroLibraryMap>>({
     url: `/api/maps/${metroId}`,
+    method: 'GET',
+  });
+}
+
+/** Builds a request to fetch all the visits for the current user. */
+export function getVisits() {
+  return withResponseType<ReactiveDataDocument<Visit[]>>({
+    url: '/api/visits',
     method: 'GET',
   });
 }
