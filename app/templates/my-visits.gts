@@ -5,7 +5,6 @@ import Component from '@glimmer/component';
 import type Store from '#app/services/store.ts';
 import { getRequestState, Request } from '@warp-drive/ember';
 import { getLibraries } from '#app/data/api';
-import LibraryList from '#app/components/library/list.gts';
 import LibraryMap from '#app/components/library/map.gts';
 import { ResponsiveImage } from '@responsive-image/ember';
 import { netlify } from '@responsive-image/cdn';
