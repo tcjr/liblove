@@ -39,15 +39,7 @@ const parserOptions = {
 };
 
 export default defineConfig([
-  globalIgnores([
-    'dist/',
-    'coverage/',
-    '.netlify/*',
-    '!**/.*',
-    // I don't really want to ignore these, but don't know how to get them to work:
-    'db/',
-    'drizzle.config.ts',
-  ]),
+  globalIgnores(['dist/', 'coverage/', '.netlify/*', '!**/.*']),
   js.configs.recommended,
   ember.configs.base,
   ember.configs.gjs,
@@ -77,7 +69,7 @@ export default defineConfig([
     },
   },
   {
-    files: ['**/*.{ts,gts}'],
+    files: ['app/**/*.{ts,gts}', 'tests/**/*.{ts,gts}', 'types/**/*.ts'],
     languageOptions: {
       parser: ember.parser,
       parserOptions: parserOptions.esm.ts,
@@ -89,6 +81,22 @@ export default defineConfig([
     rules: {
       'ember/no-empty-glimmer-component-classes': 'off',
     },
+  },
+  {
+    files: [
+      'netlify/functions/**/*.{ts,mts}',
+      'db/**/*.{ts,mts}',
+      'scripts/**/*.{ts,mts}',
+      'drizzle.config.ts',
+    ],
+    languageOptions: {
+      parser: ts.parser,
+      parserOptions: parserOptions.esm.ts,
+      globals: {
+        ...globals.node,
+      },
+    },
+    extends: [...ts.configs.recommendedTypeChecked],
   },
 
   // GJS/GTS template part

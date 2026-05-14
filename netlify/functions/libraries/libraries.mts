@@ -12,6 +12,10 @@ export default async (req: Request, context: Context) => {
     if (context.params) {
       const metroId = context.params.metroId;
 
+      if (!metroId) {
+        return new Response('Not found', { status: 404 });
+      }
+
       // get all libraries for metro
       const rows = await db
         .select()
