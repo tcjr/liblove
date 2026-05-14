@@ -1,0 +1,72 @@
+/* View Transitions for Library Tabber */
+.library-name-transition {
+  view-transition-name: library-name;
+}
+
+::view-transition-group(library-name) {
+  overflow: hidden;
+}
+
+::view-transition-old(library-name),
+::view-transition-new(library-name) {
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Default (Next) - Old slides left, New slides from right */
+::view-transition-old(library-name) {
+  animation-name: slide-out-left;
+}
+::view-transition-new(library-name) {
+  animation-name: slide-in-right;
+}
+
+/* Prev - Old slides right, New slides from left */
+html.transition-prev::view-transition-old(library-name) {
+  animation-name: slide-out-right;
+}
+html.transition-prev::view-transition-new(library-name) {
+  animation-name: slide-in-left;
+}
+
+@keyframes slide-out-left {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slide-out-right {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+@keyframes slide-in-left {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
