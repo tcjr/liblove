@@ -122,6 +122,10 @@ export default class LibraryTabber extends Component<LibraryTabberSignature> {
     }
 
     const newLibrary = this.sortedLibraries[newIndex] as Library;
+    if (!newLibrary) {
+      return;
+    }
+
     const onSelect = this.args.onSelect;
 
     if (document.startViewTransition) {
@@ -129,7 +133,7 @@ export default class LibraryTabber extends Component<LibraryTabberSignature> {
       const transition = document.startViewTransition(() => {
         onSelect(newLibrary.id);
       });
-      transition.finished.finally(() => {
+      void transition.finished.finally(() => {
         document.documentElement.classList.remove('transition-prev');
       });
     } else {
@@ -155,6 +159,10 @@ export default class LibraryTabber extends Component<LibraryTabberSignature> {
     }
 
     const newLibrary = this.sortedLibraries[newIndex] as Library;
+    if (!newLibrary) {
+      return;
+    }
+
     const onSelect = this.args.onSelect;
 
     if (document.startViewTransition) {
@@ -186,8 +194,8 @@ export default class LibraryTabber extends Component<LibraryTabberSignature> {
    * Returns null if no library is selected.
    */
   get selectedLibrary() {
-    // Don't consider the index if there is no library selected
-    if (!this.args.selectedId) {
+    // Don't consider the index if there is no library selected or no libraries.
+    if (!this.args.selectedId || !this.args.libraries) {
       return null;
     }
 
