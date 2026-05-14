@@ -8,13 +8,13 @@ export const config: Config = {
   path: ['/api/visits', '/api/visits/:id'],
 };
 
-interface VisitPayload {
-  data?: {
-    attributes?: {
-      libraryId?: string;
-    };
-  };
-}
+// interface VisitPayload {
+//   data?: {
+//     attributes?: {
+//       libraryId?: string;
+//     };
+//   };
+// }
 
 export default async (req: Request, context: Context) => {
   const netlifyUser = await getUser();

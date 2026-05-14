@@ -1,7 +1,7 @@
 import { getLibraries, getVisits } from '#app/data/api.ts';
 import type AuthService from '#app/services/auth.ts';
 import type Store from '#app/services/store.ts';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { cached } from '@glimmer/tracking';
 import { getRequestState, Request } from '@warp-drive/ember';
