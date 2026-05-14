@@ -1,6 +1,6 @@
 {
   "extends": "@ember/app-tsconfig",
-  "include": ["app", "tests", "types"],
+  "include": ["app", "tests", "types", "netlify/functions", "db", "scripts", "drizzle.config.ts"],
   "compilerOptions": {
     "lib": ["ESNext", "DOM"],
     "target": "ESNext",

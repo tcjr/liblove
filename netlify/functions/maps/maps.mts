@@ -5,7 +5,7 @@ export const config: Config = {
   path: '/api/maps/:metroId',
 };
 
-export default async (req: Request, context: Context) => {
+export default (req: Request, context: Context) => {
   if (req.method === 'GET') {
     if (context.params) {
       // GET /api/maps/abc
