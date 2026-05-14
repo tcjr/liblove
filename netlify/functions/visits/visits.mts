@@ -106,6 +106,7 @@ export default async (req: Request, context: Context) => {
           id: String(v.libraryId),
           // NOTE: we could add attributes here, but we don't need to since
           // we only care about the ids. This causes a warning in the console.
+          attributes: {},
         })),
       }),
       {

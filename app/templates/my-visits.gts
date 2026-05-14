@@ -1,4 +1,4 @@
-import { getVisits } from '#app/data/api.ts';
+import { getLibraries, getVisits } from '#app/data/api.ts';
 import type AuthService from '#app/services/auth.ts';
 import type Store from '#app/services/store.ts';
 import Component from '@ember/component';
@@ -6,13 +6,24 @@ import { service } from '@ember/service';
 import { cached } from '@glimmer/tracking';
 import { getRequestState, Request } from '@warp-drive/ember';
 
+const METRO = 'chicago';
+
 export default class MyVisitsComponent extends Component {
   @service declare store: Store;
   @service declare auth: AuthService;
 
   @cached
+  get librariesRequest() {
+    return this.store.request(getLibraries(METRO));
+  }
+
+  @cached
   get visitsRequest() {
     return this.store.request(getVisits());
+  }
+
+  get libraries() {
+    return getRequestState(this.librariesRequest).value?.data || [];
   }
 
   get visitIds() {
@@ -23,8 +34,16 @@ export default class MyVisitsComponent extends Component {
     return visits.map((visit) => visit.id);
   }
 
+  get percentageVisited() {
+    return ((this.visitIds.length / this.libraries.length) * 100).toFixed(1);
+  }
+
   <template>
     Hello.
+    {{#if this.libraries}}
+      ({{this.libraries.length}}
+      libraries loaded)
+    {{/if}}
     {{#if this.auth.isAuthenticated}}
       <p>
         Ok, logged in.
@@ -34,10 +53,28 @@ export default class MyVisitsComponent extends Component {
         <pre>{{JSON.stringify this.visitIds}}</pre>
       </p>
       <hr />
+      <div class="stats shadow">
+        <div class="stat">
+          <div class="stat-title">Library Visits</div>
+          <div class="stat-value">
+            {{this.visitIds.length}}
+            /
+            {{this.libraries.length}}
+          </div>
+          <div class="stat-desc">{{this.percentageVisited}}% visited</div>
+        </div>
+      </div>
+      <hr />
       <div>
         <Request @request={{this.visitsRequest}}>
           <:content as |response|>
-            <pre>{{JSON.stringify response null 2}}</pre>
+            {{!-- <pre>{{JSON.stringify response null 2}}</pre> --}}
+            {{#each response.data as |visit|}}
+              <div>
+                {{visit.library.id}}:
+                {{visit.library.name}}
+              </div>
+            {{/each}}
           </:content>
           <:loading>
             <p>Loading visits...</p>

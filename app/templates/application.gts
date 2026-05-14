@@ -22,6 +22,8 @@ export default class ApplicationComponent extends Component {
         <LinkTo @route="index">Home</LinkTo>
         |
         <LinkTo @route="libraries">Libraries</LinkTo>
+        |
+        <LinkTo @route="my-visits">My Visits</LinkTo>
       </div>
     </nav>
 
