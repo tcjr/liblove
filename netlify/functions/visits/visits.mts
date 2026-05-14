@@ -19,6 +19,8 @@ interface VisitPayload {
 export default async (req: Request, context: Context) => {
   const netlifyUser = await getUser();
 
+  console.log('in visits function, netlifyUser is', netlifyUser);
+
   if (!netlifyUser) {
     return new Response(
       JSON.stringify({
@@ -44,7 +46,12 @@ export default async (req: Request, context: Context) => {
     .where(eq(users.netlifyId, netlifyUser.id))
     .limit(1);
 
+  console.log('in visits function, userRecord is', userRecord);
+
   if (!userRecord) {
+    console.log(
+      'in visits function, there is no user record for this netlifyUser, so returning 404',
+    );
     return new Response(
       JSON.stringify({
         errors: [
@@ -61,6 +68,10 @@ export default async (req: Request, context: Context) => {
       },
     );
   }
+
+  console.log(
+    'in visits function, we passed all the pre-checks, now on to the actual query',
+  );
 
   const userId = userRecord.id;
 
