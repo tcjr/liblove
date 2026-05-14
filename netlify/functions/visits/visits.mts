@@ -8,6 +8,14 @@ export const config: Config = {
   path: ['/api/visits', '/api/visits/:id'],
 };
 
+interface VisitPayload {
+  data?: {
+    attributes?: {
+      libraryId?: string;
+    };
+  };
+}
+
 export default async (req: Request, context: Context) => {
   const netlifyUser = await getUser();
 
@@ -30,9 +38,11 @@ export default async (req: Request, context: Context) => {
   }
 
   // Get the internal user record
-  const userRecord = await db.query.users.findFirst({
-    where: eq(users.netlifyId, netlifyUser.id),
-  });
+  const [userRecord] = await db
+    .select()
+    .from(users)
+    .where(eq(users.netlifyId, netlifyUser.id))
+    .limit(1);
 
   if (!userRecord) {
     return new Response(
@@ -55,9 +65,10 @@ export default async (req: Request, context: Context) => {
   const userId = userRecord.id;
 
   if (req.method === 'GET') {
-    const userVisits = await db.query.visits.findMany({
-      where: eq(visits.userId, userId),
-    });
+    const userVisits = await db
+      .select()
+      .from(visits)
+      .where(eq(visits.userId, userId));
 
     return new Response(
       JSON.stringify({
@@ -77,10 +88,10 @@ export default async (req: Request, context: Context) => {
   }
 
   if (req.method === 'POST') {
-    let payload;
+    let payload: VisitPayload | undefined;
     try {
-      payload = await req.json();
-    } catch (e) {
+      payload = (await req.json()) as VisitPayload;
+    } catch {
       return new Response(
         JSON.stringify({
           errors: [
@@ -130,12 +141,16 @@ export default async (req: Request, context: Context) => {
         .returning();
 
       if (!visit) {
-        visit = await db.query.visits.findFirst({
-          where: and(
-            eq(visits.userId, userId),
-            eq(visits.libraryId, parseInt(libraryId, 10)),
-          ),
-        });
+        [visit] = await db
+          .select()
+          .from(visits)
+          .where(
+            and(
+              eq(visits.userId, userId),
+              eq(visits.libraryId, parseInt(libraryId, 10)),
+            ),
+          )
+          .limit(1);
       }
 
       if (!visit) {

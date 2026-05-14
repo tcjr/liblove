@@ -1,6 +1,6 @@
 import { db } from '../../db/index';
 import { users } from '../../db/schema';
-import type { Handler, HandlerEvent, HandlerContext } from '@netlify/functions';
+import type { Handler, HandlerEvent } from '@netlify/functions';
 
 /**
  * Netlify Identity Event Function: identity-signup
@@ -9,19 +9,26 @@ import type { Handler, HandlerEvent, HandlerContext } from '@netlify/functions';
  *
  * NOTE: Identity event functions must use the legacy named handler export.
  */
-const handler: Handler = async (
-  event: HandlerEvent,
-  _context: HandlerContext,
-) => {
+
+interface IdentityUser {
+  id: string;
+  email: string;
+}
+
+interface IdentitySignupBody {
+  user: IdentityUser;
+}
+
+const handler: Handler = async (event: HandlerEvent) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  let user;
+  let user: IdentityUser | undefined;
   try {
-    const body = JSON.parse(event.body || '{}');
+    const body = JSON.parse(event.body || '{}') as IdentitySignupBody;
     user = body.user;
-  } catch (e) {
+  } catch {
     return { statusCode: 400, body: 'Invalid JSON' };
   }
 
