@@ -42,5 +42,5 @@ export const visits = pgTable(
       .notNull(),
     visitedAt: timestamp('visited_at', { withTimezone: true }).defaultNow(),
   },
-  (t) => [unique().on(t.userId, t.libraryId)],
+  (t) => [unique().on(t.userId, t.libraryId)]
 );

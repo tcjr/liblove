@@ -36,9 +36,12 @@ export default async (req: Request, context: Context) => {
       where: eq(visits.userId, userId),
     });
 
-    return new Response(JSON.stringify({ data: userVisits.map(v => v.libraryId) }), {
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({ data: userVisits.map((v) => v.libraryId) }),
+      {
+        headers: { 'Content-Type': 'application/json' },
+      },
+    );
   }
 
   if (req.method === 'POST') {
@@ -52,10 +55,13 @@ export default async (req: Request, context: Context) => {
     }
 
     try {
-      await db.insert(visits).values({
-        userId,
-        libraryId: parseInt(libraryId, 10),
-      }).onConflictDoNothing();
+      await db
+        .insert(visits)
+        .values({
+          userId,
+          libraryId: parseInt(libraryId, 10),
+        })
+        .onConflictDoNothing();
 
       return new Response(JSON.stringify({ message: 'Visit recorded' }), {
         status: 201,
@@ -79,12 +85,14 @@ export default async (req: Request, context: Context) => {
       });
     }
 
-    await db.delete(visits).where(
-      and(
-        eq(visits.userId, userId),
-        eq(visits.libraryId, parseInt(libraryId, 10))
-      )
-    );
+    await db
+      .delete(visits)
+      .where(
+        and(
+          eq(visits.userId, userId),
+          eq(visits.libraryId, parseInt(libraryId, 10)),
+        ),
+      );
 
     return new Response(null, { status: 204 });
   }
