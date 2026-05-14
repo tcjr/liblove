@@ -4,5 +4,4 @@ export default defineConfig({
   dialect: 'postgresql',
   schema: './db/schema.ts',
   out: 'netlify/database/migrations',
-  migrations: { prefix: 'timestamp' },
 });
