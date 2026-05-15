@@ -9,4 +9,5 @@
   --chicago-red: oklch(0.5794 0.2343 23.93);
   --chicago-blue-lighter: oklch(from var(--chicago-blue) calc(l + 0.05) c h);
   --chicago-blue-darker: oklch(from var(--chicago-blue) calc(l - 0.25) c h);
+  --chicago-red-lighter: oklch(from var(--chicago-red) calc(l + 0.05) c h);
 }
