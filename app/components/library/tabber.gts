@@ -166,8 +166,12 @@ export default class LibraryTabber extends Component<LibraryTabberSignature> {
     const onSelect = this.args.onSelect;
 
     if (document.startViewTransition) {
-      document.startViewTransition(() => {
+      document.documentElement.classList.add('transition-next');
+      const transition = document.startViewTransition(() => {
         onSelect(newLibrary.id);
+      });
+      void transition.finished.finally(() => {
+        document.documentElement.classList.remove('transition-next');
       });
     } else {
       onSelect(newLibrary.id);

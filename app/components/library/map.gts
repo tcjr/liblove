@@ -25,6 +25,17 @@ export default class LibraryMap extends Component<LibraryMapSignature> {
     return this.args.visitedIds || new Set();
   }
 
+  onSelect = (id: string) => {
+    const selFn = this.args.onSelect;
+    if (!selFn) {
+      return;
+    }
+
+    document.startViewTransition(() => {
+      selFn(id);
+    });
+  };
+
   <template>
     <div ...attributes>
 
@@ -35,7 +46,7 @@ export default class LibraryMap extends Component<LibraryMapSignature> {
             @cells={{response.data.libraryCells}}
             @outlinePath={{response.data.metro.outlinePath}}
             @selected={{@selectedId}}
-            @onSelect={{@onSelect}}
+            @onSelect={{this.onSelect}}
             @highlighted={{@highlightedId}}
             @onHighlight={{@onHighlight}}
             @visited={{this.visitedIds}}
