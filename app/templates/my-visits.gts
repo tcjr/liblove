@@ -73,6 +73,11 @@ export default class MyVisitsComponent extends Component {
     {{pageTitle "Libraries"}}
 
     <Request @request={{this.visitsRequest}}>
+      <:content as |response|>
+        {{! eslint-disable-next-line ember/template-no-log }}
+        {{log "loaded visits" response.data}}
+      </:content>
+
       <:error as |e|>
         <h2>There was an error loading your visits</h2>
         <p>
