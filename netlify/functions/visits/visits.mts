@@ -2,7 +2,7 @@ import { db } from '../../../db/index';
 import { visits, users } from '../../../db/schema';
 import { and, eq } from 'drizzle-orm';
 import type { Context, Config } from '@netlify/functions';
-import { getUser } from '@netlify/identity';
+import { getUser as originalGetUser } from '@netlify/identity';
 
 export const config: Config = {
   path: ['/api/visits', '/api/visits/:id'],
@@ -17,7 +17,7 @@ export const config: Config = {
 // }
 
 export default async (req: Request, context: Context) => {
-  const netlifyUser = await getUser();
+  const netlifyUser = await originalGetUser();
 
   console.log('in visits function, netlifyUser is', netlifyUser);
 

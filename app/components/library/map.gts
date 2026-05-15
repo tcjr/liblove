@@ -11,6 +11,8 @@ export interface LibraryMapSignature {
 
     highlightedId?: string | null;
     onHighlight?: (id: string | null) => void;
+
+    visitedIds?: Set<string>;
   };
 
   Element: HTMLDivElement;
@@ -18,6 +20,10 @@ export interface LibraryMapSignature {
 
 export default class LibraryMap extends Component<LibraryMapSignature> {
   query = getMetroLibraryMap(this.args.metroId);
+
+  get visitedIds() {
+    return this.args.visitedIds || new Set();
+  }
 
   <template>
     <div ...attributes>
@@ -32,6 +38,7 @@ export default class LibraryMap extends Component<LibraryMapSignature> {
             @onSelect={{@onSelect}}
             @highlighted={{@highlightedId}}
             @onHighlight={{@onHighlight}}
+            @visited={{this.visitedIds}}
           />
         </:content>
         <:loading>

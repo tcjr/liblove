@@ -37,6 +37,10 @@ export default class MyVisitsComponent extends Component {
     return getRequestState(this.visitsRequest).value?.data || [];
   }
 
+  get visitIds() {
+    return new Set(this.visits.map((visit) => visit.library.id));
+  }
+
   // SELECTION AND HIGHLIGHTING
 
   @tracked selectedId?: string;
@@ -66,8 +70,19 @@ export default class MyVisitsComponent extends Component {
   // VISIT MANAGEMENT
 
   hasVisited = (library: Library) => {
-    return this.visits.some((visit) => visit.library.id === library.id);
+    return this.visitIds.has(library.id);
   };
+
+  get percentageVisited() {
+    if (this.libraries.length === 0) {
+      return '0';
+    }
+    return ((this.visitIds.size / this.libraries.length) * 100).toFixed(1);
+  }
+
+  get latestVisit() {
+    return this.visits.at(-1);
+  }
 
   <template>
     {{pageTitle "Libraries"}}
@@ -108,11 +123,36 @@ export default class MyVisitsComponent extends Component {
               @onSelect={{this.selectLibrary}}
               @highlightedId={{this.highlightedId}}
               @onHighlight={{this.highlightLibrary}}
+              @visitedIds={{this.visitIds}}
               class="w-full"
             />
           </div>
 
           <div class="w-1/3">
+            <div>
+              <div class="stats">
+
+                <div class="stat">
+                  <div class="stat-title">Visits</div>
+                  <div class="stat-value">
+                    {{this.visitIds.size}}
+                    /
+                    {{this.libraries.length}}
+                  </div>
+                  <div class="stat-desc">{{this.percentageVisited}}% visited</div>
+                </div>
+
+                <div class="stat">
+                  <div class="stat-title">Latest Visit</div>
+                  <div class="stat-value">
+                    Jan 21, 2026
+                  </div>
+                  <div class="stat-desc">{{this.latestVisit.library.name}}</div>
+                </div>
+
+              </div>
+              <hr />
+            </div>
             {{#if this.selectedLibrary}}
               <h3
                 class="font-black text-3xl text-balance"
@@ -132,6 +172,8 @@ export default class MyVisitsComponent extends Component {
                     aspectRatio=1.5
                   }}
                 />
+                <p class="text-right text-base-content/25 text-xs">Library
+                  {{this.selectedLibrary.id}}</p>
               </div>
               <div>
                 {{#if (this.hasVisited this.selectedLibrary)}}

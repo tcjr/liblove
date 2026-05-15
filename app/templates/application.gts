@@ -22,8 +22,10 @@ export default class ApplicationComponent extends Component {
         <LinkTo @route="index">Home</LinkTo>
         |
         <LinkTo @route="libraries">Libraries</LinkTo>
-        |
-        <LinkTo @route="my-visits">My Visits</LinkTo>
+        {{#if this.auth.isAuthenticated}}
+          |
+          <LinkTo @route="my-visits">My Visits</LinkTo>
+        {{/if}}
       </div>
     </nav>
 
