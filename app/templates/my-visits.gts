@@ -4,17 +4,20 @@ import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import type Store from '#app/services/store.ts';
 import { getRequestState, Request } from '@warp-drive/ember';
-import { getLibraries } from '#app/data/api';
+import { getLibraries, getVisits } from '#app/data/api';
 import LibraryMap from '#app/components/library/map.gts';
 import { ResponsiveImage } from '@responsive-image/ember';
 import { netlify } from '@responsive-image/cdn';
 import { concat } from '@ember/helper';
 import LibraryTabber from '#app/components/library/tabber.gts';
+import type { Library } from '#app/data/library.ts';
 
 const METRO = 'chicago';
 
 export default class MyVisitsComponent extends Component {
   @service declare store: Store;
+
+  // DATA
 
   @cached
   get librariesRequest() {
@@ -24,6 +27,17 @@ export default class MyVisitsComponent extends Component {
   get libraries() {
     return getRequestState(this.librariesRequest).value?.data || [];
   }
+
+  @cached
+  get visitsRequest() {
+    return this.store.request(getVisits());
+  }
+
+  get visits() {
+    return getRequestState(this.visitsRequest).value?.data || [];
+  }
+
+  // SELECTION AND HIGHLIGHTING
 
   @tracked selectedId?: string;
   selectLibrary = (id: string) => {
@@ -46,12 +60,28 @@ export default class MyVisitsComponent extends Component {
     if (!this.highlightedId) {
       return null;
     }
-
     return this.libraries.find((lib) => lib.id === this.highlightedId) || null;
   }
 
+  // VISIT MANAGEMENT
+
+  hasVisited = (library: Library) => {
+    return this.visits.some((visit) => visit.library.id === library.id);
+  };
+
   <template>
     {{pageTitle "Libraries"}}
+
+    <Request @request={{this.visitsRequest}}>
+      <:error as |e|>
+        <h2>There was an error loading your visits</h2>
+        <p>
+          {{e.message}}
+        </p>
+        {{! eslint-disable-next-line ember/template-no-log }}
+        {{log "visits loading error" e}}
+      </:error>
+    </Request>
 
     <Request @request={{this.librariesRequest}}>
       <:content as |response|>
@@ -98,25 +128,16 @@ export default class MyVisitsComponent extends Component {
                   }}
                 />
               </div>
+              <div>
+                {{#if (this.hasVisited this.selectedLibrary)}}
+                  Visited? YES
+                {{else}}
+                  Visited? NO
+                {{/if}}
+              </div>
             {{/if}}
           </div>
 
-        </div>
-
-        <div>
-          {{#if this.highlightedId}}
-            <h3 class="font-bold text-2xl">{{this.highlightedLibrary.name}}</h3>
-            <div class="w-48">
-              <ResponsiveImage
-                alt={{this.highlightedLibrary.name}}
-                @src={{netlify
-                  (concat "/images/" this.highlightedLibrary.img)
-                  aspectRatio=1.5
-                  quality=5
-                }}
-              />
-            </div>
-          {{/if}}
         </div>
 
       </:content>
