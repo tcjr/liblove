@@ -11,6 +11,7 @@ import { netlify } from '@responsive-image/cdn';
 import { concat } from '@ember/helper';
 import LibraryTabber from '#app/components/library/tabber.gts';
 import type { Library } from '#app/data/library.ts';
+import { asMonthDayYear } from '#app/utils/dates.ts';
 
 const METRO = 'chicago';
 
@@ -69,6 +70,10 @@ export default class MyVisitsComponent extends Component {
 
   // VISIT MANAGEMENT
 
+  getVisit = (library: Library) => {
+    return this.visits.find((visit) => visit.library.id === library.id);
+  };
+
   hasVisited = (library: Library) => {
     return this.visitIds.has(library.id);
   };
@@ -105,7 +110,6 @@ export default class MyVisitsComponent extends Component {
 
     <Request @request={{this.librariesRequest}}>
       <:content as |response|>
-
         <div class="flex gap-2">
 
           <div class="w-1/3">
@@ -116,7 +120,7 @@ export default class MyVisitsComponent extends Component {
               @sort="lon"
               class="text-xl font-semibold"
             />
-            <hr />
+            <div class="divider"></div>
             <LibraryMap
               @metroId={{METRO}}
               @selectedId={{this.selectedId}}
@@ -129,64 +133,74 @@ export default class MyVisitsComponent extends Component {
           </div>
 
           <div class="w-1/3">
-            <div>
-              <div class="stats">
+            <div class="stats">
 
-                <div class="stat">
-                  <div class="stat-title">Visits</div>
-                  <div class="stat-value">
-                    {{this.visitIds.size}}
-                    /
-                    {{this.libraries.length}}
-                  </div>
-                  <div class="stat-desc">{{this.percentageVisited}}% visited</div>
+              <div class="stat">
+                <div class="stat-title">Visited</div>
+                <div class="stat-value">
+                  {{this.visitIds.size}}
+                  <span class="text-sm">of</span>
+                  {{this.libraries.length}}
                 </div>
-
-                <div class="stat">
-                  <div class="stat-title">Latest Visit</div>
-                  <div class="stat-value">
-                    Jan 21, 2026
-                  </div>
-                  <div class="stat-desc">{{this.latestVisit.library.name}}</div>
-                </div>
-
+                <div class="stat-desc">{{this.percentageVisited}}% visited</div>
               </div>
-              <hr />
+
+              <div class="stat">
+                <div class="stat-title">Latest Visit</div>
+                <div class="stat-value">
+                  {{asMonthDayYear this.latestVisit.visitedAt}}
+                </div>
+                <div class="stat-desc">{{this.latestVisit.library.name}}</div>
+              </div>
+
             </div>
+            <div class="divider"></div>
             {{#if this.selectedLibrary}}
-              <h3
-                class="font-black text-3xl text-balance"
-              >{{this.selectedLibrary.name}}</h3>
-              <address>
-                {{this.selectedLibrary.address}}
-                <br />
-                {{this.selectedLibrary.city}},
-                {{this.selectedLibrary.state}}
-                {{this.selectedLibrary.zip}}
-              </address>
-              <div>
-                <ResponsiveImage
-                  alt={{this.selectedLibrary.name}}
-                  @src={{netlify
-                    (concat "/images/" this.selectedLibrary.img)
-                    aspectRatio=1.5
-                  }}
-                />
-                <p class="text-right text-base-content/25 text-xs">Library
-                  {{this.selectedLibrary.id}}</p>
-              </div>
-              <div>
-                {{#if (this.hasVisited this.selectedLibrary)}}
-                  Visited? YES
-                {{else}}
-                  Visited? NO
-                {{/if}}
+              <div class="px-2 pt-2">
+                <h3
+                  class="font-black text-3xl text-balance"
+                >{{this.selectedLibrary.name}}</h3>
+                <address>
+                  {{this.selectedLibrary.address}}
+                  <br />
+                  {{this.selectedLibrary.city}},
+                  {{this.selectedLibrary.state}}
+                  {{this.selectedLibrary.zip}}
+                </address>
+                <div>
+                  <ResponsiveImage
+                    class="rounded-box"
+                    alt={{this.selectedLibrary.name}}
+                    @src={{netlify
+                      (concat "/images/" this.selectedLibrary.img)
+                      aspectRatio=1.5
+                    }}
+                  />
+                  <p class="text-right text-base-content/25 text-xs">
+                    library id
+                    {{this.selectedLibrary.id}}
+                  </p>
+                </div>
+                <div>
+                  {{#let (this.getVisit this.selectedLibrary) as |visit|}}
+                    {{#if visit}}
+                      <p>
+                        Visited on:
+                        {{asMonthDayYear visit.visitedAt}}
+                      </p>
+                    {{else}}
+                      <p>
+                        Not yet visited.
+                      </p>
+                    {{/if}}
+                  {{/let}}
+
+                </div>
               </div>
             {{/if}}
           </div>
 
         </div>
-
       </:content>
 
       <:loading>
