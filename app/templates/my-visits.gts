@@ -12,6 +12,7 @@ import { concat } from '@ember/helper';
 import LibraryTabber from '#app/components/library/tabber.gts';
 import type { Library } from '#app/data/library.ts';
 import { asMonthDayYear } from '#app/utils/dates.ts';
+import MakeNewVisit from '#app/components/make-new-visit.gts';
 
 const METRO = 'chicago';
 
@@ -192,6 +193,7 @@ export default class MyVisitsComponent extends Component {
                       <p>
                         Not yet visited.
                       </p>
+                      <MakeNewVisit @library={{this.selectedLibrary}} />
                     {{/if}}
                   {{/let}}
 

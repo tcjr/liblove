@@ -8,13 +8,28 @@ export const config: Config = {
   path: ['/api/visits', '/api/visits/:id'],
 };
 
-// interface VisitPayload {
-//   data?: {
-//     attributes?: {
-//       libraryId?: string;
-//     };
-//   };
-// }
+interface VisitPayload {
+  libraryId?: string;
+  visitedAt?: string;
+}
+
+function errorResponse(title: string, detail: string, status: number) {
+  return new Response(
+    JSON.stringify({
+      errors: [
+        {
+          status: String(status),
+          title,
+          detail,
+        },
+      ],
+    }),
+    {
+      status,
+      headers: { 'Content-Type': 'application/vnd.api+json' },
+    },
+  );
+}
 
 export default async (req: Request, context: Context) => {
   const netlifyUser = await originalGetUser();
@@ -115,39 +130,78 @@ export default async (req: Request, context: Context) => {
   }
 
   if (req.method === 'POST') {
-    // The JSONAPI format is in flux, so wait to implment this
-    return new Response(
-      JSON.stringify({
-        errors: [
-          {
-            status: '400',
-            title: 'Not Implemented',
-            detail: 'POST is not implemented yet',
+    // console.log('.... req:', req);
+    console.log('.... this is a POST request; req.body:', req.body);
+
+    const parsed: VisitPayload = await req.json();
+    console.log('.... parsed:', parsed);
+
+    // TODO: validate both of these
+    const libraryId = parsed['libraryId'];
+    const visitedAt = parsed['visitedAt'];
+    console.log('.... libraryId:', libraryId);
+    console.log('.... visitedAt:', visitedAt);
+
+    if (!libraryId || !visitedAt) {
+      return errorResponse('Bad Request', 'Missing required fields', 400);
+    }
+
+    type Visit = typeof visits.$inferSelect;
+
+    try {
+      const newVisits = await db
+        .insert(visits)
+        .values({
+          userId,
+          libraryId: parseInt(libraryId, 10),
+          visitedAt: new Date(visitedAt),
+        })
+        .onConflictDoNothing()
+        .returning();
+
+      const newVisit = newVisits[0] as Visit;
+
+      console.log('.... newVisit is', newVisit);
+
+      // return errorResponse('Almost home', 'not yet', 500);
+
+      return new Response(
+        JSON.stringify({
+          data: {
+            type: 'visit',
+            id: String(newVisit.id),
+            attributes: {
+              visitedAt: newVisit.visitedAt,
+            },
+            relationships: {
+              library: {
+                links: {
+                  related: `/api/libraries/${newVisit.libraryId}`,
+                },
+                data: {
+                  type: 'library',
+                  id: String(newVisit.libraryId),
+                },
+              },
+            },
           },
-        ],
-      }),
-    );
+          included: [{ type: 'library', id: String(newVisit.libraryId) }],
+        }),
+        {
+          status: 201,
+          headers: { 'Content-Type': 'application/vnd.api+json' },
+        },
+      );
+    } catch (error) {
+      return errorResponse('Failed to record visit', 'insert failed', 500);
+    }
   }
 
   if (req.method === 'DELETE') {
     const visitId = context.params.id;
 
     if (!visitId) {
-      return new Response(
-        JSON.stringify({
-          errors: [
-            {
-              status: '400',
-              title: 'Bad Request',
-              detail: 'Missing visit ID in URL',
-            },
-          ],
-        }),
-        {
-          status: 400,
-          headers: { 'Content-Type': 'application/vnd.api+json' },
-        },
-      );
+      return errorResponse('Bad Request', 'Missing visit ID in URL', 400);
     }
 
     await db
