@@ -193,6 +193,7 @@ export default async (req: Request, context: Context) => {
         },
       );
     } catch (error) {
+      console.error(error);
       return errorResponse('Failed to record visit', 'insert failed', 500);
     }
   }
@@ -204,13 +205,29 @@ export default async (req: Request, context: Context) => {
       return errorResponse('Bad Request', 'Missing visit ID in URL', 400);
     }
 
-    await db
-      .delete(visits)
-      .where(
-        and(eq(visits.userId, userId), eq(visits.id, parseInt(visitId, 10))),
-      );
+    try {
+      console.log('.... making db call, visitId is', visitId);
+      await db
+        .delete(visits)
+        .where(
+          and(eq(visits.userId, userId), eq(visits.id, parseInt(visitId, 10))),
+        );
 
-    return new Response(null, { status: 204 });
+      console.log('.... returning 204');
+      return new Response(
+        // The payload seems to be required so it is properly deleted from the client-side cache
+        JSON.stringify({
+          data: null,
+        }),
+        {
+          status: 200,
+          headers: { 'Content-Type': 'application/vnd.api+json' },
+        },
+      );
+    } catch (error) {
+      console.error(error);
+      return errorResponse('Failed to delete visit', 'delete failed', 500);
+    }
   }
 
   return new Response('Method not allowed', { status: 405 });

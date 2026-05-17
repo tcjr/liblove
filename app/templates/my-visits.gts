@@ -14,6 +14,7 @@ import type { Library } from '#app/data/library.ts';
 import { asMonthDayYear } from '#app/utils/dates.ts';
 import MakeNewVisit from '#app/components/make-new-visit.gts';
 import type { Visit } from '#app/data/visit.ts';
+import RemoveVisit from '#app/components/remove-visit.gts';
 
 const METRO = 'chicago';
 
@@ -202,6 +203,7 @@ export default class MyVisitsComponent extends Component {
                         Visited on:
                         {{asMonthDayYear visit.visitedAt}}
                       </p>
+                      <RemoveVisit @visit={{visit}} />
                     {{else}}
                       <p>
                         Not yet visited.

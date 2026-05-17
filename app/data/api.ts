@@ -110,3 +110,11 @@ export function differentCreateVisit(library: Library, date: Date) {
     op: 'createRecord',
   });
 }
+
+export function deleteVisit(visit: Visit) {
+  return withResponseType<ReactiveDataDocument<Visit>>({
+    method: 'DELETE',
+    url: `/api/visits/${visit.id}`,
+    op: 'deleteRecord',
+  });
+}
