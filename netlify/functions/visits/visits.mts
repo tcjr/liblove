@@ -133,7 +133,7 @@ export default async (req: Request, context: Context) => {
     // console.log('.... req:', req);
     console.log('.... this is a POST request; req.body:', req.body);
 
-    const parsed: VisitPayload = await req.json();
+    const parsed = (await req.json()) as VisitPayload;
     console.log('.... parsed:', parsed);
 
     // TODO: validate both of these
