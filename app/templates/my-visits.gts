@@ -13,8 +13,22 @@ import LibraryTabber from '#app/components/library/tabber.gts';
 import type { Library } from '#app/data/library.ts';
 import { asMonthDayYear } from '#app/utils/dates.ts';
 import MakeNewVisit from '#app/components/make-new-visit.gts';
+import type { Visit } from '#app/data/visit.ts';
 
 const METRO = 'chicago';
+
+/*
+Warp-drive wants you to use derrived state for most data displayed on the page.
+This page doesn't do that, however, because I couldn't figure out how to get
+a "live" collection of visits from a request. By that I mean one that will show
+all the visits, then upate when a new visit is added by a component not directly
+on this page. So, instead I am doing the initial query to populate the store,
+then using a `peekAll` to get me a live collection of data that will update
+whenever we add a new visit to the store. This feels brittle and will break if
+we ever add the ability to view visits from other users. The data model doesn't
+support that right now, so I'm not gonna worrry about it. Also, I don't know
+what will happen if we delete a visit.
+*/
 
 export default class MyVisitsComponent extends Component {
   @service declare store: Store;
@@ -36,7 +50,7 @@ export default class MyVisitsComponent extends Component {
   }
 
   get visits() {
-    return getRequestState(this.visitsRequest).value?.data || [];
+    return this.store.peekAll<Visit>('visit');
   }
 
   get visitIds() {
@@ -94,11 +108,10 @@ export default class MyVisitsComponent extends Component {
     {{pageTitle "Libraries"}}
 
     <Request @request={{this.visitsRequest}}>
-      <:content as |response|>
-        {{! eslint-disable-next-line ember/template-no-log }}
-        {{log "loaded visits" response.data}}
-      </:content>
-
+      {{! 
+        Note: We're not using the content. This component is here to kick off
+        the request and have a place to show errors.
+      }}
       <:error as |e|>
         <h2>There was an error loading your visits</h2>
         <p>
