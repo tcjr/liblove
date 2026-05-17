@@ -105,6 +105,17 @@ export default class MyVisitsComponent extends Component {
     return this.visits.at(-1);
   }
 
+  // PAGE CONCERNS
+
+  chooseDefaultLibrary = () => {
+    // Pick a random library and select it
+    const randomIndex = Math.floor(Math.random() * this.libraries.length);
+    const libId = this.libraries?.[randomIndex]?.id;
+    if (libId) {
+      this.selectLibrary(libId);
+    }
+  };
+
   <template>
     {{pageTitle "Libraries"}}
 
@@ -125,6 +136,8 @@ export default class MyVisitsComponent extends Component {
 
     <Request @request={{this.librariesRequest}}>
       <:content as |response|>
+        {{! Choose a library once the libraries are loaded }}
+        {{(this.chooseDefaultLibrary)}}
         <div class="flex gap-2">
 
           <div class="w-1/3">
