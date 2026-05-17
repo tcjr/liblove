@@ -50,8 +50,14 @@ export default class MyVisitsComponent extends Component {
     return this.store.request(getVisits());
   }
 
+  // NOTE: I had a problem sorting because the proxy objects returned by
+  // peekAll did not seem to be actual dates. Not entirely sure what the
+  // problem was, but a string compare works.
   get visits() {
-    return this.store.peekAll<Visit>('visit');
+    const unsorted = this.store.peekAll<Visit>('visit').map((v) => v);
+    return unsorted.sort((a, b) => {
+      return a.visitedAt.toString().localeCompare(b.visitedAt.toString());
+    });
   }
 
   get visitIds() {
@@ -164,7 +170,7 @@ export default class MyVisitsComponent extends Component {
             <div class="stats">
 
               <div class="stat">
-                <div class="stat-title">Visited</div>
+                <div class="stat-title">Progress</div>
                 <div class="stat-value">
                   {{this.visitIds.size}}
                   <span class="text-sm">of</span>
