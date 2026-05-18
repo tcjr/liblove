@@ -11,16 +11,18 @@
     }
 
     &.visited.highlighted {
-      stroke: var(--chicago-blue);
-      fill: var(--chicago-blue-lighter);
+      stroke: var(--chicago-red);
+      fill: var(--chicago-red-lighter);
     }
 
     &.selected {
-      fill: var(--chicago-blue);
+      stroke: var(--chicago-red);
+      fill: var(--chicago-red);
     }
 
     &.highlighted {
-      fill: var(--chicago-blue-lighter);
+      stroke: var(--chicago-red);
+      fill: var(--chicago-red);
     }
   }
 
@@ -34,6 +36,11 @@
     }
 
     &.selected {
+      fill: #ffffff;
+      stroke: #ffffff;
+    }
+
+    &.highlighted {
       fill: #ffffff;
       stroke: #ffffff;
     }

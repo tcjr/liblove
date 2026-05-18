@@ -1,9 +1,11 @@
 import {
   doublePrecision,
+  integer,
   pgTable,
   serial,
   text,
   timestamp,
+  unique,
   varchar,
 } from 'drizzle-orm/pg-core';
 
@@ -27,3 +29,18 @@ export const users = pgTable('users', {
   email: varchar({ length: 255 }).notNull().unique(),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
 });
+
+export const visits = pgTable(
+  'visits',
+  {
+    id: serial().primaryKey(),
+    userId: integer('user_id')
+      .references(() => users.id)
+      .notNull(),
+    libraryId: integer('library_id')
+      .references(() => libraries.id)
+      .notNull(),
+    visitedAt: timestamp('visited_at', { withTimezone: true }).defaultNow(),
+  },
+  (t) => [unique().on(t.userId, t.libraryId)]
+);

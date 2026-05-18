@@ -24,6 +24,10 @@ export default class LibrariesComponent extends Component {
     return this.store.request(getLibraries('chicago'));
   }
 
+  get libraries() {
+    return getRequestState(this.librariesRequest).value?.data || [];
+  }
+
   @tracked selectedId?: string;
   selectLibrary = (id: string) => {
     this.selectedId = id;
@@ -38,22 +42,15 @@ export default class LibrariesComponent extends Component {
     if (!this.selectedId) {
       return null;
     }
-    const libraries = getRequestState(this.librariesRequest).value?.data;
-    if (!libraries) {
-      return null;
-    }
-    return libraries.find((lib) => lib.id === this.selectedId);
+    return this.libraries.find((lib) => lib.id === this.selectedId) || null;
   }
 
   get highlightedLibrary() {
     if (!this.highlightedId) {
       return null;
     }
-    const libraries = getRequestState(this.librariesRequest).value?.data;
-    if (!libraries) {
-      return null;
-    }
-    return libraries.find((lib) => lib.id === this.highlightedId);
+
+    return this.libraries.find((lib) => lib.id === this.highlightedId) || null;
   }
 
   <template>
