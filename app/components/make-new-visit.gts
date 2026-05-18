@@ -36,14 +36,11 @@ export default class MakeNewVisit extends Component<MakeNewVisitSignature> {
   };
 
   makeVisit = async () => {
-    console.log('calling createVisit to get the builder...');
-    const dateToUse = new Date(`${this.selectedDateStr}T12:00:00`);
-    const b = createVisit(this.args.library, dateToUse);
-    console.log('b', b);
+    const dateToUse = this.selectedDateStr
+      ? new Date(`${this.selectedDateStr}T12:00:00`)
+      : new Date();
 
-    console.log('calling store.request...');
-    const req = this.store.request(b);
-    console.log('req', req);
+    const req = this.store.request(createVisit(this.args.library, dateToUse));
     const awaitedReq = await req;
     console.log('awaitedReq', awaitedReq);
   };
