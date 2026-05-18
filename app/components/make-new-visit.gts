@@ -1,9 +1,19 @@
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { on } from '@ember/modifier';
 import type { Library } from '#app/data/library.ts';
 import { service } from '@ember/service';
 import type Store from '#app/services/store.ts';
 import { createVisit } from '#app/data/api.ts';
 import ConfirmButton from './confirm-button.gts';
+
+function getTodayString() {
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const dd = String(today.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+}
 
 export interface MakeNewVisitSignature {
   Args: {
@@ -18,15 +28,19 @@ export interface MakeNewVisitSignature {
 export default class MakeNewVisit extends Component<MakeNewVisitSignature> {
   @service declare store: Store;
 
-  makeVisit = async () => {
-    console.log('calling createVisit to get the builder...');
-    // TODO: add a date picker and use that date here
-    const b = createVisit(this.args.library, new Date());
-    console.log('b', b);
+  @tracked selectedDateStr = getTodayString();
 
-    console.log('calling store.request...');
-    const req = this.store.request(b);
-    console.log('req', req);
+  updateDate = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    this.selectedDateStr = target.value;
+  };
+
+  makeVisit = async () => {
+    const dateToUse = this.selectedDateStr
+      ? new Date(`${this.selectedDateStr}T12:00:00`)
+      : new Date();
+
+    const req = this.store.request(createVisit(this.args.library, dateToUse));
     const awaitedReq = await req;
     console.log('awaitedReq', awaitedReq);
   };
@@ -43,8 +57,19 @@ export default class MakeNewVisit extends Component<MakeNewVisitSignature> {
         <p>
           This will add a visit to
           <strong>{{@library.name}}</strong>.
-          {{! TODO: add a date picker to choose a date }}
         </p>
+        <div class="form-control w-full max-w-xs">
+          <label class="label" for="visit-date-picker">
+            <span class="label-text">Date of visit</span>
+          </label>
+          <input
+            id="visit-date-picker"
+            type="date"
+            class="input input-bordered w-full max-w-xs"
+            value={{this.selectedDateStr}}
+            {{on "change" this.updateDate}}
+          />
+        </div>
         <p>Are you sure?</p>
       </div>
     </ConfirmButton>

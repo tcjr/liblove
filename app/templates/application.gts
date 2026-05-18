@@ -3,6 +3,7 @@ import { pageTitle } from 'ember-page-title';
 import Component from '@glimmer/component';
 import type AuthService from '#app/services/auth.ts';
 import { service } from '@ember/service';
+import ChicagoFlag from '#app/components/chicago-flag.gts';
 
 export default class ApplicationComponent extends Component {
   @service declare auth: AuthService;
@@ -29,6 +30,19 @@ export default class ApplicationComponent extends Component {
       </div>
     </nav>
 
-    {{outlet}}
+    <main class="min-h-screen">
+      {{outlet}}
+    </main>
+    <footer
+      class="footer footer-horizontal footer-center bg-primary text-primary-content p-10"
+    >
+      <aside>
+        <ChicagoFlag class="w-12 h-12" />
+        <p class="font-thinner">
+          Made with ♥ at libraries in Chicago, 2026
+        </p>
+        <p>tcjr</p>
+      </aside>
+    </footer>
   </template>
 }
