@@ -123,7 +123,7 @@ export default class MyVisitsComponent extends Component {
   };
 
   <template>
-    {{pageTitle "Libraries"}}
+    {{pageTitle "My Library Visits"}}
 
     <Request @request={{this.visitsRequest}}>
       {{! 
