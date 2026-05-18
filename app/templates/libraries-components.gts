@@ -53,26 +53,23 @@ export default class LibrariesComponent extends Component {
     return this.libraries.find((lib) => lib.id === this.highlightedId) || null;
   }
 
-  chooseDefaultLibrary = () => {
-    // Pick a random library and select it
-    const randomIndex = Math.floor(Math.random() * this.libraries.length);
-    const libId = this.libraries?.[randomIndex]?.id;
-    if (libId) {
-      this.selectLibrary(libId);
-    }
-  };
-
   <template>
     {{pageTitle "Libraries"}}
 
     <Request @request={{this.librariesRequest}}>
       <:content as |response|>
-        {{! Choose a library once the libraries are loaded }}
-        {{(this.chooseDefaultLibrary)}}
 
-        <div class="flex flex-col md:flex-row gap-2">
+        <div class="flex gap-2">
+          <LibraryList
+            @libraries={{response.data}}
+            @selectedId={{this.selectedId}}
+            @onSelect={{this.selectLibrary}}
+            @highlightedId={{this.highlightedId}}
+            @onHighlight={{this.highlightLibrary}}
+            class="text-center w-1/3"
+          />
 
-          <div class="md:w-3/5">
+          <div class="w-1/3">
             <LibraryTabber
               @libraries={{response.data}}
               @selectedId={{this.selectedId}}
@@ -90,7 +87,7 @@ export default class LibrariesComponent extends Component {
             />
           </div>
 
-          <div class="md:w-2/5 flex-1">
+          <div class="w-1/3 flex-1">
             {{#if this.selectedLibrary}}
               <h3
                 class="font-black text-3xl text-balance"
@@ -114,6 +111,22 @@ export default class LibrariesComponent extends Component {
             {{/if}}
           </div>
 
+        </div>
+
+        <div>
+          {{#if this.highlightedId}}
+            <h3 class="font-bold text-2xl">{{this.highlightedLibrary.name}}</h3>
+            <div class="w-48">
+              <ResponsiveImage
+                alt={{this.highlightedLibrary.name}}
+                @src={{netlify
+                  (concat "/images/" this.highlightedLibrary.img)
+                  aspectRatio=1.5
+                  quality=5
+                }}
+              />
+            </div>
+          {{/if}}
         </div>
 
       </:content>

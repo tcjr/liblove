@@ -34,7 +34,7 @@ export default class ApplicationComponent extends Component {
       {{outlet}}
     </main>
     <footer
-      class="footer footer-horizontal footer-center bg-primary text-primary-content p-10"
+      class="footer footer-horizontal footer-center bg-primary text-primary-content p-10 mt-4"
     >
       <aside>
         <ChicagoFlag class="w-12 h-12" />
