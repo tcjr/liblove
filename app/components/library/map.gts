@@ -31,9 +31,13 @@ export default class LibraryMap extends Component<LibraryMapSignature> {
       return;
     }
 
-    document.startViewTransition(() => {
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        selFn(id);
+      });
+    } else {
       selFn(id);
-    });
+    }
   };
 
   <template>

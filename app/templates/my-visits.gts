@@ -52,10 +52,14 @@ export default class MyVisitsComponent extends Component {
 
   // NOTE: I had a problem sorting because the proxy objects returned by
   // peekAll did not seem to be actual dates. Not entirely sure what the
-  // problem was, but a string compare works.
+  // problem was, but a string compare works because these are in YYYY-MM-DD
+  // format.
   get visits() {
     const unsorted = this.store.peekAll<Visit>('visit').map((v) => v);
     return unsorted.sort((a, b) => {
+      console.log(
+        `SORT comparing ${a.visitedAt.toString()} and ${b.visitedAt.toString()}`
+      );
       return a.visitedAt.toString().localeCompare(b.visitedAt.toString());
     });
   }
@@ -179,13 +183,15 @@ export default class MyVisitsComponent extends Component {
                 <div class="stat-desc">{{this.percentageVisited}}% visited</div>
               </div>
 
-              <div class="stat">
-                <div class="stat-title">Latest Visit</div>
-                <div class="stat-value">
-                  {{asMonthDayYear this.latestVisit.visitedAt}}
+              {{#if this.latestVisit}}
+                <div class="stat">
+                  <div class="stat-title">Latest Visit</div>
+                  <div class="stat-value">
+                    {{asMonthDayYear this.latestVisit.visitedAt}}
+                  </div>
+                  <div class="stat-desc">{{this.latestVisit.library.name}}</div>
                 </div>
-                <div class="stat-desc">{{this.latestVisit.library.name}}</div>
-              </div>
+              {{/if}}
 
             </div>
             <div class="divider"></div>
