@@ -4,6 +4,7 @@ import { extensions, ember } from '@embroider/vite';
 import { babel } from '@rollup/plugin-babel';
 import { preview } from '@vitest/browser-preview';
 import { playwright } from '@vitest/browser-playwright';
+import { emberSsg } from 'vite-ember-ssr/vite-plugin';
 
 const isCI = process.env.CI === 'true';
 
@@ -49,5 +50,8 @@ export default defineConfig({
       extensions,
     }),
     tailwindcss(),
+    emberSsg({
+      routes: ['index', 'about'],
+    }),
   ],
 });
