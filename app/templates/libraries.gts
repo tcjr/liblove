@@ -1,31 +1,23 @@
-import { pageTitle } from 'ember-page-title';
-import { cached, tracked } from '@glimmer/tracking';
-import { service } from '@ember/service';
-import Component from '@glimmer/component';
-import type Store from '#app/services/store.ts';
-import { getRequestState, Request } from '@warp-drive/ember';
-import { getLibraries } from '#app/data/api';
 import LibraryList from '#app/components/library/list.gts';
 import LibraryMap from '#app/components/library/map.gts';
-import { ResponsiveImage } from '@responsive-image/ember';
-import { netlify } from '@responsive-image/cdn';
-import { concat } from '@ember/helper';
 import LibraryTabber from '#app/components/library/tabber.gts';
+import type { Library, MetroLibraryMap } from '#app/data/models.ts';
+import { concat } from '@ember/helper';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { netlify } from '@responsive-image/cdn';
+import { ResponsiveImage } from '@responsive-image/ember';
 
-/**
- * This page is a demonstration of integrating the primary building blocks:
- * LibraryList and LibraryMap.
- */
-export default class LibrariesComponent extends Component {
-  @service declare store: Store;
+interface LibsSignature {
+  Args: {
+    model: { libraries: Library[]; map: MetroLibraryMap };
+  };
+  Element: HTMLDivElement;
+}
 
-  @cached
-  get librariesRequest() {
-    return this.store.request(getLibraries('chicago'));
-  }
-
+export default class LibrariesComponent extends Component<LibsSignature> {
   get libraries() {
-    return getRequestState(this.librariesRequest).value?.data || [];
+    return this.args.model.libraries;
   }
 
   @tracked selectedId?: string;
@@ -54,96 +46,64 @@ export default class LibrariesComponent extends Component {
   }
 
   <template>
-    {{pageTitle "Libraries"}}
+    {{log "@model" @model}}
+    <div>
+      {{@model.libraries.length}}
+      libraries loaded
+    </div>
+    <div>
+      {{@model.map.libraryCells.length}}
+      map cells loaded for
+      {{@model.map.metro.id}}
+    </div>
 
-    <Request @request={{this.librariesRequest}}>
-      <:content as |response|>
+    <LibraryList
+      @libraries={{this.libraries}}
+      @selectedId={{this.selectedId}}
+      @onSelect={{this.selectLibrary}}
+      @highlightedId={{this.highlightedId}}
+      @onHighlight={{this.highlightLibrary}}
+      class="text-center"
+    />
 
-        <div class="flex gap-2">
-          <LibraryList
-            @libraries={{response.data}}
-            @selectedId={{this.selectedId}}
-            @onSelect={{this.selectLibrary}}
-            @highlightedId={{this.highlightedId}}
-            @onHighlight={{this.highlightLibrary}}
-            class="text-center w-1/3"
-          />
+    <LibraryTabber
+      @libraries={{this.libraries}}
+      @selectedId={{this.selectedId}}
+      @onSelect={{this.selectLibrary}}
+      @sort="name"
+    />
 
-          <div class="w-1/3">
-            <LibraryTabber
-              @libraries={{response.data}}
-              @selectedId={{this.selectedId}}
-              @onSelect={{this.selectLibrary}}
-              @sort="name"
-            />
-            <hr />
-            <LibraryMap
-              @metroId="chicago"
-              @selectedId={{this.selectedId}}
-              @onSelect={{this.selectLibrary}}
-              @highlightedId={{this.highlightedId}}
-              @onHighlight={{this.highlightLibrary}}
-              class="w-full"
-            />
-          </div>
+    <LibraryMap
+      @map={{@model.map}}
+      @selectedId={{this.selectedId}}
+      @onSelect={{this.selectLibrary}}
+      @highlightedId={{this.highlightedId}}
+      @onHighlight={{this.highlightLibrary}}
+      class="w-full"
+    />
 
-          <div class="w-1/3 flex-1">
-            {{#if this.selectedLibrary}}
-              <h3
-                class="font-black text-3xl text-balance"
-              >{{this.selectedLibrary.name}}</h3>
-              <address>
-                {{this.selectedLibrary.address}}
-                <br />
-                {{this.selectedLibrary.city}},
-                {{this.selectedLibrary.state}}
-                {{this.selectedLibrary.zip}}
-              </address>
-              <div>
-                <ResponsiveImage
-                  alt={{this.selectedLibrary.name}}
-                  @src={{netlify
-                    (concat "/images/" this.selectedLibrary.img)
-                    aspectRatio=1.5
-                  }}
-                />
-              </div>
-            {{/if}}
-          </div>
-
-        </div>
-
+    <div>
+      {{#if this.selectedLibrary}}
+        <h3
+          class="font-black text-3xl text-balance"
+        >{{this.selectedLibrary.name}}</h3>
+        <address>
+          {{this.selectedLibrary.address}}
+          <br />
+          {{this.selectedLibrary.city}},
+          {{this.selectedLibrary.state}}
+          {{this.selectedLibrary.zip}}
+        </address>
         <div>
-          {{#if this.highlightedId}}
-            <h3 class="font-bold text-2xl">{{this.highlightedLibrary.name}}</h3>
-            <div class="w-48">
-              <ResponsiveImage
-                alt={{this.highlightedLibrary.name}}
-                @src={{netlify
-                  (concat "/images/" this.highlightedLibrary.img)
-                  aspectRatio=1.5
-                  quality=5
-                }}
-              />
-            </div>
-          {{/if}}
+          <ResponsiveImage
+            alt={{this.selectedLibrary.name}}
+            @src={{netlify
+              (concat "/images/" this.selectedLibrary.img)
+              aspectRatio=1.5
+            }}
+          />
         </div>
-
-      </:content>
-
-      <:loading>
-        <p>Loading libraries...</p>
-      </:loading>
-
-      <:error as |e|>
-        <h2>Error loading libraries</h2>
-        <p>
-          {{e.message}}
-        </p>
-        {{! eslint-disable-next-line ember/template-no-log }}
-        {{log "error" e}}
-      </:error>
-
-    </Request>
+      {{/if}}
+    </div>
   </template>
 }

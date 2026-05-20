@@ -1,4 +1,4 @@
-import type { Library } from '#app/data/library.ts';
+import type { Library } from '#app/data/models.ts';
 import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
 import Component from '@glimmer/component';
