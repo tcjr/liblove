@@ -38,6 +38,6 @@ export interface MetroLibraryMap {
 
 export interface Visit {
   id: string;
-  library: Library;
+  libraryId: string;
   visitedAt: Date;
 }

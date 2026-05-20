@@ -1,5 +1,5 @@
 import { pageTitle } from 'ember-page-title';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 // import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import LibraryMap from '#app/components/library/map.gts';
@@ -9,6 +9,13 @@ import { concat } from '@ember/helper';
 import LibraryTabber from '#app/components/library/tabber.gts';
 import { asMonthDayYear } from '#app/utils/dates.ts';
 import type { Library, MetroLibraryMap, Visit } from '#app/data/models.ts';
+import { getPromiseState } from 'reactiveweb/get-promise-state';
+
+async function loadVisits(): Promise<Visit[]> {
+  console.log('FETCHING visits');
+  const response = await fetch('/api/visits');
+  return response.json();
+}
 
 interface MyVisitsSignature {
   Args: {
@@ -24,8 +31,21 @@ export default class MyVisitsComponent extends Component<MyVisitsSignature> {
     return this.args.model.libraries;
   }
 
+  getLibrary = (id: string) => {
+    return this.libraries.find((lib) => lib.id === id);
+  };
+
   get map() {
     return this.args.model.map;
+  }
+
+  @cached
+  get loadVisitsPromise() {
+    return loadVisits();
+  }
+
+  get visitsState() {
+    return getPromiseState(this.loadVisitsPromise);
   }
 
   // NOTE: I had a problem sorting because the proxy objects returned by
@@ -42,11 +62,11 @@ export default class MyVisitsComponent extends Component<MyVisitsSignature> {
   //   });
   // }
   get visits(): Visit[] {
-    return [];
+    return this.visitsState.resolved || [];
   }
 
   get visitIds() {
-    return new Set(this.visits.map((visit) => visit.library.id));
+    return new Set(this.visits.map((visit) => visit.libraryId));
   }
 
   // SELECTION AND HIGHLIGHTING
@@ -78,7 +98,7 @@ export default class MyVisitsComponent extends Component<MyVisitsSignature> {
   // VISIT MANAGEMENT
 
   getVisit = (library: Library) => {
-    return this.visits.find((visit) => visit.library.id === library.id);
+    return this.visits.find((visit) => visit.libraryId === library.id);
   };
 
   hasVisited = (library: Library) => {
@@ -153,7 +173,11 @@ export default class MyVisitsComponent extends Component<MyVisitsSignature> {
               <div class="stat-value">
                 {{asMonthDayYear this.latestVisit.visitedAt}}
               </div>
-              <div class="stat-desc">{{this.latestVisit.library.name}}</div>
+              <div class="stat-desc">
+                {{#let (this.getLibrary this.latestVisit.libraryId) as |lib|}}
+                  {{lib.name}}
+                {{/let}}
+              </div>
             </div>
           {{/if}}
 
