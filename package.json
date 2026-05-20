@@ -8,7 +8,8 @@
   "author": "",
   "type": "module",
   "scripts": {
-    "build": "vite build",
+    "build": "netlify build",
+    "build:ember": "vite build",
     "format": "prettier . --cache --write",
     "lint": "concurrently \"pnpm:lint:*(!fix)\" --names \"lint:\" --prefixColors auto",
     "lint:fix": "concurrently \"pnpm:lint:*:fix\" --names \"fix:\" --prefixColors auto && pnpm format",
