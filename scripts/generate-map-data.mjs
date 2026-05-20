@@ -4,14 +4,23 @@ import { Delaunay } from 'd3-delaunay';
 import polygonClipping from 'polygon-clipping';
 import simplify from 'simplify-js';
 
+const METRO = 'chicago';
+// Required input files must exist:
+// - data/${METRO}-libs.json
+// - data/${METRO}-boundary.geojson
+// Output file:
+// - netlify/functions/static-data/${METRO}-library-map-data.json
+
 // Configuration based on existing scripts and map-svg-spec.md
 const WIDTH = 800;
+// NOTE: These are chicago-specific
 const LNG_MIN = -87.95;
 const LNG_MAX = -87.5;
 const LAT_MIN = 41.63;
 const LAT_MAX = 42.05;
 
 // Dynamic height calculation to match geographic aspect ratio at 41.8° N
+// NOTE: This is chicago-specific
 const ASPECT_RATIO =
   (LAT_MAX - LAT_MIN) /
   ((LNG_MAX - LNG_MIN) * Math.cos((41.8 * Math.PI) / 180));
@@ -36,9 +45,11 @@ function projectY(lat) {
 
 async function generateData() {
   console.log('Loading input files...');
-  const libsData = JSON.parse(fs.readFileSync('scripts/libs-geo.json', 'utf8'));
+  const libsData = JSON.parse(
+    fs.readFileSync(`data/${METRO}-libs.json`, 'utf8'),
+  );
   const boundaryData = JSON.parse(
-    fs.readFileSync('data/chicago-boundary.geojson', 'utf8'),
+    fs.readFileSync(`data/${METRO}-boundary.geojson`, 'utf8'),
   );
 
   // 1. Extract and simplify metro boundary
@@ -138,12 +149,16 @@ async function generateData() {
   // 5. Assemble final JSON object
   console.log('Assembling final JSON...');
   const result = {
+    _INFO: {
+      note: 'GENERATED FILE - DO NOT EDIT',
+      timestamp: new Date().toISOString(),
+    },
     svg: {
       width: WIDTH,
       height: HEIGHT,
     },
     metro: {
-      id: 'chicago',
+      id: METRO,
       outlinePath: metroOutlinePath,
     },
     libraryCells: libraryCells,
@@ -155,7 +170,7 @@ async function generateData() {
     'functions',
     'static-data',
   );
-  const filename = path.join(outputDir, 'chicago-library-map-data.json');
+  const filename = path.join(outputDir, `${METRO}-library-map-data.json`);
 
   fs.writeFileSync(filename, JSON.stringify(result, null, 2));
   console.log(`Successfully generated ${filename}`);
