@@ -27,7 +27,7 @@ intro(`Generating library map data for ${options.metro}`);
 // - data/${options.metro}-libs.json
 // - data/${options.metro}-boundary.geojson
 // Output file:
-// - netlify/functions/static-data/${options.metro}-library-map-data.json
+// - data/${options.metro}-library-map-data.json
 
 // Configuration
 const WIDTH = 800;
@@ -182,12 +182,7 @@ async function generateData() {
     libraryCells: libraryCells,
   };
 
-  const outputDir = path.join(
-    process.cwd(),
-    'netlify',
-    'functions',
-    'static-data',
-  );
+  const outputDir = path.join(process.cwd(), 'data');
   const filename = path.join(
     outputDir,
     `${options.metro}-library-map-data.json`,
