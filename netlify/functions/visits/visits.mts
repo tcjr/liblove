@@ -1,6 +1,3 @@
-import { db } from '../../../db/index';
-import { visits, users } from '../../../db/schema';
-import { and, eq } from 'drizzle-orm';
 import type { Context, Config } from '@netlify/functions';
 import { getUser as originalGetUser } from '@netlify/identity';
 
@@ -9,8 +6,8 @@ export const config: Config = {
 };
 
 interface VisitPayload {
-  libraryId?: string;
-  visitedAt?: string;
+  libraryId: string;
+  visitedAt: string;
 }
 
 function errorResponse(title: string, detail: string, status: number) {
@@ -52,12 +49,8 @@ export default async (req: Request, context: Context) => {
     );
   }
 
-  // Get the internal user record
-  const [userRecord] = await db
-    .select()
-    .from(users)
-    .where(eq(users.netlifyId, netlifyUser.id))
-    .limit(1);
+  // Get the internal user data (blob?). For now, just use the netlify id.
+  const userRecord = { id: netlifyUser.id };
 
   if (!userRecord) {
     return new Response(
@@ -80,44 +73,26 @@ export default async (req: Request, context: Context) => {
 
   const userId = userRecord.id;
 
-  if (req.method === 'GET') {
-    const userVisits = await db
-      .select()
-      .from(visits)
-      .where(eq(visits.userId, userId));
+  // ===============
+  // GET
+  // ===============
 
-    return new Response(
-      JSON.stringify({
-        data: userVisits.map((v) => ({
-          type: 'visit',
-          id: String(v.id),
-          attributes: {
-            visitedAt: v.visitedAt,
-          },
-          relationships: {
-            library: {
-              links: {
-                related: `/api/libraries/${v.libraryId}`,
-              },
-              data: {
-                type: 'library',
-                id: String(v.libraryId),
-              },
-            },
-          },
-        })),
-        included: userVisits.map((v) => ({
-          type: 'library',
-          id: String(v.libraryId),
-          // NOTE: we could add attributes here, but we don't need to since
-          // we only care about the ids. This causes a warning in the console.
-          attributes: {},
-        })),
-      }),
+  if (req.method === 'GET') {
+    // Look up the REAL visits
+    const userVisits: VisitPayload[] = [
       {
-        headers: { 'Content-Type': 'application/vnd.api+json' },
+        libraryId: 'altgeld',
+        visitedAt: '2026-02-01',
       },
-    );
+      {
+        libraryId: 'harold-washington',
+        visitedAt: '2026-03-04',
+      },
+    ];
+
+    return new Response(JSON.stringify(userVisits), {
+      headers: { 'Content-Type': 'application/vnd.api+json' },
+    });
   }
 
   if (req.method === 'POST') {
@@ -131,52 +106,12 @@ export default async (req: Request, context: Context) => {
       return errorResponse('Bad Request', 'Missing required fields', 400);
     }
 
-    type Visit = typeof visits.$inferSelect;
+    // TODO: save the visit
 
-    try {
-      const newVisits = await db
-        .insert(visits)
-        .values({
-          userId,
-          libraryId: parseInt(libraryId, 10),
-          visitedAt: new Date(visitedAt),
-        })
-        .onConflictDoNothing()
-        .returning();
-
-      const newVisit = newVisits[0] as Visit;
-
-      return new Response(
-        JSON.stringify({
-          data: {
-            type: 'visit',
-            id: String(newVisit.id),
-            attributes: {
-              visitedAt: newVisit.visitedAt,
-            },
-            relationships: {
-              library: {
-                links: {
-                  related: `/api/libraries/${newVisit.libraryId}`,
-                },
-                data: {
-                  type: 'library',
-                  id: String(newVisit.libraryId),
-                },
-              },
-            },
-          },
-          included: [{ type: 'library', id: String(newVisit.libraryId) }],
-        }),
-        {
-          status: 201,
-          headers: { 'Content-Type': 'application/vnd.api+json' },
-        },
-      );
-    } catch (error) {
-      console.error(error);
-      return errorResponse('Failed to record visit', 'insert failed', 500);
-    }
+    return new Response(JSON.stringify({ message: 'saved (not really)' }), {
+      status: 201,
+      headers: { 'Content-Type': 'application/vnd.api+json' },
+    });
   }
 
   if (req.method === 'DELETE') {
@@ -186,27 +121,12 @@ export default async (req: Request, context: Context) => {
       return errorResponse('Bad Request', 'Missing visit ID in URL', 400);
     }
 
-    try {
-      await db
-        .delete(visits)
-        .where(
-          and(eq(visits.userId, userId), eq(visits.id, parseInt(visitId, 10))),
-        );
+    // TODO: delete the visit
 
-      return new Response(
-        // The payload seems to be required so it is properly deleted from the client-side cache
-        JSON.stringify({
-          data: null,
-        }),
-        {
-          status: 200,
-          headers: { 'Content-Type': 'application/vnd.api+json' },
-        },
-      );
-    } catch (error) {
-      console.error(error);
-      return errorResponse('Failed to delete visit', 'delete failed', 500);
-    }
+    return new Response(JSON.stringify({ message: 'removed (not really)' }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/vnd.api+json' },
+    });
   }
 
   return new Response('Method not allowed', { status: 405 });
