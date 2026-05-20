@@ -51,7 +51,7 @@ export default defineConfig({
     }),
     tailwindcss(),
     emberSsg({
-      routes: ['index', 'about'],
+      routes: ['index', 'about', 'libraries'],
     }),
   ],
 });

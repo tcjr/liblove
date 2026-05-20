@@ -21,6 +21,7 @@ export default class LibrariesComponent extends Component {
 
   @cached
   get librariesRequest() {
+    console.log('MAKING STORE REQUEST');
     return this.store.request(getLibraries('chicago'));
   }
 

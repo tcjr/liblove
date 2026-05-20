@@ -1,5 +1,5 @@
 [build]
-  command = "pnpm build"
+  command = "pnpm build:ember"
   publish = "dist"
   functions = "netlify/functions"
 
