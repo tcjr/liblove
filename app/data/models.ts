@@ -35,3 +35,9 @@ export interface MetroLibraryMap {
   svg: Svg;
   libraryCells: Cell[];
 }
+
+export interface Visit {
+  id: string;
+  library: Library;
+  visitedAt: Date;
+}
