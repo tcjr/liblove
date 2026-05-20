@@ -6,7 +6,7 @@
 
 # generated
 /netlify/database/migrations/
-/netlify/functions/static-data/chicago-library-map-data.json
+/data/chicago-library-map-data.json
 
 # misc
 /coverage/

@@ -1,16 +1,13 @@
 import { pageTitle } from 'ember-page-title';
 import { tracked } from '@glimmer/tracking';
-import { service } from '@ember/service';
+// import { service } from '@ember/service';
 import Component from '@glimmer/component';
-import type Store from '#app/services/store.ts';
 import LibraryMap from '#app/components/library/map.gts';
 import { ResponsiveImage } from '@responsive-image/ember';
 import { netlify } from '@responsive-image/cdn';
 import { concat } from '@ember/helper';
 import LibraryTabber from '#app/components/library/tabber.gts';
 import { asMonthDayYear } from '#app/utils/dates.ts';
-// import MakeNewVisit from '#app/components/make-new-visit.gts';
-// import RemoveVisit from '#app/components/remove-visit.gts';
 import type { Library, MetroLibraryMap, Visit } from '#app/data/models.ts';
 
 interface MyVisitsSignature {
@@ -21,8 +18,6 @@ interface MyVisitsSignature {
 }
 
 export default class MyVisitsComponent extends Component<MyVisitsSignature> {
-  @service declare store: Store;
-
   // DATA
 
   get libraries() {

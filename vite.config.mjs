@@ -16,13 +16,8 @@ export default defineConfig({
       //    fail, lead to flaky behaviour or duplicated test runs.
       'ember-source/@ember/service/index.js',
       '@embroider/router',
-      '@warp-drive/legacy',
-      '@warp-drive/json-api',
       'ember-page-title',
-      '@warp-drive/ember',
       'ember-source/@ember/routing/index.js',
-      '@warp-drive/core/reactive',
-      '@warp-drive/core/request',
       'ember-source/@ember/reactive/collections.js',
       'ember-source/@glimmer/tracking/index.js',
       '@responsive-image/ember',
