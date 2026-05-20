@@ -7,8 +7,9 @@ import type { ReactiveDataDocument } from '@warp-drive/core/reactive';
 /** Builds a request to fetch all libraries. */
 export function getLibraries(metroId: string) {
   return withResponseType<ReactiveDataDocument<Library[]>>({
+    url: `https://liblove.netlify.app/api/libraries/${metroId}`,
     // url: `/api/libraries/${metroId}`,
-    url: `/.netlify/functions/libraries/${metroId}`,
+    // url: `/.netlify/functions/libraries/${metroId}`,
     method: 'GET',
   });
 }
