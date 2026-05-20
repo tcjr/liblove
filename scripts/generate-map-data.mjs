@@ -3,15 +3,33 @@ import path from 'path';
 import { Delaunay } from 'd3-delaunay';
 import polygonClipping from 'polygon-clipping';
 import simplify from 'simplify-js';
+import { Command } from 'commander';
+import { intro, log, outro } from '@clack/prompts';
 
-const METRO = 'chicago';
+const program = new Command();
+
+program.option('-m, --metro <name>', 'metro name', 'chicago');
+
+program.parse();
+
+const options = program.opts();
+
+if (options.metro) {
+  if (options.metro !== 'chicago') {
+    console.error('Invalid metro name, only "chicago" is currently supported.');
+    process.exit(1);
+  }
+}
+
+intro(`Generating library map data for ${options.metro}`);
+
 // Required input files must exist:
-// - data/${METRO}-libs.json
-// - data/${METRO}-boundary.geojson
+// - data/${options.metro}-libs.json
+// - data/${options.metro}-boundary.geojson
 // Output file:
-// - netlify/functions/static-data/${METRO}-library-map-data.json
+// - netlify/functions/static-data/${options.metro}-library-map-data.json
 
-// Configuration based on existing scripts and map-svg-spec.md
+// Configuration
 const WIDTH = 800;
 // NOTE: These are chicago-specific
 const LNG_MIN = -87.95;
@@ -29,7 +47,7 @@ const HEIGHT = Math.round(WIDTH * ASPECT_RATIO);
 // Douglas-Peucker simplification tolerance.
 const SIMPLIFICATION_TOLERANCE = 10;
 
-console.log(
+log.step(
   `Canvas: ${WIDTH}x${HEIGHT} (Aspect Ratio: ${ASPECT_RATIO.toFixed(3)})`,
 );
 
@@ -44,16 +62,16 @@ function projectY(lat) {
 }
 
 async function generateData() {
-  console.log('Loading input files...');
+  log.step('Loading input files...');
   const libsData = JSON.parse(
-    fs.readFileSync(`data/${METRO}-libs.json`, 'utf8'),
+    fs.readFileSync(`data/${options.metro}-libs.json`, 'utf8'),
   );
   const boundaryData = JSON.parse(
-    fs.readFileSync(`data/${METRO}-boundary.geojson`, 'utf8'),
+    fs.readFileSync(`data/${options.metro}-boundary.geojson`, 'utf8'),
   );
 
   // 1. Extract and simplify metro boundary
-  console.log('Simplifying metro boundary...');
+  log.step('Simplifying metro boundary...');
   let metroPolygons = [];
   boundaryData.features.forEach((feature) => {
     if (feature.geometry.type === 'Polygon') {
@@ -83,13 +101,13 @@ async function generateData() {
   });
 
   // 2. Prepare library points for Voronoi
-  console.log('Generating Voronoi points...');
+  log.step('Generating Voronoi points...');
   const points = libsData.map((lib) => [projectX(lib.lon), projectY(lib.lat)]);
   const delaunay = Delaunay.from(points);
   const voronoi = delaunay.voronoi([0, 0, WIDTH, HEIGHT]);
 
   // 3. Generate clipped Voronoi cells
-  console.log('Generating Voronoi cells data...');
+  log.step('Generating Voronoi cells data...');
   const libraryCells = [];
 
   libsData.forEach((lib, i) => {
@@ -134,7 +152,7 @@ async function generateData() {
   });
 
   // 4. Generate metro outline path
-  console.log('Generating metro outline path...');
+  log.step('Generating metro outline path...');
   const metroOutlinePath = metroPolygons
     .map((poly) => {
       const outerRing = poly[0];
@@ -147,7 +165,7 @@ async function generateData() {
     .join(' ');
 
   // 5. Assemble final JSON object
-  console.log('Assembling final JSON...');
+  log.step('Assembling final JSON...');
   const result = {
     _INFO: {
       note: 'GENERATED FILE - DO NOT EDIT',
@@ -158,7 +176,7 @@ async function generateData() {
       height: HEIGHT,
     },
     metro: {
-      id: METRO,
+      id: options.metro,
       outlinePath: metroOutlinePath,
     },
     libraryCells: libraryCells,
@@ -170,10 +188,15 @@ async function generateData() {
     'functions',
     'static-data',
   );
-  const filename = path.join(outputDir, `${METRO}-library-map-data.json`);
+  const filename = path.join(
+    outputDir,
+    `${options.metro}-library-map-data.json`,
+  );
 
   fs.writeFileSync(filename, JSON.stringify(result, null, 2));
-  console.log(`Successfully generated ${filename}`);
+  log.step(`Successfully generated ${filename}`);
 }
 
 generateData().catch(console.error);
+
+outro('All done');
