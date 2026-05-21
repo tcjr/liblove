@@ -177,6 +177,7 @@ export default defineConfig([
             prelude: '<string>',
             descriptors: {
               themes: '<any-value>',
+              exclude: '<any-value>',
             },
           },
         },
