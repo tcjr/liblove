@@ -83,12 +83,7 @@ export default defineConfig([
     },
   },
   {
-    files: [
-      'netlify/functions/**/*.{ts,mts}',
-      'db/**/*.{ts,mts}',
-      'scripts/**/*.{ts,mts}',
-      'drizzle.config.ts',
-    ],
+    files: ['netlify/functions/**/*.{ts,mts}', 'scripts/**/*.{ts,mts}'],
     languageOptions: {
       parser: ts.parser,
       parserOptions: parserOptions.esm.ts,
