@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 import type { Library } from '#app/data/models.ts';
-// import { service } from '@ember/service';
 import ConfirmButton from './confirm-button.gts';
 
 function getTodayString() {
@@ -16,6 +15,7 @@ function getTodayString() {
 export interface MakeNewVisitSignature {
   Args: {
     library: Library;
+    // TODO:add after add callback
   };
   Blocks: {
     default: [];
@@ -36,7 +36,16 @@ export default class MakeNewVisit extends Component<MakeNewVisitSignature> {
       ? new Date(`${this.selectedDateStr}T12:00:00`)
       : new Date();
 
-    // TODO: actually make visit...
+    await fetch('/api/visits', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        libraryId: this.args.library.id,
+        visitedAt: dateToUse.toISOString(),
+      }),
+    });
   };
 
   <template>

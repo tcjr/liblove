@@ -10,6 +10,7 @@ import LibraryTabber from '#app/components/library/tabber.gts';
 import { asMonthDayYear } from '#app/utils/dates.ts';
 import type { Library, MetroLibraryMap, Visit } from '#app/data/models.ts';
 import { getPromiseState } from 'reactiveweb/get-promise-state';
+import MakeNewVisit from '#app/components/make-new-visit.gts';
 
 async function loadVisits(): Promise<Visit[]> {
   console.log('FETCHING visits');
@@ -221,7 +222,10 @@ export default class MyVisitsComponent extends Component<MyVisitsSignature> {
                   <p>
                     Not yet visited.
                   </p>
-                  {{!-- <MakeNewVisit @library={{this.selectedLibrary}} /> --}}
+                  <MakeNewVisit
+                    @library={{this.selectedLibrary}}
+                    @onSave={{this.updateVisits}}
+                  />
                 {{/if}}
               {{/let}}
 

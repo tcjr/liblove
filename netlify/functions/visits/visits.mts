@@ -1,5 +1,6 @@
 import type { Context, Config } from '@netlify/functions';
 import { getUser as originalGetUser } from '@netlify/identity';
+import { getStore } from '@netlify/blobs';
 
 export const config: Config = {
   path: ['/api/visits', '/api/visits/:id'],
@@ -73,24 +74,22 @@ export default async (req: Request, context: Context) => {
 
   const userId = userRecord.id;
 
+  const store = getStore('library-visits');
+
   // ===============
   // GET
   // ===============
 
   if (req.method === 'GET') {
-    // Look up the REAL visits
-    const userVisits: VisitPayload[] = [
-      {
-        libraryId: 'altgeld',
-        visitedAt: '2026-02-01',
-      },
-      {
-        libraryId: 'harold-washington',
-        visitedAt: '2026-03-04',
-      },
-    ];
+    const userVisits: VisitPayload[] = await store.get(userId, {
+      type: 'json',
+    });
 
-    return new Response(JSON.stringify(userVisits), {
+    console.log(`STORE:`, store);
+    console.log(`STORE list:`, await store.list());
+    console.log(`LOADED userVisits for user '${userId}':`, userVisits);
+
+    return new Response(JSON.stringify(userVisits || []), {
       headers: { 'Content-Type': 'application/vnd.api+json' },
     });
   }
@@ -106,9 +105,20 @@ export default async (req: Request, context: Context) => {
       return errorResponse('Bad Request', 'Missing required fields', 400);
     }
 
-    // TODO: save the visit
+    // TODO: ensure we don't add same library twice (overwrite or reject on dupes)
 
-    return new Response(JSON.stringify({ message: 'saved (not really)' }), {
+    // get visits, append the new one, set visits
+    let visits: VisitPayload[] = await store.get(userId, { type: 'json' });
+    if (!visits) {
+      visits = [];
+    }
+    visits.push(parsed);
+    console.log(
+      `setting visits for user '${userId}' to '${JSON.stringify(visits)}'`,
+    );
+    await store.set(userId, JSON.stringify(visits));
+
+    return new Response(JSON.stringify({ message: 'saved' }), {
       status: 201,
       headers: { 'Content-Type': 'application/vnd.api+json' },
     });
