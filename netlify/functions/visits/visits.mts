@@ -125,7 +125,10 @@ export default async (req: Request, context: Context) => {
 
       // Load existing visits from Blobs.
       const rawVisits =
-        ((await store.get(userId, { type: 'json' })) as RawVisitRecord[]) || [];
+        ((await store.get(userId, {
+          type: 'json',
+          consistency: 'strong',
+        })) as RawVisitRecord[]) || [];
       const visits: VisitRecord[] = rawVisits.map((v) => ({
         id: v.id || v.libraryId || '',
         libraryId: v.libraryId || '',
@@ -171,7 +174,10 @@ export default async (req: Request, context: Context) => {
 
       // Retrieve existing visits list.
       const rawVisits =
-        ((await store.get(userId, { type: 'json' })) as RawVisitRecord[]) || [];
+        ((await store.get(userId, {
+          type: 'json',
+          consistency: 'strong',
+        })) as RawVisitRecord[]) || [];
       const visits: VisitRecord[] = rawVisits.map((v) => ({
         id: v.id || v.libraryId || '',
         libraryId: v.libraryId || '',
