@@ -67,19 +67,9 @@ export default async (req: Request, context: Context) => {
       return errorResponse('Unauthorized', 'Authentication required', 401);
     }
 
-    // Fetch user information. Currently using the Netlify Identity ID directly.
-    const userRecord = { id: netlifyUser.id };
+    // Currently using the Netlify Identity ID directly.
+    const userId = netlifyUser.id;
 
-    // Validate that the user record exists.
-    if (!userRecord) {
-      return errorResponse(
-        'User Not Found',
-        'User record not found in database',
-        404,
-      );
-    }
-
-    const userId = userRecord.id;
     const store = getStore('library-visits');
 
     // ===============

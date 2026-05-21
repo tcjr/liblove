@@ -1,6 +1,5 @@
 import { pageTitle } from 'ember-page-title';
 import { tracked } from '@glimmer/tracking';
-// import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import type Owner from '@ember/owner';
 import LibraryMap from '#app/components/library/map.gts';
@@ -33,7 +32,10 @@ export default class MyVisitsComponent extends Component<MyVisitsSignature> {
 
   constructor(owner: Owner, args: MyVisitsSignature['Args']) {
     super(owner, args);
-    void this.loadVisits();
+    void this.loadVisits().then(() => {
+      // do this on the first load only
+      this.chooseDefaultLibrary();
+    });
   }
 
   loadVisits = async () => {
@@ -64,20 +66,6 @@ export default class MyVisitsComponent extends Component<MyVisitsSignature> {
   updateVisits = () => {
     void this.loadVisits();
   };
-
-  // NOTE: I had a problem sorting because the proxy objects returned by
-  // peekAll did not seem to be actual dates. Not entirely sure what the
-  // problem was, but a string compare works because these are in YYYY-MM-DD
-  // format.
-  // get visits() {
-  //   const unsorted = this.store.peekAll<Visit>('visit').map((v) => v);
-  //   return unsorted.sort((a, b) => {
-  //     console.log(
-  //       `SORT comparing ${a.visitedAt.toString()} and ${b.visitedAt.toString()}`
-  //     );
-  //     return a.visitedAt.toString().localeCompare(b.visitedAt.toString());
-  //   });
-  // }
 
   get visitIds() {
     return new Set(this.visits.map((visit) => visit.libraryId));
@@ -144,8 +132,6 @@ export default class MyVisitsComponent extends Component<MyVisitsSignature> {
   <template>
     {{pageTitle "My Library Visits"}}
 
-    {{! Choose a library once the libraries are loaded }}
-    {{(this.chooseDefaultLibrary)}}
     <div class="flex gap-2">
 
       <div class="w-1/3">
