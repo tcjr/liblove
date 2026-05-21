@@ -46,7 +46,6 @@ export default class LibrariesComponent extends Component<LibsSignature> {
   }
 
   <template>
-    {{log "@model" @model}}
     <div>
       {{@model.libraries.length}}
       libraries loaded

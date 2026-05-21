@@ -6,9 +6,16 @@ export const config: Config = {
   path: ['/api/visits', '/api/visits/:id'],
 };
 
-interface VisitPayload {
+interface VisitRecord {
+  id: string;
   libraryId: string;
   visitedAt: string;
+}
+
+interface RawVisitRecord {
+  id?: string;
+  libraryId?: string;
+  visitedAt?: string;
 }
 
 function errorResponse(title: string, detail: string, status: number) {
@@ -81,23 +88,37 @@ export default async (req: Request, context: Context) => {
   // ===============
 
   if (req.method === 'GET') {
-    const userVisits: VisitPayload[] = await store.get(userId, {
-      type: 'json',
-    });
+    const rawVisits =
+      ((await store.get(userId, {
+        type: 'json',
+      })) as RawVisitRecord[]) || [];
+
+    // Ensure all visits returned have an ID (fallback to libraryId for legacy data)
+    const userVisits: VisitRecord[] = rawVisits.map((v) => ({
+      id: v.id || v.libraryId || '',
+      libraryId: v.libraryId || '',
+      visitedAt: v.visitedAt || '',
+    }));
 
     console.log(`STORE:`, store);
     console.log(`STORE list:`, await store.list());
     console.log(`LOADED userVisits for user '${userId}':`, userVisits);
 
-    return new Response(JSON.stringify(userVisits || []), {
+    return new Response(JSON.stringify(userVisits), {
       headers: { 'Content-Type': 'application/vnd.api+json' },
     });
   }
 
-  if (req.method === 'POST') {
-    const parsed = (await req.json()) as VisitPayload;
+  // ===============
+  // POST
+  // ===============
 
-    // TODO: validate both of these
+  if (req.method === 'POST') {
+    const parsed = (await req.json()) as {
+      libraryId: string;
+      visitedAt: string;
+    };
+
     const libraryId = parsed['libraryId'];
     const visitedAt = parsed['visitedAt'];
 
@@ -105,24 +126,42 @@ export default async (req: Request, context: Context) => {
       return errorResponse('Bad Request', 'Missing required fields', 400);
     }
 
-    // TODO: ensure we don't add same library twice (overwrite or reject on dupes)
+    // get visits, map/normalize legacy data, check for duplicates and append/overwrite
+    const rawVisits =
+      ((await store.get(userId, { type: 'json' })) as RawVisitRecord[]) || [];
+    const visits: VisitRecord[] = rawVisits.map((v) => ({
+      id: v.id || v.libraryId || '',
+      libraryId: v.libraryId || '',
+      visitedAt: v.visitedAt || '',
+    }));
 
-    // get visits, append the new one, set visits
-    let visits: VisitPayload[] = await store.get(userId, { type: 'json' });
-    if (!visits) {
-      visits = [];
+    const existingIndex = visits.findIndex((v) => v.libraryId === libraryId);
+    const newVisit: VisitRecord = {
+      id: crypto.randomUUID(),
+      libraryId,
+      visitedAt,
+    };
+
+    if (existingIndex > -1) {
+      visits[existingIndex] = newVisit; // overwrite / update duplicate
+    } else {
+      visits.push(newVisit);
     }
-    visits.push(parsed);
+
     console.log(
       `setting visits for user '${userId}' to '${JSON.stringify(visits)}'`,
     );
     await store.set(userId, JSON.stringify(visits));
 
-    return new Response(JSON.stringify({ message: 'saved' }), {
+    return new Response(JSON.stringify({ message: 'saved', visit: newVisit }), {
       status: 201,
       headers: { 'Content-Type': 'application/vnd.api+json' },
     });
   }
+
+  // ===============
+  // DELETE
+  // ===============
 
   if (req.method === 'DELETE') {
     const visitId = context.params.id;
@@ -131,9 +170,22 @@ export default async (req: Request, context: Context) => {
       return errorResponse('Bad Request', 'Missing visit ID in URL', 400);
     }
 
-    // TODO: delete the visit
+    const rawVisits =
+      ((await store.get(userId, { type: 'json' })) as RawVisitRecord[]) || [];
+    const visits: VisitRecord[] = rawVisits.map((v) => ({
+      id: v.id || v.libraryId || '',
+      libraryId: v.libraryId || '',
+      visitedAt: v.visitedAt || '',
+    }));
 
-    return new Response(JSON.stringify({ message: 'removed (not really)' }), {
+    const updatedVisits = visits.filter((v) => v.id !== visitId);
+
+    console.log(
+      `setting visits for user '${userId}' after delete to '${JSON.stringify(updatedVisits)}'`,
+    );
+    await store.set(userId, JSON.stringify(updatedVisits));
+
+    return new Response(JSON.stringify({ message: 'removed' }), {
       status: 200,
       headers: { 'Content-Type': 'application/vnd.api+json' },
     });

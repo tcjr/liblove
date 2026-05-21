@@ -11,11 +11,13 @@ import { asMonthDayYear } from '#app/utils/dates.ts';
 import type { Library, MetroLibraryMap, Visit } from '#app/data/models.ts';
 import { getPromiseState } from 'reactiveweb/get-promise-state';
 import MakeNewVisit from '#app/components/make-new-visit.gts';
+import RemoveVisit from '#app/components/remove-visit.gts';
 
 async function loadVisits(): Promise<Visit[]> {
   console.log('FETCHING visits');
   const response = await fetch('/api/visits');
-  return response.json();
+  const data = (await response.json()) as Visit[];
+  return data;
 }
 
 interface MyVisitsSignature {
@@ -27,6 +29,8 @@ interface MyVisitsSignature {
 
 export default class MyVisitsComponent extends Component<MyVisitsSignature> {
   // DATA
+
+  @tracked visitsRefreshCounter = 0;
 
   get libraries() {
     return this.args.model.libraries;
@@ -42,12 +46,19 @@ export default class MyVisitsComponent extends Component<MyVisitsSignature> {
 
   @cached
   get loadVisitsPromise() {
-    return loadVisits();
+    if (this.visitsRefreshCounter > -1) {
+      return loadVisits();
+    }
+    return [];
   }
 
   get visitsState() {
     return getPromiseState(this.loadVisitsPromise);
   }
+
+  updateVisits = () => {
+    this.visitsRefreshCounter++;
+  };
 
   // NOTE: I had a problem sorting because the proxy objects returned by
   // peekAll did not seem to be actual dates. Not entirely sure what the
@@ -217,7 +228,11 @@ export default class MyVisitsComponent extends Component<MyVisitsSignature> {
                     Visited on:
                     {{asMonthDayYear visit.visitedAt}}
                   </p>
-                  {{!-- <RemoveVisit @visit={{visit}} /> --}}
+                  <RemoveVisit
+                    @visit={{visit}}
+                    @library={{this.selectedLibrary}}
+                    @onRemove={{this.updateVisits}}
+                  />
                 {{else}}
                   <p>
                     Not yet visited.

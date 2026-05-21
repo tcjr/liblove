@@ -15,7 +15,7 @@ function getTodayString() {
 export interface MakeNewVisitSignature {
   Args: {
     library: Library;
-    // TODO:add after add callback
+    onSave?: () => void;
   };
   Blocks: {
     default: [];
@@ -36,16 +36,26 @@ export default class MakeNewVisit extends Component<MakeNewVisitSignature> {
       ? new Date(`${this.selectedDateStr}T12:00:00`)
       : new Date();
 
-    await fetch('/api/visits', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        libraryId: this.args.library.id,
-        visitedAt: dateToUse.toISOString(),
-      }),
-    });
+    try {
+      const response = await fetch('/api/visits', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          libraryId: this.args.library.id,
+          visitedAt: dateToUse.toISOString(),
+        }),
+      });
+
+      if (response.ok) {
+        this.args.onSave?.();
+      } else {
+        console.error('Failed to add visit:', response.statusText);
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   <template>
