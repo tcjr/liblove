@@ -1,7 +1,8 @@
 import { pageTitle } from 'ember-page-title';
-import { cached, tracked } from '@glimmer/tracking';
+import { tracked } from '@glimmer/tracking';
 // import { service } from '@ember/service';
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 import LibraryMap from '#app/components/library/map.gts';
 import { ResponsiveImage } from '@responsive-image/ember';
 import { netlify } from '@responsive-image/cdn';
@@ -9,12 +10,10 @@ import { concat } from '@ember/helper';
 import LibraryTabber from '#app/components/library/tabber.gts';
 import { asMonthDayYear } from '#app/utils/dates.ts';
 import type { Library, MetroLibraryMap, Visit } from '#app/data/models.ts';
-import { getPromiseState } from 'reactiveweb/get-promise-state';
 import MakeNewVisit from '#app/components/make-new-visit.gts';
 import RemoveVisit from '#app/components/remove-visit.gts';
 
 async function loadVisits(): Promise<Visit[]> {
-  console.log('FETCHING visits');
   const response = await fetch('/api/visits');
   const data = (await response.json()) as Visit[];
   return data;
@@ -30,7 +29,25 @@ interface MyVisitsSignature {
 export default class MyVisitsComponent extends Component<MyVisitsSignature> {
   // DATA
 
-  @tracked visitsRefreshCounter = 0;
+  @tracked visits: Visit[] = [];
+
+  constructor(owner: Owner, args: MyVisitsSignature['Args']) {
+    super(owner, args);
+    void this.loadVisits();
+  }
+
+  loadVisits = async () => {
+    try {
+      let unsorted = await loadVisits();
+      this.visits = unsorted.sort((a, b) => {
+        return (
+          new Date(a.visitedAt).getTime() - new Date(b.visitedAt).getTime()
+        );
+      });
+    } catch (e) {
+      console.error('Failed to load visits:', e);
+    }
+  };
 
   get libraries() {
     return this.args.model.libraries;
@@ -44,20 +61,8 @@ export default class MyVisitsComponent extends Component<MyVisitsSignature> {
     return this.args.model.map;
   }
 
-  @cached
-  get loadVisitsPromise() {
-    if (this.visitsRefreshCounter > -1) {
-      return loadVisits();
-    }
-    return [];
-  }
-
-  get visitsState() {
-    return getPromiseState(this.loadVisitsPromise);
-  }
-
   updateVisits = () => {
-    this.visitsRefreshCounter++;
+    void this.loadVisits();
   };
 
   // NOTE: I had a problem sorting because the proxy objects returned by
@@ -73,9 +78,6 @@ export default class MyVisitsComponent extends Component<MyVisitsSignature> {
   //     return a.visitedAt.toString().localeCompare(b.visitedAt.toString());
   //   });
   // }
-  get visits(): Visit[] {
-    return this.visitsState.resolved || [];
-  }
 
   get visitIds() {
     return new Set(this.visits.map((visit) => visit.libraryId));
