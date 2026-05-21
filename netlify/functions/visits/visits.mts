@@ -77,10 +77,12 @@ export default async (req: Request, context: Context) => {
     // ===============
 
     if (req.method === 'GET') {
-      // Retrieve the user's visits list from the Netlify Blobs 'library-visits' store.
+      // Retrieve the user's visits list from the Netlify Blobs 'library-visits' store. We use
+      // strong consistency since we read immediately after adding/removing.
       const rawVisits =
         ((await store.get(userId, {
           type: 'json',
+          consistency: 'strong',
         })) as RawVisitRecord[]) || [];
 
       // Map raw blob data to the standard VisitRecord structure, supplying fallbacks for missing fields.
