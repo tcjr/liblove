@@ -35,3 +35,19 @@
 //     }
 //   }
 // }
+
+Cypress.Commands.add('fakeUserLogin', () => {
+  cy.visit('/about');
+  cy.contains('You are not logged in.');
+  cy.contains('Login (fake user)').click();
+
+  cy.contains('You are logged in. (fakeuser@tcjr.org)');
+});
+
+// declare global {
+//   namespace Cypress {
+//     interface Chainable {
+//       fakeUserLogin(): Chainable<void>;
+//     }
+//   }
+// }
