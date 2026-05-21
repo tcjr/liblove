@@ -1,11 +1,11 @@
 import Component from '@glimmer/component';
-import { getMetroLibraryMap } from '#app/data/api';
-import { Request } from '@warp-drive/ember';
 import CellMap from '#app/components/cell-map.gts';
+import type { MetroLibraryMap } from '#app/data/models.ts';
 
 export interface LibraryMapSignature {
   Args: {
-    metroId: string;
+    map: MetroLibraryMap;
+
     selectedId?: string;
     onSelect?: (id: string) => void;
 
@@ -19,8 +19,6 @@ export interface LibraryMapSignature {
 }
 
 export default class LibraryMap extends Component<LibraryMapSignature> {
-  query = getMetroLibraryMap(this.args.metroId);
-
   get visitedIds() {
     return this.args.visitedIds || new Set();
   }
@@ -43,31 +41,16 @@ export default class LibraryMap extends Component<LibraryMapSignature> {
   <template>
     <div ...attributes>
 
-      <Request @query={{this.query}}>
-        <:content as |response|>
-          <CellMap
-            @viewBox="0 0 {{response.data.svg.width}} {{response.data.svg.height}}"
-            @cells={{response.data.libraryCells}}
-            @outlinePath={{response.data.metro.outlinePath}}
-            @selected={{@selectedId}}
-            @onSelect={{this.onSelect}}
-            @highlighted={{@highlightedId}}
-            @onHighlight={{@onHighlight}}
-            @visited={{this.visitedIds}}
-          />
-        </:content>
-        <:loading>
-          <p>Loading ...</p>
-        </:loading>
-        <:error as |e|>
-          <h2>Error loading data</h2>
-          <p>
-            {{e.message}}
-          </p>
-          {{! eslint-disable-next-line ember/template-no-log }}
-          {{log "error" e}}
-        </:error>
-      </Request>
+      <CellMap
+        @viewBox="0 0 {{@map.svg.width}} {{@map.svg.height}}"
+        @cells={{@map.libraryCells}}
+        @outlinePath={{@map.metro.outlinePath}}
+        @selected={{@selectedId}}
+        @onSelect={{this.onSelect}}
+        @highlighted={{@highlightedId}}
+        @onHighlight={{@onHighlight}}
+        @visited={{this.visitedIds}}
+      />
 
     </div>
   </template>

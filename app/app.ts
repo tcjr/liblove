@@ -1,6 +1,5 @@
 import Application from 'ember-strict-application-resolver';
 import PageTitleService from 'ember-page-title/services/page-title';
-import '@warp-drive/ember/install';
 import './styles/app.css';
 
 export default class App extends Application {

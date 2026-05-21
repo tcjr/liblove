@@ -1,21 +1,39 @@
-import { db } from '../../../db/index';
-import { visits, users } from '../../../db/schema';
-import { and, eq } from 'drizzle-orm';
 import type { Context, Config } from '@netlify/functions';
 import { getUser as originalGetUser } from '@netlify/identity';
+import { getStore } from '@netlify/blobs';
 
 export const config: Config = {
   path: ['/api/visits', '/api/visits/:id'],
 };
 
-interface VisitPayload {
+interface VisitRecord {
+  id: string;
+  libraryId: string;
+  visitedAt: string;
+}
+
+interface RawVisitRecord {
+  id?: string;
   libraryId?: string;
   visitedAt?: string;
 }
 
+/**
+ * Standard helper to build JSON:API-compliant HTTP responses.
+ */
+function jsonResponse(data: unknown, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: { 'Content-Type': 'application/vnd.api+json' },
+  });
+}
+
+/**
+ * Helper to build JSON:API-formatted error responses.
+ */
 function errorResponse(title: string, detail: string, status: number) {
-  return new Response(
-    JSON.stringify({
+  return jsonResponse(
+    {
       errors: [
         {
           status: String(status),
@@ -23,191 +41,172 @@ function errorResponse(title: string, detail: string, status: number) {
           detail,
         },
       ],
-    }),
-    {
-      status,
-      headers: { 'Content-Type': 'application/vnd.api+json' },
     },
+    status,
   );
 }
 
+/**
+ * Safely parses the request body as JSON, returning null if malformed or empty.
+ */
+async function safeParseJson<T>(req: Request): Promise<T | null> {
+  try {
+    return (await req.json()) as T;
+  } catch {
+    return null;
+  }
+}
+
 export default async (req: Request, context: Context) => {
-  const netlifyUser = await originalGetUser();
+  try {
+    // Authenticate the user session using Netlify Identity.
+    const netlifyUser = await originalGetUser();
 
-  if (!netlifyUser) {
-    return new Response(
-      JSON.stringify({
-        errors: [
-          {
-            status: '401',
-            title: 'Unauthorized',
-            detail: 'Authentication required',
-          },
-        ],
-      }),
-      {
-        status: 401,
-        headers: { 'Content-Type': 'application/vnd.api+json' },
-      },
-    );
-  }
-
-  // Get the internal user record
-  const [userRecord] = await db
-    .select()
-    .from(users)
-    .where(eq(users.netlifyId, netlifyUser.id))
-    .limit(1);
-
-  if (!userRecord) {
-    return new Response(
-      JSON.stringify({
-        errors: [
-          {
-            status: '404',
-            title: 'User Not Found',
-            detail: 'User record not found in database',
-          },
-        ],
-      }),
-      {
-        status: 404,
-        headers: { 'Content-Type': 'application/vnd.api+json' },
-      },
-    );
-  }
-  // console.log('....  we passed all the pre-checks, now on to the actual query');
-
-  const userId = userRecord.id;
-
-  if (req.method === 'GET') {
-    const userVisits = await db
-      .select()
-      .from(visits)
-      .where(eq(visits.userId, userId));
-
-    return new Response(
-      JSON.stringify({
-        data: userVisits.map((v) => ({
-          type: 'visit',
-          id: String(v.id),
-          attributes: {
-            visitedAt: v.visitedAt,
-          },
-          relationships: {
-            library: {
-              links: {
-                related: `/api/libraries/${v.libraryId}`,
-              },
-              data: {
-                type: 'library',
-                id: String(v.libraryId),
-              },
-            },
-          },
-        })),
-        included: userVisits.map((v) => ({
-          type: 'library',
-          id: String(v.libraryId),
-          // NOTE: we could add attributes here, but we don't need to since
-          // we only care about the ids. This causes a warning in the console.
-          attributes: {},
-        })),
-      }),
-      {
-        headers: { 'Content-Type': 'application/vnd.api+json' },
-      },
-    );
-  }
-
-  if (req.method === 'POST') {
-    const parsed = (await req.json()) as VisitPayload;
-
-    // TODO: validate both of these
-    const libraryId = parsed['libraryId'];
-    const visitedAt = parsed['visitedAt'];
-
-    if (!libraryId || !visitedAt) {
-      return errorResponse('Bad Request', 'Missing required fields', 400);
+    // If no valid session is found, return a 401 Unauthorized response in JSON:API format.
+    if (!netlifyUser) {
+      return errorResponse('Unauthorized', 'Authentication required', 401);
     }
 
-    type Visit = typeof visits.$inferSelect;
+    // Currently using the Netlify Identity ID directly.
+    const userId = netlifyUser.id;
 
-    try {
-      const newVisits = await db
-        .insert(visits)
-        .values({
-          userId,
-          libraryId: parseInt(libraryId, 10),
-          visitedAt: new Date(visitedAt),
-        })
-        .onConflictDoNothing()
-        .returning();
+    const store = getStore('library-visits');
 
-      const newVisit = newVisits[0] as Visit;
+    // ===============
+    // GET: Fetch all visits for the authenticated user
+    // ===============
 
-      return new Response(
-        JSON.stringify({
-          data: {
-            type: 'visit',
-            id: String(newVisit.id),
-            attributes: {
-              visitedAt: newVisit.visitedAt,
-            },
-            relationships: {
-              library: {
-                links: {
-                  related: `/api/libraries/${newVisit.libraryId}`,
-                },
-                data: {
-                  type: 'library',
-                  id: String(newVisit.libraryId),
-                },
-              },
-            },
-          },
-          included: [{ type: 'library', id: String(newVisit.libraryId) }],
-        }),
-        {
-          status: 201,
-          headers: { 'Content-Type': 'application/vnd.api+json' },
-        },
-      );
-    } catch (error) {
-      console.error(error);
-      return errorResponse('Failed to record visit', 'insert failed', 500);
-    }
-  }
+    if (req.method === 'GET') {
+      // Retrieve the user's visits list from the Netlify Blobs 'library-visits' store. We use
+      // strong consistency since we read immediately after adding/removing.
+      const rawVisits =
+        ((await store.get(userId, {
+          type: 'json',
+          consistency: 'strong',
+        })) as RawVisitRecord[]) || [];
 
-  if (req.method === 'DELETE') {
-    const visitId = context.params.id;
+      // Map raw blob data to the standard VisitRecord structure, supplying fallbacks for missing fields.
+      const userVisits: VisitRecord[] = rawVisits.map((v) => ({
+        id: v.id || v.libraryId || '',
+        libraryId: v.libraryId || '',
+        visitedAt: v.visitedAt || '',
+      }));
 
-    if (!visitId) {
-      return errorResponse('Bad Request', 'Missing visit ID in URL', 400);
+      // Return the visits array.
+      return jsonResponse(userVisits);
     }
 
-    try {
-      await db
-        .delete(visits)
-        .where(
-          and(eq(visits.userId, userId), eq(visits.id, parseInt(visitId, 10))),
+    // ===============
+    // POST: Record or update a library visit
+    // ===============
+
+    if (req.method === 'POST') {
+      // Parse request body for library details and visit timestamp.
+      const parsed = await safeParseJson<{
+        libraryId: string;
+        visitedAt: string;
+      }>(req);
+
+      if (!parsed) {
+        return errorResponse(
+          'Bad Request',
+          'Malformed or empty JSON payload',
+          400,
         );
+      }
 
-      return new Response(
-        // The payload seems to be required so it is properly deleted from the client-side cache
-        JSON.stringify({
-          data: null,
-        }),
-        {
-          status: 200,
-          headers: { 'Content-Type': 'application/vnd.api+json' },
-        },
+      const libraryId = parsed['libraryId'];
+      const visitedAt = parsed['visitedAt'];
+
+      // Ensure all required fields are present in the request payload.
+      if (!libraryId || !visitedAt) {
+        return errorResponse('Bad Request', 'Missing required fields', 400);
+      }
+
+      // Load existing visits from Blobs.
+      const rawVisits =
+        ((await store.get(userId, {
+          type: 'json',
+          consistency: 'strong',
+        })) as RawVisitRecord[]) || [];
+      const visits: VisitRecord[] = rawVisits.map((v) => ({
+        id: v.id || v.libraryId || '',
+        libraryId: v.libraryId || '',
+        visitedAt: v.visitedAt || '',
+      }));
+
+      // Check if the user has already recorded a visit for this library.
+      const existingIndex = visits.findIndex((v) => v.libraryId === libraryId);
+      const newVisit: VisitRecord = {
+        id: crypto.randomUUID(),
+        libraryId,
+        visitedAt,
+      };
+
+      if (existingIndex > -1) {
+        // Overwrite/update the existing visit for this library (only one record per library).
+        visits[existingIndex] = newVisit;
+      } else {
+        // Append the new visit.
+        visits.push(newVisit);
+      }
+
+      console.log(
+        `setting visits for user '${userId}' to '${JSON.stringify(visits)}'`,
       );
-    } catch (error) {
-      console.error(error);
-      return errorResponse('Failed to delete visit', 'delete failed', 500);
-    }
-  }
+      // Persist the updated visits array back to Blobs.
+      await store.set(userId, JSON.stringify(visits));
 
-  return new Response('Method not allowed', { status: 405 });
+      return jsonResponse({ message: 'saved', visit: newVisit }, 201);
+    }
+
+    // ===============
+    // DELETE: Remove a specific library visit by its ID
+    // ===============
+
+    if (req.method === 'DELETE') {
+      // Extract the specific visit ID from the route parameter context.id.
+      const visitId = context.params.id;
+
+      if (!visitId) {
+        return errorResponse('Bad Request', 'Missing visit ID in URL', 400);
+      }
+
+      // Retrieve existing visits list.
+      const rawVisits =
+        ((await store.get(userId, {
+          type: 'json',
+          consistency: 'strong',
+        })) as RawVisitRecord[]) || [];
+      const visits: VisitRecord[] = rawVisits.map((v) => ({
+        id: v.id || v.libraryId || '',
+        libraryId: v.libraryId || '',
+        visitedAt: v.visitedAt || '',
+      }));
+
+      // Filter out the visit record matching the provided ID.
+      const updatedVisits = visits.filter((v) => v.id !== visitId);
+
+      console.log(
+        `setting visits for user '${userId}' after delete to '${JSON.stringify(updatedVisits)}'`,
+      );
+      // Save the filtered list back to Blobs.
+      await store.set(userId, JSON.stringify(updatedVisits));
+
+      return jsonResponse({ message: 'removed' });
+    }
+
+    return errorResponse(
+      'Method Not Allowed',
+      `Method ${req.method} is not supported`,
+      405,
+    );
+  } catch (error) {
+    console.error('Unhandled exception in visits function:', error);
+    return errorResponse(
+      'Internal Server Error',
+      error instanceof Error ? error.message : 'An unexpected error occurred',
+      500,
+    );
+  }
 };

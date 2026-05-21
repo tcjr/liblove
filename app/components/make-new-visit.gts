@@ -1,10 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
-import type { Library } from '#app/data/library.ts';
-import { service } from '@ember/service';
-import type Store from '#app/services/store.ts';
-import { createVisit } from '#app/data/api.ts';
+import type { Library } from '#app/data/models.ts';
 import ConfirmButton from './confirm-button.gts';
 
 function getTodayString() {
@@ -18,16 +15,11 @@ function getTodayString() {
 export interface MakeNewVisitSignature {
   Args: {
     library: Library;
+    onSave?: () => void;
   };
-  Blocks: {
-    default: [];
-  };
-  Element: null;
 }
 
 export default class MakeNewVisit extends Component<MakeNewVisitSignature> {
-  @service declare store: Store;
-
   @tracked selectedDateStr = getTodayString();
 
   updateDate = (event: Event) => {
@@ -40,9 +32,26 @@ export default class MakeNewVisit extends Component<MakeNewVisitSignature> {
       ? new Date(`${this.selectedDateStr}T12:00:00`)
       : new Date();
 
-    const req = this.store.request(createVisit(this.args.library, dateToUse));
-    const awaitedReq = await req;
-    console.log('awaitedReq', awaitedReq);
+    try {
+      const response = await fetch('/api/visits', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          libraryId: this.args.library.id,
+          visitedAt: dateToUse.toISOString(),
+        }),
+      });
+
+      if (response.ok) {
+        this.args.onSave?.();
+      } else {
+        console.error('Failed to add visit:', response.statusText);
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   <template>

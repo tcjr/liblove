@@ -9,7 +9,6 @@ export default class Router extends EmbroiderRouter {
 Router.map(function () {
   this.route('index', { path: '/' });
   this.route('libraries');
-  this.route('map');
   this.route('about');
   this.route('my-visits');
 });
