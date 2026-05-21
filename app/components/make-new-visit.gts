@@ -17,10 +17,6 @@ export interface MakeNewVisitSignature {
     library: Library;
     onSave?: () => void;
   };
-  Blocks: {
-    default: [];
-  };
-  Element: null;
 }
 
 export default class MakeNewVisit extends Component<MakeNewVisitSignature> {

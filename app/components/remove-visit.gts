@@ -10,7 +10,6 @@ export interface RemoveVisitSignature {
     library: Library;
     onRemove?: () => void;
   };
-  Element: null;
 }
 
 export default class RemoveVisit extends Component<RemoveVisitSignature> {
@@ -31,10 +30,6 @@ export default class RemoveVisit extends Component<RemoveVisitSignature> {
   };
 
   <template>
-    {{!-- <button {{on "click" this.deleteVisit}} class="btn">
-      Click here to remove the Visit for this library
-    </button> --}}
-
     <ConfirmButton
       @title="Delete Visit"
       @confirmText="Yes, remove visit"
