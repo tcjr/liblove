@@ -37,8 +37,10 @@ function errorResponse(title: string, detail: string, status: number) {
 }
 
 export default async (req: Request, context: Context) => {
+  // Authenticate the user session using Netlify Identity.
   const netlifyUser = await originalGetUser();
 
+  // If no valid session is found, return a 401 Unauthorized response in JSON:API format.
   if (!netlifyUser) {
     return new Response(
       JSON.stringify({
@@ -57,9 +59,10 @@ export default async (req: Request, context: Context) => {
     );
   }
 
-  // Get the internal user data (blob?). For now, just use the netlify id.
+  // Fetch user information. Currently using the Netlify Identity ID directly.
   const userRecord = { id: netlifyUser.id };
 
+  // Validate that the user record exists.
   if (!userRecord) {
     return new Response(
       JSON.stringify({
@@ -84,36 +87,35 @@ export default async (req: Request, context: Context) => {
   const store = getStore('library-visits');
 
   // ===============
-  // GET
+  // GET: Fetch all visits for the authenticated user
   // ===============
 
   if (req.method === 'GET') {
+    // Retrieve the user's visits list from the Netlify Blobs 'library-visits' store.
     const rawVisits =
       ((await store.get(userId, {
         type: 'json',
       })) as RawVisitRecord[]) || [];
 
-    // Ensure all visits returned have an ID (fallback to libraryId for legacy data)
+    // Map raw blob data to the standard VisitRecord structure, supplying fallbacks for missing fields.
     const userVisits: VisitRecord[] = rawVisits.map((v) => ({
       id: v.id || v.libraryId || '',
       libraryId: v.libraryId || '',
       visitedAt: v.visitedAt || '',
     }));
 
-    console.log(`STORE:`, store);
-    console.log(`STORE list:`, await store.list());
-    console.log(`LOADED userVisits for user '${userId}':`, userVisits);
-
+    // Return the visits array.
     return new Response(JSON.stringify(userVisits), {
       headers: { 'Content-Type': 'application/vnd.api+json' },
     });
   }
 
   // ===============
-  // POST
+  // POST: Record or update a library visit
   // ===============
 
   if (req.method === 'POST') {
+    // Parse request body for library details and visit timestamp.
     const parsed = (await req.json()) as {
       libraryId: string;
       visitedAt: string;
@@ -122,11 +124,12 @@ export default async (req: Request, context: Context) => {
     const libraryId = parsed['libraryId'];
     const visitedAt = parsed['visitedAt'];
 
+    // Ensure all required fields are present in the request payload.
     if (!libraryId || !visitedAt) {
       return errorResponse('Bad Request', 'Missing required fields', 400);
     }
 
-    // get visits, map/normalize legacy data, check for duplicates and append/overwrite
+    // Load existing visits from Blobs.
     const rawVisits =
       ((await store.get(userId, { type: 'json' })) as RawVisitRecord[]) || [];
     const visits: VisitRecord[] = rawVisits.map((v) => ({
@@ -135,6 +138,7 @@ export default async (req: Request, context: Context) => {
       visitedAt: v.visitedAt || '',
     }));
 
+    // Check if the user has already recorded a visit for this library.
     const existingIndex = visits.findIndex((v) => v.libraryId === libraryId);
     const newVisit: VisitRecord = {
       id: crypto.randomUUID(),
@@ -143,14 +147,17 @@ export default async (req: Request, context: Context) => {
     };
 
     if (existingIndex > -1) {
-      visits[existingIndex] = newVisit; // overwrite / update duplicate
+      // Overwrite/update the existing visit for this library (only one record per library).
+      visits[existingIndex] = newVisit;
     } else {
+      // Append the new visit.
       visits.push(newVisit);
     }
 
     console.log(
       `setting visits for user '${userId}' to '${JSON.stringify(visits)}'`,
     );
+    // Persist the updated visits array back to Blobs.
     await store.set(userId, JSON.stringify(visits));
 
     return new Response(JSON.stringify({ message: 'saved', visit: newVisit }), {
@@ -160,16 +167,18 @@ export default async (req: Request, context: Context) => {
   }
 
   // ===============
-  // DELETE
+  // DELETE: Remove a specific library visit by its ID
   // ===============
 
   if (req.method === 'DELETE') {
+    // Extract the specific visit ID from the route parameter context.id.
     const visitId = context.params.id;
 
     if (!visitId) {
       return errorResponse('Bad Request', 'Missing visit ID in URL', 400);
     }
 
+    // Retrieve existing visits list.
     const rawVisits =
       ((await store.get(userId, { type: 'json' })) as RawVisitRecord[]) || [];
     const visits: VisitRecord[] = rawVisits.map((v) => ({
@@ -178,11 +187,13 @@ export default async (req: Request, context: Context) => {
       visitedAt: v.visitedAt || '',
     }));
 
+    // Filter out the visit record matching the provided ID.
     const updatedVisits = visits.filter((v) => v.id !== visitId);
 
     console.log(
       `setting visits for user '${userId}' after delete to '${JSON.stringify(updatedVisits)}'`,
     );
+    // Save the filtered list back to Blobs.
     await store.set(userId, JSON.stringify(updatedVisits));
 
     return new Response(JSON.stringify({ message: 'removed' }), {
