@@ -24,6 +24,7 @@ import n from 'eslint-plugin-n';
 import babelParser from '@babel/eslint-parser/experimental-worker';
 import css from '@eslint/css';
 import { tailwind4 } from 'tailwind-csstree';
+import pluginCypress from 'eslint-plugin-cypress';
 
 const parserOptions = {
   esm: {
@@ -96,6 +97,15 @@ export default defineConfig([
 
   // GJS/GTS template part
   ...templateConfig,
+
+  // TESTING (cypress)
+  {
+    files: ['cypress/**/*.{js,ts}'],
+    extends: [pluginCypress.configs.globals],
+    plugins: {
+      cypress: pluginCypress,
+    },
+  },
 
   // TESTING (vitest)
   {
