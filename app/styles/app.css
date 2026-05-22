@@ -2,6 +2,8 @@
 
 @plugin "daisyui" {
   themes: nord --default;
+  /* To supress a build-time warning: */
+  exclude: properties;
 }
 
 :root {

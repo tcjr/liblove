@@ -5,7 +5,6 @@
 /dist/
 
 # generated
-/netlify/database/migrations/
 /data/chicago-library-map-data.json
 
 # misc
