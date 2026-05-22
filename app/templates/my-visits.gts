@@ -30,7 +30,7 @@ export default class MyVisitsComponent extends Component<MyVisitsSignature> {
   }
 
   get visits() {
-    return [...this.visitsService.records].sort((a, b) => {
+    return [...this.visitsService.libraryVisits].sort((a, b) => {
       return a.visitedAt.getTime() - b.visitedAt.getTime();
     });
   }
