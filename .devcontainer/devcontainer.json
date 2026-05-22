@@ -1,6 +1,14 @@
 {
-	"name": "Liblove Dev Container",
-	"image": "mcr.microsoft.com/devcontainers/universal:5",
-	"forwardPorts": [8888],
-	"postCreateCommand": "pnpm install"
+	"name": "Liblove Dev Container with Cypress",
+  "image": "cypress/included:15.15.0",
+  "forwardPorts": [6080, 5901, 8888],
+  "features": {
+      "ghcr.io/devcontainers/features/desktop-lite:1": {}
+  },
+  "portsAttributes": {
+    "6080": {
+      "label": "desktop"
+    }
+  },
+  "postCreateCommand": "pnpm install && cypress install"
 }
