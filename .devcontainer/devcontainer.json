@@ -3,12 +3,14 @@
   "image": "cypress/included:15.15.0",
   "forwardPorts": [6080, 5901, 8888],
   "features": {
-      "ghcr.io/devcontainers/features/desktop-lite:1": {}
+      "ghcr.io/devcontainers/features/desktop-lite:1": {},
+      "ghcr.io/nils-geistmann/devcontainers-features/zsh:0": {},
+      "ghcr.io/devcontainers/features/node:2": {}
   },
   "portsAttributes": {
     "6080": {
       "label": "desktop"
     }
   },
-  "postCreateCommand": "pnpm install && cypress install"
+  "postCreateCommand": "pnpm install"
 }
