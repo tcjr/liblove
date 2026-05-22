@@ -11,8 +11,6 @@ export default class ApplicationComponent extends Component {
       <div>
         <LinkTo @route="index">Home</LinkTo>
         |
-        {{! <LinkTo @route="libraries">Libraries</LinkTo>
-        | }}
         <LinkTo @route="my-visits">My Visits</LinkTo>
         |
         <LinkTo @route="about">About</LinkTo>
@@ -27,10 +25,10 @@ export default class ApplicationComponent extends Component {
     >
       <aside>
         <ChicagoFlag class="w-12 h-12" />
-        <p class="font-thinner">
+        <p class="font-thinner text-xs">
           Made with ♥ at libraries in Chicago, 2026
         </p>
-        <p>tcjr</p>
+        <p class="font-thinner text-xs">tcjr</p>
       </aside>
     </footer>
   </template>

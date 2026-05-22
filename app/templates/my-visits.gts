@@ -1,5 +1,5 @@
 import { pageTitle } from 'ember-page-title';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import type Owner from '@ember/owner';
 import LibraryMap from '#app/components/library/map.gts';
@@ -29,6 +29,7 @@ export default class MyVisitsComponent extends Component<MyVisitsSignature> {
     this.chooseDefaultLibrary();
   }
 
+  @cached
   get visits() {
     return [...this.visitsService.libraryVisits].sort((a, b) => {
       return a.visitedAt.getTime() - b.visitedAt.getTime();
@@ -49,7 +50,7 @@ export default class MyVisitsComponent extends Component<MyVisitsSignature> {
 
   updateVisits = () => {
     // Local storage is reactive and automatically updates the template.
-    // No-op for compatibility.
+    // TODO: add toast or other visual feedback
   };
 
   get visitIds() {
