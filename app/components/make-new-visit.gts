@@ -3,6 +3,8 @@ import { tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 import type { Library } from '#app/data/models.ts';
 import ConfirmButton from './confirm-button.gts';
+import { service } from '@ember/service';
+import type VisitsService from '#app/services/visits.ts';
 
 function getTodayString() {
   const today = new Date();
@@ -20,6 +22,7 @@ export interface MakeNewVisitSignature {
 }
 
 export default class MakeNewVisit extends Component<MakeNewVisitSignature> {
+  @service declare visits: VisitsService;
   @tracked selectedDateStr = getTodayString();
 
   updateDate = (event: Event) => {
@@ -27,30 +30,16 @@ export default class MakeNewVisit extends Component<MakeNewVisitSignature> {
     this.selectedDateStr = target.value;
   };
 
-  makeVisit = async () => {
+  makeVisit = () => {
     const dateToUse = this.selectedDateStr
       ? new Date(`${this.selectedDateStr}T12:00:00`)
       : new Date();
 
     try {
-      const response = await fetch('/api/visits', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          libraryId: this.args.library.id,
-          visitedAt: dateToUse.toISOString(),
-        }),
-      });
-
-      if (response.ok) {
-        this.args.onSave?.();
-      } else {
-        console.error('Failed to add visit:', response.statusText);
-      }
+      this.visits.addVisit(this.args.library.id, dateToUse);
+      this.args.onSave?.();
     } catch (e) {
-      console.error(e);
+      console.error('Failed to add visit:', e);
     }
   };
 
