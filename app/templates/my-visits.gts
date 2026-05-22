@@ -1,5 +1,5 @@
 import { pageTitle } from 'ember-page-title';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import type Owner from '@ember/owner';
 import LibraryMap from '#app/components/library/map.gts';
@@ -8,15 +8,11 @@ import { netlify } from '@responsive-image/cdn';
 import { concat } from '@ember/helper';
 import LibraryTabber from '#app/components/library/tabber.gts';
 import { asMonthDayYear } from '#app/utils/dates.ts';
-import type { Library, MetroLibraryMap, Visit } from '#app/data/models.ts';
+import type { Library, MetroLibraryMap } from '#app/data/models.ts';
 import MakeNewVisit from '#app/components/make-new-visit.gts';
 import RemoveVisit from '#app/components/remove-visit.gts';
-
-async function loadVisits(): Promise<Visit[]> {
-  const response = await fetch('/api/visits');
-  const data = (await response.json()) as Visit[];
-  return data;
-}
+import { service } from '@ember/service';
+import type VisitsService from '#app/services/visits.ts';
 
 interface MyVisitsSignature {
   Args: {
@@ -26,30 +22,19 @@ interface MyVisitsSignature {
 }
 
 export default class MyVisitsComponent extends Component<MyVisitsSignature> {
-  // DATA
-
-  @tracked visits: Visit[] = [];
+  @service('visits') declare visitsService: VisitsService;
 
   constructor(owner: Owner, args: MyVisitsSignature['Args']) {
     super(owner, args);
-    void this.loadVisits().then(() => {
-      // do this on the first load only
-      this.chooseDefaultLibrary();
-    });
+    this.chooseDefaultLibrary();
   }
 
-  loadVisits = async () => {
-    try {
-      let unsorted = await loadVisits();
-      this.visits = unsorted.sort((a, b) => {
-        return (
-          new Date(a.visitedAt).getTime() - new Date(b.visitedAt).getTime()
-        );
-      });
-    } catch (e) {
-      console.error('Failed to load visits:', e);
-    }
-  };
+  @cached
+  get visits() {
+    return [...this.visitsService.libraryVisits].sort((a, b) => {
+      return a.visitedAt.getTime() - b.visitedAt.getTime();
+    });
+  }
 
   get libraries() {
     return this.args.model.libraries;
@@ -64,7 +49,8 @@ export default class MyVisitsComponent extends Component<MyVisitsSignature> {
   }
 
   updateVisits = () => {
-    void this.loadVisits();
+    // Local storage is reactive and automatically updates the template.
+    // TODO: add toast or other visual feedback
   };
 
   get visitIds() {

@@ -1,8 +1,9 @@
 import type { Library, Visit } from '#app/data/models.ts';
 import { asMonthDayYear } from '#app/utils/dates.ts';
-// import { service } from '@ember/service';
+import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import ConfirmButton from './confirm-button.gts';
+import type VisitsService from '#app/services/visits.ts';
 
 export interface RemoveVisitSignature {
   Args: {
@@ -13,19 +14,14 @@ export interface RemoveVisitSignature {
 }
 
 export default class RemoveVisit extends Component<RemoveVisitSignature> {
-  deleteVisit = async () => {
-    try {
-      const response = await fetch(`/api/visits/${this.args.visit.id}`, {
-        method: 'DELETE',
-      });
+  @service declare visits: VisitsService;
 
-      if (response.ok) {
-        this.args.onRemove?.();
-      } else {
-        console.error('Failed to remove visit:', response.statusText);
-      }
+  deleteVisit = () => {
+    try {
+      this.visits.removeVisit(this.args.visit.id);
+      this.args.onRemove?.();
     } catch (e) {
-      console.error(e);
+      console.error('Failed to remove visit:', e);
     }
   };
 
