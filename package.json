@@ -19,7 +19,6 @@
     "lint:types": "ember-tsc --noEmit",
     "start": "netlify dev",
     "start:ember": "vite",
-    "generate:map-data": "node scripts/generate-map-data.mjs",
     "test": "vitest",
     "test:ci": "CI=true vitest run"
   },

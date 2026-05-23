@@ -39,7 +39,7 @@ This project, **liblove**, is an Ember.js application for exploring Chicago Publ
 
 ### Map Generation
 
-- Custom logic in `scripts/generate-map-data.mjs` uses `d3-delaunay` to create Voronoi cells and `polygon-clipping` to fit them within the Chicago city boundary.
+- Custom logic in `scripts/generate-library-map-data.mjs` uses `d3-delaunay` to create Voronoi cells and `polygon-clipping` to fit them within the Chicago city boundary.
 - The output is a static JSON file (`data/chicago-library-map-data.json`) used by the frontend.
 
 ## Building and Running
