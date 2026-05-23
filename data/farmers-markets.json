@@ -1,11 +1,14 @@
 [
   {
+    "id": "edgewater",
     "name": "Edgewater Monday Market",
     "address": "5917 N. Broadway St.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60660",
     "dayOfWeek": "Monday",
+    "lat": 41.9897,
+    "lon": -87.6601,
     "links": [
       {
         "type": "website",
@@ -14,12 +17,15 @@
     ]
   },
   {
+    "id": "lincoln-square",
     "name": "Lincoln Square Farmers Market",
     "address": "2301 W. Leland Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60625",
     "dayOfWeek": "Tuesday",
+    "lat": 41.9669,
+    "lon": -87.6868,
     "links": [
       {
         "type": "instagram",
@@ -32,12 +38,15 @@
     ]
   },
   {
+    "id": "low-line",
     "name": "Low-Line Market",
     "address": "3410 N. Southport Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60657",
     "dayOfWeek": "Tuesday",
+    "lat": 41.9436,
+    "lon": -87.6639,
     "links": [
       {
         "type": "facebook",
@@ -54,12 +63,15 @@
     ]
   },
   {
+    "id": "andersonville",
     "name": "Andersonville Farmers Market",
     "address": "1500 W. Winona St.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60640",
     "dayOfWeek": "Wednesday",
+    "lat": 41.9752,
+    "lon": -87.6681,
     "links": [
       {
         "type": "facebook",
@@ -76,12 +88,15 @@
     ]
   },
   {
+    "id": "green-city-lincoln-park-wednesday",
     "name": "Green City Market (Lincoln Park - Wednesday)",
     "address": "1817 N. Clark St.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60614",
     "dayOfWeek": "Wednesday",
+    "lat": 41.9161,
+    "lon": -87.6354,
     "links": [
       {
         "type": "instagram",
@@ -94,12 +109,15 @@
     ]
   },
   {
+    "id": "ravenswood-community",
     "name": "Ravenswood Community Farmers Market",
     "address": "4900 N. Damen Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60625",
     "dayOfWeek": "Wednesday",
+    "lat": 41.9708,
+    "lon": -87.6796,
     "links": [
       {
         "type": "facebook",
@@ -112,12 +130,15 @@
     ]
   },
   {
+    "id": "uptown",
     "name": "Uptown Farmers Market",
     "address": "1250 W. Sunnyside Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60640",
     "dayOfWeek": "Wednesday",
+    "lat": 41.9632,
+    "lon": -87.6622,
     "links": [
       {
         "type": "facebook",
@@ -134,12 +155,15 @@
     ]
   },
   {
+    "id": "lincoln-square",
     "name": "Lincoln Square Farmers Market",
     "address": "2301 W. Leland Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60625",
     "dayOfWeek": "Thursday",
+    "lat": 41.9669,
+    "lon": -87.6868,
     "links": [
       {
         "type": "instagram",
@@ -152,12 +176,15 @@
     ]
   },
   {
+    "id": "chicago-nettelhorst",
     "name": "Chicago Nettelhorst French Market",
     "address": "3252 N. Broadway",
     "city": "Chicago",
     "state": "IL",
     "zip": "60657",
     "dayOfWeek": "Saturday",
+    "lat": 41.9416,
+    "lon": -87.6443,
     "links": [
       {
         "type": "facebook",
@@ -174,12 +201,15 @@
     ]
   },
   {
+    "id": "green-city-lincoln-park-saturday",
     "name": "Green City Market (Lincoln Park - Saturday)",
     "address": "1817 N. Clark St.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60614",
     "dayOfWeek": "Saturday",
+    "lat": 41.9161,
+    "lon": -87.6354,
     "links": [
       {
         "type": "instagram",
@@ -192,12 +222,15 @@
     ]
   },
   {
+    "id": "lincoln-park",
     "name": "Lincoln Park Farmers Market",
     "address": "Enter at Armitage & Orchard",
     "city": "Chicago",
     "state": "IL",
     "zip": "60614",
     "dayOfWeek": "Saturday",
+    "lat": 41.9181,
+    "lon": -87.6464,
     "links": [
       {
         "type": "facebook",
@@ -210,12 +243,15 @@
     ]
   },
   {
+    "id": "northcenter",
     "name": "Northcenter Farmers Market",
     "address": "4100 N. Damen Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60618",
     "dayOfWeek": "Saturday",
+    "lat": 41.9562,
+    "lon": -87.6791,
     "links": [
       {
         "type": "facebook",
@@ -232,12 +268,15 @@
     ]
   },
   {
+    "id": "glenwood",
     "name": "Glenwood Sunday Market",
     "address": "6960 N. Glenwood Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60626",
     "dayOfWeek": "Sunday",
+    "lat": 42.0084,
+    "lon": -87.6658,
     "links": [
       {
         "type": "facebook",
@@ -254,12 +293,15 @@
     ]
   },
   {
+    "id": "roscoe-village",
     "name": "Roscoe Village Farmers Market",
     "address": "3035 N. Hoyne Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60618",
     "dayOfWeek": "Sunday",
+    "lat": 41.9367,
+    "lon": -87.6806,
     "links": [
       {
         "type": "website",
@@ -268,12 +310,15 @@
     ]
   },
   {
+    "id": "horner-park",
     "name": "Horner Park Farmers Market",
     "address": "2741 W. Montrose Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60618",
     "dayOfWeek": "Saturday",
+    "lat": 41.9606,
+    "lon": -87.6977,
     "links": [
       {
         "type": "facebook",
@@ -290,12 +335,15 @@
     ]
   },
   {
+    "id": "north-branch",
     "name": "North Branch Farmers Market",
     "address": "6525 N. Hiawatha Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60646",
     "dayOfWeek": "Saturday",
+    "lat": 41.9996,
+    "lon": -87.7618,
     "links": [
       {
         "type": "instagram",
@@ -308,12 +356,15 @@
     ]
   },
   {
+    "id": "independence-park",
     "name": "Independence Park Farmers Market",
     "address": "3945 N. Springfield Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60618",
     "dayOfWeek": "Sunday",
+    "lat": 41.9535,
+    "lon": -87.7247,
     "links": [
       {
         "type": "facebook",
@@ -330,12 +381,15 @@
     ]
   },
   {
+    "id": "jefferson-park",
     "name": "Jefferson Park Sunday Market",
     "address": "4818 N. Long Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60630",
     "dayOfWeek": "Sunday",
+    "lat": 41.9686,
+    "lon": -87.7624,
     "links": [
       {
         "type": "facebook",
@@ -352,12 +406,15 @@
     ]
   },
   {
+    "id": "logan-square",
     "name": "Logan Square Farmers Market",
     "address": "2620 N. Milwaukee Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60647",
     "dayOfWeek": "Sunday",
+    "lat": 41.9292,
+    "lon": -87.7013,
     "links": [
       {
         "type": "instagram",
@@ -370,12 +427,15 @@
     ]
   },
   {
+    "id": "north-park",
     "name": "North Park Community Market",
     "address": "5555 North Kimball Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60625",
     "dayOfWeek": "Sunday",
+    "lat": 41.9824,
+    "lon": -87.7144,
     "links": [
       {
         "type": "facebook",
@@ -392,12 +452,15 @@
     ]
   },
   {
+    "id": "portage-park",
     "name": "Portage Park Farmers Market",
     "address": "4100 N. Long Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60641",
     "dayOfWeek": "Sunday",
+    "lat": 41.9553,
+    "lon": -87.7622,
     "links": [
       {
         "type": "instagram",
@@ -410,12 +473,15 @@
     ]
   },
   {
+    "id": "soar",
     "name": "SOAR Farmers Market",
     "address": "220 E. Chicago Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60611",
     "dayOfWeek": "Tuesday",
+    "lat": 41.8973,
+    "lon": -87.6212,
     "links": [
       {
         "type": "instagram",
@@ -428,12 +494,15 @@
     ]
   },
   {
+    "id": "the-farmer-at-the-green",
     "name": "The Farmer at the Green",
     "address": "320 S. Canal St.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60606",
     "dayOfWeek": "Tuesday",
+    "lat": 41.8774,
+    "lon": -87.6398,
     "links": [
       {
         "type": "facebook",
@@ -450,12 +519,15 @@
     ]
   },
   {
+    "id": "growing-solutions-farm-wednesday",
     "name": "Growing Solutions Farm - Onsite Stand (Wednesday)",
     "address": "2200 W. Campbell Park Drive",
     "city": "Chicago",
     "state": "IL",
     "zip": "60612",
     "dayOfWeek": "Wednesday",
+    "lat": 41.8681,
+    "lon": -87.6817,
     "links": [
       {
         "type": "facebook",
@@ -472,12 +544,15 @@
     ]
   },
   {
+    "id": "pioneer-court",
     "name": "Pioneer Court Market Days",
     "address": "401 N. Michigan Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60606",
     "dayOfWeek": "Wednesday",
+    "lat": 41.8895,
+    "lon": -87.6231,
     "links": [
       {
         "type": "facebook",
@@ -494,12 +569,15 @@
     ]
   },
   {
+    "id": "city",
     "name": "City Market In Real Life",
     "address": "835 N. Michigan Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60611",
     "dayOfWeek": "Thursday",
+    "lat": 41.8974,
+    "lon": -87.6239,
     "links": [
       {
         "type": "instagram",
@@ -512,12 +590,15 @@
     ]
   },
   {
+    "id": "daley-plaza",
     "name": "Daley Plaza Farmers Market",
     "address": "50 W. Washington St.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60602",
     "dayOfWeek": "Thursday",
+    "lat": 41.8832,
+    "lon": -87.6302,
     "links": [
       {
         "type": "facebook",
@@ -534,12 +615,15 @@
     ]
   },
   {
+    "id": "growing-solutions-farm-friday",
     "name": "Growing Solutions Farm - Onsite Stand (Friday)",
     "address": "2200 W. Campbell Park Drive",
     "city": "Chicago",
     "state": "IL",
     "zip": "60612",
     "dayOfWeek": "Friday",
+    "lat": 41.8681,
+    "lon": -87.6817,
     "links": [
       {
         "type": "facebook",
@@ -556,12 +640,15 @@
     ]
   },
   {
+    "id": "division-street",
     "name": "Division Street Farmers Market",
     "address": "100 W. Division St.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60610",
     "dayOfWeek": "Saturday",
+    "lat": 41.9038,
+    "lon": -87.6315,
     "links": [
       {
         "type": "facebook",
@@ -578,12 +665,15 @@
     ]
   },
   {
+    "id": "green-city-west-loop",
     "name": "Green City Market (West Loop)",
     "address": "900 W. Monroe St.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60607",
     "dayOfWeek": "Saturday",
+    "lat": 41.8804,
+    "lon": -87.6501,
     "links": [
       {
         "type": "instagram",
@@ -596,12 +686,15 @@
     ]
   },
   {
+    "id": "south-loop-printers-row",
     "name": "South Loop Farmers Market Printers Row",
     "address": "632 S. Dearborn St.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60605",
     "dayOfWeek": "Saturday",
+    "lat": 41.8744,
+    "lon": -87.6291,
     "links": [
       {
         "type": "instagram",
@@ -614,12 +707,15 @@
     ]
   },
   {
+    "id": "maxwell-street",
     "name": "Maxwell Street Market",
     "address": "798 W. Maxwell St.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60607",
     "dayOfWeek": "Sunday",
+    "lat": 41.8646,
+    "lon": -87.6477,
     "links": [
       {
         "type": "facebook",
@@ -636,12 +732,15 @@
     ]
   },
   {
+    "id": "austin-town-hall",
     "name": "Austin Town Hall Farmers Market",
     "address": "5610 W. Lake St.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60644",
     "dayOfWeek": "Thursday",
+    "lat": 41.8879,
+    "lon": -87.7656,
     "links": [
       {
         "type": "facebook",
@@ -658,12 +757,15 @@
     ]
   },
   {
+    "id": "pcc-austin",
     "name": "PCC Austin Farm Stand",
     "address": "330 N. Lotus Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60644",
     "dayOfWeek": "Thursday",
+    "lat": 41.8872,
+    "lon": -87.7618,
     "links": [
       {
         "type": "facebook",
@@ -680,12 +782,15 @@
     ]
   },
   {
+    "id": "garfield-park",
     "name": "Garfield Park Neighborhood Market",
     "address": "135 N. Kedzie Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60612",
     "dayOfWeek": "Saturday",
+    "lat": 41.8841,
+    "lon": -87.7064,
     "links": [
       {
         "type": "instagram",
@@ -698,12 +803,15 @@
     ]
   },
   {
+    "id": "mercadito-dpulgas",
     "name": "Mercadito D'Pulgas",
     "address": "3517 W. 18th St",
     "city": "Chicago",
     "state": "IL",
     "zip": "60623",
     "dayOfWeek": "Sunday",
+    "lat": 41.8572,
+    "lon": -87.7135,
     "links": [
       {
         "type": "facebook",
@@ -712,12 +820,15 @@
     ]
   },
   {
+    "id": "wicker-park",
     "name": "Wicker Park Farmers Market",
     "address": "1425 N. Damen Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60622",
     "dayOfWeek": "Sunday",
+    "lat": 41.908,
+    "lon": -87.6767,
     "links": [
       {
         "type": "instagram",
@@ -730,12 +841,15 @@
     ]
   },
   {
+    "id": "pullman",
     "name": "Pullman Farmers Market",
     "address": "11100 S. Cottage Grove Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60628",
     "dayOfWeek": "Wednesday",
+    "lat": 41.6924,
+    "lon": -87.6046,
     "links": [
       {
         "type": "instagram",
@@ -748,12 +862,15 @@
     ]
   },
   {
+    "id": "olive-harvey-college",
     "name": "Olive Harvey College Market",
     "address": "10001 S. Woodlawn Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60628",
     "dayOfWeek": "Thursday",
+    "lat": 41.7131,
+    "lon": -87.5959,
     "links": [
       {
         "type": "instagram",
@@ -766,12 +883,15 @@
     ]
   },
   {
+    "id": "61st-street",
     "name": "61st Street Farmers Market",
     "address": "6100 S. Blackstone Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60637",
     "dayOfWeek": "Saturday",
+    "lat": 41.7842,
+    "lon": -87.5882,
     "links": [
       {
         "type": "facebook",
@@ -788,12 +908,15 @@
     ]
   },
   {
+    "id": "hegewisch",
     "name": "Hegewisch Farmers Market",
     "address": "13323 S. Green Bay Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60633",
     "dayOfWeek": "Saturday",
+    "lat": 41.6534,
+    "lon": -87.5349,
     "links": [
       {
         "type": "instagram",
@@ -806,12 +929,15 @@
     ]
   },
   {
+    "id": "urban-growers-collectives-south-chicago",
     "name": "Urban Growers Collective’s South Chicago Farm Stand",
     "address": "9001 S. Mackinaw Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60617",
     "dayOfWeek": "Saturday",
+    "lat": 41.7317,
+    "lon": -87.5358,
     "links": [
       {
         "type": "instagram",
@@ -824,12 +950,15 @@
     ]
   },
   {
+    "id": "bronzeville",
     "name": "Bronzeville Farmers Market",
     "address": "4702 S. Martin Luther King Dr.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60615",
     "dayOfWeek": "Sunday",
+    "lat": 41.8094,
+    "lon": -87.6166,
     "links": [
       {
         "type": "instagram",
@@ -842,12 +971,15 @@
     ]
   },
   {
+    "id": "hyde-park",
     "name": "Hyde Park Farmers Market",
     "address": "1516 E. 54th St.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60615",
     "dayOfWeek": "Sunday",
+    "lat": 41.7979,
+    "lon": -87.5878,
     "links": [
       {
         "type": "facebook",
@@ -864,12 +996,15 @@
     ]
   },
   {
+    "id": "growing-home",
     "name": "Growing Home Farmstand",
     "address": "1844 W. 59th St.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60636",
     "dayOfWeek": "Thursday",
+    "lat": 41.7865,
+    "lon": -87.6713,
     "links": [
       {
         "type": "facebook",
@@ -882,12 +1017,15 @@
     ]
   },
   {
+    "id": "englewood-village",
     "name": "Englewood Village Farmers Market",
     "address": "5822 S. Halsted St.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60621",
     "dayOfWeek": "Saturday",
+    "lat": 41.7881,
+    "lon": -87.6444,
     "links": [
       {
         "type": "facebook",
@@ -904,12 +1042,15 @@
     ]
   },
   {
+    "id": "garfield-ridge",
     "name": "Garfield Ridge Gourmet & Artisan Market",
     "address": "6422 W. Archer Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60638",
     "dayOfWeek": "Saturday",
+    "lat": 41.7942,
+    "lon": -87.7825,
     "links": [
       {
         "type": "facebook",
@@ -926,12 +1067,15 @@
     ]
   },
   {
+    "id": "plant-chicago",
     "name": "Plant Chicago Farmers Market",
     "address": "4459 S. Marshfield Ave.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60609",
     "dayOfWeek": "Saturday",
+    "lat": 41.8122,
+    "lon": -87.6663,
     "links": [
       {
         "type": "instagram",
@@ -944,12 +1088,15 @@
     ]
   },
   {
+    "id": "95th-street",
     "name": "95th Street Farmers Market",
     "address": "1835 W. 95th St.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60643",
     "dayOfWeek": "Sunday",
+    "lat": 41.7212,
+    "lon": -87.6677,
     "links": [
       {
         "type": "facebook",
