@@ -208,7 +208,11 @@ export default class LibraryTabber extends Component<LibraryTabberSignature> {
   }
 
   <template>
-    <div class="flex flex-row justify-between" ...attributes>
+    <div
+      class="flex flex-row justify-between"
+      ...attributes
+      data-component="library/tabber"
+    >
       <button type="button" {{on "click" this.choosePrev}} class="btn">
         &larr;
       </button>

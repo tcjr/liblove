@@ -170,7 +170,7 @@ export default class MyVisitsComponent extends Component<MyVisitsSignature> {
         </div>
         <div class="divider"></div>
         {{#if this.selectedLibrary}}
-          <div class="px-2 pt-2">
+          <div class="px-2 pt-2" data-test-selected-library>
             <h3
               class="font-black text-3xl text-balance"
             >{{this.selectedLibrary.name}}</h3>
