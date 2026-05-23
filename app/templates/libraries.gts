@@ -1,7 +1,7 @@
 import LibraryList from '#app/components/library/list.gts';
 import LibraryMap from '#app/components/library/map.gts';
 import LibraryTabber from '#app/components/library/tabber.gts';
-import type { Library, MetroLibraryMap } from '#app/data/models.ts';
+import type { Library, MetroCellMap } from '#app/data/models.ts';
 import { concat } from '@ember/helper';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
@@ -10,7 +10,7 @@ import { ResponsiveImage } from '@responsive-image/ember';
 
 interface LibsSignature {
   Args: {
-    model: { libraries: Library[]; map: MetroLibraryMap };
+    model: { libraries: Library[]; map: MetroCellMap };
   };
   Element: HTMLDivElement;
 }
@@ -51,7 +51,7 @@ export default class LibrariesComponent extends Component<LibsSignature> {
       libraries loaded
     </div>
     <div>
-      {{@model.map.libraryCells.length}}
+      {{@model.map.cells.length}}
       map cells loaded for
       {{@model.map.metro.id}}
     </div>

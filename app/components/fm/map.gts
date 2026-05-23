@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import CellMap from '#app/components/cell-map.gts';
 import type { MetroCellMap } from '#app/data/models.ts';
 
-export interface LibraryMapSignature {
+export interface FmMapSignature {
   Args: {
     map: MetroCellMap;
 
@@ -18,7 +18,7 @@ export interface LibraryMapSignature {
   Element: HTMLDivElement;
 }
 
-export default class LibraryMap extends Component<LibraryMapSignature> {
+export default class FmMap extends Component<FmMapSignature> {
   get visitedIds() {
     return this.args.visitedIds || new Set();
   }

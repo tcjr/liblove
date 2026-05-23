@@ -8,7 +8,7 @@ import { netlify } from '@responsive-image/cdn';
 import { concat } from '@ember/helper';
 import LibraryTabber from '#app/components/library/tabber.gts';
 import { asMonthDayYear } from '#app/utils/dates.ts';
-import type { Library, MetroLibraryMap } from '#app/data/models.ts';
+import type { Library, MetroCellMap } from '#app/data/models.ts';
 import MakeNewVisit from '#app/components/make-new-visit.gts';
 import RemoveVisit from '#app/components/remove-visit.gts';
 import { service } from '@ember/service';
@@ -16,7 +16,7 @@ import type VisitsService from '#app/services/visits.ts';
 
 interface MyVisitsSignature {
   Args: {
-    model: { libraries: Library[]; map: MetroLibraryMap };
+    model: { libraries: Library[]; map: MetroCellMap };
   };
   Element: HTMLDivElement;
 }

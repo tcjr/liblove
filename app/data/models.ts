@@ -11,6 +11,17 @@ export interface Library {
   lon: number;
 }
 
+export interface FarmersMarket {
+  id: string;
+  name: string;
+  address: string;
+  city: string;
+  state: string;
+  zip: string;
+  lat: number;
+  lon: number;
+}
+
 interface Metro {
   id: string;
   outlinePath: string;
@@ -29,11 +40,11 @@ interface Svg {
   height: number;
 }
 
-export interface MetroLibraryMap {
+export interface MetroCellMap {
   id: string;
   metro: Metro;
   svg: Svg;
-  libraryCells: Cell[];
+  cells: Cell[];
 }
 
 export interface Visit {

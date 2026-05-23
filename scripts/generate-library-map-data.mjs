@@ -108,7 +108,7 @@ async function generateData() {
 
   // 3. Generate clipped Voronoi cells
   log.step('Generating Voronoi cells data...');
-  const libraryCells = [];
+  const cells = [];
 
   libsData.forEach((lib, i) => {
     const cellPolygon = voronoi.cellPolygon(i);
@@ -138,7 +138,7 @@ async function generateData() {
           });
         });
 
-        libraryCells.push({
+        cells.push({
           id: lib.id,
           name: lib.name,
           outlinePath: outlinePath.trim(),
@@ -179,7 +179,7 @@ async function generateData() {
       id: options.metro,
       outlinePath: metroOutlinePath,
     },
-    libraryCells: libraryCells,
+    cells,
   };
 
   const outputDir = path.join(process.cwd(), 'data');
