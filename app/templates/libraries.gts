@@ -1,6 +1,6 @@
 import LibraryList from '#app/components/library/list.gts';
 import LibraryMap from '#app/components/library/map.gts';
-import LibraryTabber from '#app/components/library/tabber.gts';
+import Tabber from '#app/components/tabber.gts';
 import type { Library, MetroCellMap } from '#app/data/models.ts';
 import { concat } from '@ember/helper';
 import Component from '@glimmer/component';
@@ -65,8 +65,8 @@ export default class LibrariesComponent extends Component<LibsSignature> {
       class="text-center"
     />
 
-    <LibraryTabber
-      @libraries={{this.libraries}}
+    <Tabber
+      @items={{this.libraries}}
       @selectedId={{this.selectedId}}
       @onSelect={{this.selectLibrary}}
       @sort="name"

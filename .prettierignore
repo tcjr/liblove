@@ -6,6 +6,7 @@
 
 # generated
 /data/chicago-library-map-data.json
+/data/chicago-fm-map-data.json
 
 # misc
 /coverage/

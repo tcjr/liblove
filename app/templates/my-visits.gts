@@ -6,7 +6,7 @@ import LibraryMap from '#app/components/library/map.gts';
 import { ResponsiveImage } from '@responsive-image/ember';
 import { netlify } from '@responsive-image/cdn';
 import { concat } from '@ember/helper';
-import LibraryTabber from '#app/components/library/tabber.gts';
+import Tabber from '#app/components/tabber.gts';
 import { asMonthDayYear } from '#app/utils/dates.ts';
 import type { Library, MetroCellMap } from '#app/data/models.ts';
 import MakeNewVisit from '#app/components/make-new-visit.gts';
@@ -121,8 +121,8 @@ export default class MyVisitsComponent extends Component<MyVisitsSignature> {
     <div class="flex gap-2">
 
       <div class="w-1/3">
-        <LibraryTabber
-          @libraries={{this.libraries}}
+        <Tabber
+          @items={{this.libraries}}
           @selectedId={{this.selectedId}}
           @onSelect={{this.selectLibrary}}
           @sort="lon"
