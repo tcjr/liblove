@@ -3,7 +3,7 @@ import { cached, tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import type Owner from '@ember/owner';
 import FmMap from '#app/components/fm/map.gts';
-// import FmTabber from '#app/components/fm/tabber.gts';
+import Tabber from '#app/components/tabber.gts';
 import type { FarmersMarket, MetroCellMap } from '#app/data/models.ts';
 
 interface MyFmVisitsSignature {
@@ -76,14 +76,15 @@ export default class MyVisitsComponent extends Component<MyFmVisitsSignature> {
     <div class="flex gap-2">
 
       <div class="w-1/3">
-        {{!-- <FmTabber
-          @markets={{this.markets}}
+        <Tabber
+          @items={{this.markets}}
           @selectedId={{this.selectedId}}
           @onSelect={{this.selectMarket}}
           @sort="lon"
           class="text-xl font-semibold"
         />
-        <div class="divider"></div> --}}
+        <div class="divider"></div>
+
         <FmMap
           @map={{this.map}}
           @selectedId={{this.selectedId}}
