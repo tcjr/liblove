@@ -1,9 +1,18 @@
 @import 'tailwindcss';
+/* @import '@fontsource/damion/400.css'; */
+/* @import '@fontsource/rubik-dirt/400.css'; */
+@import '@fontsource/shrikhand/400.css';
 
 @plugin "daisyui" {
   themes: nord --default;
   /* To supress a build-time warning: */
   exclude: properties;
+}
+
+@theme {
+  /* --font-logo: 'Damion', sans-serif; */
+  /* --font-logo: 'Rubik Dirt', sans-serif; */
+  --font-logo: 'Shrikhand', sans-serif;
 }
 
 :root {

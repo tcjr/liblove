@@ -4,6 +4,7 @@ import { extensions, ember } from '@embroider/vite';
 import { babel } from '@rollup/plugin-babel';
 import { preview } from '@vitest/browser-preview';
 import { playwright } from '@vitest/browser-playwright';
+import svgJar from '@svg-jar/plugin/vite';
 
 const isCI = process.env.CI === 'true';
 
@@ -44,5 +45,6 @@ export default defineConfig({
       extensions,
     }),
     tailwindcss(),
+    svgJar({ target: 'ember' }),
   ],
 });
