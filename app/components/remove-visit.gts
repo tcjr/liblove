@@ -18,7 +18,7 @@ export default class RemoveVisit extends Component<RemoveVisitSignature> {
 
   deleteVisit = () => {
     try {
-      this.visits.removeVisit(this.args.visit.id);
+      this.visits.removeLibraryVisit(this.args.visit.id);
       this.args.onRemove?.();
     } catch (e) {
       console.error('Failed to remove visit:', e);

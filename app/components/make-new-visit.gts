@@ -36,7 +36,7 @@ export default class MakeNewVisit extends Component<MakeNewVisitSignature> {
       : new Date();
 
     try {
-      this.visits.addVisit(this.args.library.id, dateToUse);
+      this.visits.addLibraryVisit(this.args.library.id, dateToUse);
       this.args.onSave?.();
     } catch (e) {
       console.error('Failed to add visit:', e);
