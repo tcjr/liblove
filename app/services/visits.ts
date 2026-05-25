@@ -5,7 +5,7 @@ import type { Visit } from '#app/data/models.ts';
 
 const LOCAL_STORAGE_KEY = 'liblove:library-visits';
 
-interface VisitData {
+interface LibraryVisitData {
   id: string;
   libraryId: string;
   visitedAt: string | Date;
@@ -23,7 +23,7 @@ export default class VisitsService extends Service {
     try {
       const data = localStorage.getItem(LOCAL_STORAGE_KEY);
       if (data) {
-        const parsed = JSON.parse(data) as VisitData[];
+        const parsed = JSON.parse(data) as LibraryVisitData[];
         this.libraryVisits = parsed.map((v) => ({
           id: v.id,
           libraryId: v.libraryId,
@@ -46,7 +46,7 @@ export default class VisitsService extends Service {
     }
   }
 
-  addVisit(libraryId: string, visitedAt: Date) {
+  addLibraryVisit(libraryId: string, visitedAt: Date) {
     const existingIndex = this.libraryVisits.findIndex(
       (v) => v.libraryId === libraryId
     );
@@ -66,7 +66,7 @@ export default class VisitsService extends Service {
     this.saveToLocalStorage();
   }
 
-  removeVisit(visitId: string) {
+  removeLibraryVisit(visitId: string) {
     this.libraryVisits = this.libraryVisits.filter((v) => v.id !== visitId);
     this.saveToLocalStorage();
   }

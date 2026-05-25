@@ -6,9 +6,9 @@ import LibraryMap from '#app/components/library/map.gts';
 import { ResponsiveImage } from '@responsive-image/ember';
 import { netlify } from '@responsive-image/cdn';
 import { concat } from '@ember/helper';
-import LibraryTabber from '#app/components/library/tabber.gts';
+import Tabber from '#app/components/tabber.gts';
 import { asMonthDayYear } from '#app/utils/dates.ts';
-import type { Library, MetroLibraryMap } from '#app/data/models.ts';
+import type { Library, MetroCellMap } from '#app/data/models.ts';
 import MakeNewVisit from '#app/components/make-new-visit.gts';
 import RemoveVisit from '#app/components/remove-visit.gts';
 import { service } from '@ember/service';
@@ -16,7 +16,7 @@ import type VisitsService from '#app/services/visits.ts';
 
 interface MyVisitsSignature {
   Args: {
-    model: { libraries: Library[]; map: MetroLibraryMap };
+    model: { libraries: Library[]; map: MetroCellMap };
   };
   Element: HTMLDivElement;
 }
@@ -121,8 +121,8 @@ export default class MyVisitsComponent extends Component<MyVisitsSignature> {
     <div class="flex gap-2">
 
       <div class="w-1/3">
-        <LibraryTabber
-          @libraries={{this.libraries}}
+        <Tabber
+          @items={{this.libraries}}
           @selectedId={{this.selectedId}}
           @onSelect={{this.selectLibrary}}
           @sort="lon"
@@ -190,10 +190,10 @@ export default class MyVisitsComponent extends Component<MyVisitsSignature> {
                   aspectRatio=1.5
                 }}
               />
-              <p class="text-right text-base-content/25 text-xs">
+              {{!-- <p class="text-right text-base-content/25 text-xs">
                 library id
                 {{this.selectedLibrary.id}}
-              </p>
+              </p> --}}
             </div>
             <div>
               {{#let (this.getVisit this.selectedLibrary) as |visit|}}
