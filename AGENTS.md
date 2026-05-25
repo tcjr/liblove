@@ -1,6 +1,6 @@
 # Agent Context: liblove
 
-This project, **liblove**, is an Ember.js application for exploring Chicago Public Library locations. It features a unique Voronoi-based map visualization of library service areas.
+This project, **liblove**, is an Ember.js application for exploring Chicago Public locations, currently public libraries and farmer's markets. It features a unique Voronoi-based map visualization of service areas.
 
 ## Project Overview
 
@@ -17,7 +17,7 @@ This project, **liblove**, is an Ember.js application for exploring Chicago Publ
 - `app/`: Frontend source code (Components, Routes, Services, Styles).
 - `netlify/functions/`: Serverless backend functions.
 - `scripts/`: Data processing scripts, specifically for generating the Voronoi map data from GeoJSON.
-- `data/`: Raw geographic and library location data + generated map data.
+- `data/`: Raw geographic and location data + generated map data.
 - `public/`: Static assets, including a large collection of Chicago library images.
 
 ## Architecture & Conventions
@@ -26,21 +26,18 @@ This project, **liblove**, is an Ember.js application for exploring Chicago Publ
 
 - Uses modern "Polaris" patterns: `<template>` tags in `.gts` files for components.
 - State management: `tracked` properties and `ember-resources`.
+- User-specific data is stored in local storage only.
 - Routing: Standard Ember router (`app/router.ts`).
 
 ### Backend (Netlify)
 
-- Functions are located in `netlify/functions/`.
+- Functions are located in `netlify/functions/`. (CURRENTLY NOT USED.)
 - `netlify.toml` handles redirects and configures the build/dev environment.
-
-### Database (Blobs)
-
-- TBD
 
 ### Map Generation
 
-- Custom logic in `scripts/generate-library-map-data.mjs` uses `d3-delaunay` to create Voronoi cells and `polygon-clipping` to fit them within the Chicago city boundary.
-- The output is a static JSON file (`data/chicago-library-map-data.json`) used by the frontend.
+- Custom logic in `scripts/generate-library-map-data.mjs` and `scripts/generate-fm-map-data.mjs` uses `d3-delaunay` to create Voronoi cells and `polygon-clipping` to fit them within the Chicago city boundary.
+- The output are static JSON files (`data/chicago-library-map-data.json` and `data/chicago-fm-map-data.json`) that are used in the frontend.
 
 ## Building and Running
 
