@@ -5,13 +5,15 @@ import ChicagoFlag from '#app/components/chicago-flag.gts';
 
 export default class ApplicationComponent extends Component {
   <template>
-    {{pageTitle "Lib Love"}}
+    {{pageTitle "Exploring Chicago"}}
 
     <nav class="flex flex-row gap-2 items-center py-2 px-4">
       <div>
         <LinkTo @route="index">Home</LinkTo>
         |
-        <LinkTo @route="my-visits">My Visits</LinkTo>
+        <LinkTo @route="my-visits">Libraries</LinkTo>
+        |
+        <LinkTo @route="farmers-markets">Farmer's Markets</LinkTo>
         |
         <LinkTo @route="about">About</LinkTo>
       </div>

@@ -190,10 +190,10 @@ export default class MyVisitsComponent extends Component<MyVisitsSignature> {
                   aspectRatio=1.5
                 }}
               />
-              <p class="text-right text-base-content/25 text-xs">
+              {{!-- <p class="text-right text-base-content/25 text-xs">
                 library id
                 {{this.selectedLibrary.id}}
-              </p>
+              </p> --}}
             </div>
             <div>
               {{#let (this.getVisit this.selectedLibrary) as |visit|}}

@@ -1,20 +1,20 @@
 import { pageTitle } from 'ember-page-title';
-import { cached, tracked } from '@glimmer/tracking';
+import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import type Owner from '@ember/owner';
 import FmMap from '#app/components/fm/map.gts';
 import Tabber from '#app/components/tabber.gts';
 import type { FarmersMarket, MetroCellMap } from '#app/data/models.ts';
 
-interface MyFmVisitsSignature {
+interface FarmersMarketsSignature {
   Args: {
     model: { markets: FarmersMarket[]; map: MetroCellMap };
   };
   Element: HTMLDivElement;
 }
 
-export default class MyVisitsComponent extends Component<MyFmVisitsSignature> {
-  constructor(owner: Owner, args: MyFmVisitsSignature['Args']) {
+export default class FarmersMarketsComponent extends Component<FarmersMarketsSignature> {
+  constructor(owner: Owner, args: FarmersMarketsSignature['Args']) {
     super(owner, args);
     this.chooseDefaultMarket();
   }
@@ -71,7 +71,7 @@ export default class MyVisitsComponent extends Component<MyFmVisitsSignature> {
   };
 
   <template>
-    {{pageTitle "My Farmers Market Visits"}}
+    {{pageTitle "Farmers Markets"}}
 
     <div class="flex gap-2">
 
@@ -109,13 +109,6 @@ export default class MyVisitsComponent extends Component<MyFmVisitsSignature> {
               {{this.selectedMarket.state}}
               {{this.selectedMarket.zip}}
             </address>
-            <div>
-
-              <p class="text-right text-base-content/25 text-xs">
-                market id
-                {{this.selectedMarket.id}}
-              </p>
-            </div>
 
           </div>
         {{/if}}
