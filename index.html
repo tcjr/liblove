@@ -5,13 +5,10 @@
     <title>Liblove</title>
     <meta name="description" content="Libraries and the folks who love them.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- VITE_EMBER_SSR_HEAD -->
   </head>
   <body class="bg-base-100 text-base-content">
-    <script type="module">
-      import Application from './app/app.ts';
-      import config from './app/config.ts';
-
-      Application.create(config.APP);
-    </script>
+    <!-- VITE_EMBER_SSR_BODY -->
+    <script type="module" src="/app/entry.ts"></script>
   </body>
 </html>
