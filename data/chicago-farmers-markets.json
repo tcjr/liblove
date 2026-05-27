@@ -6,7 +6,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60660",
-    "dayOfWeek": "Monday",
+    "dayOfWeek": [
+      "Monday"
+    ],
     "lat": 41.9897,
     "lon": -87.6601,
     "links": [
@@ -23,7 +25,10 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60625",
-    "dayOfWeek": "Tuesday",
+    "dayOfWeek": [
+      "Tuesday",
+      "Thursday"
+    ],
     "lat": 41.9669,
     "lon": -87.6868,
     "links": [
@@ -44,7 +49,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60657",
-    "dayOfWeek": "Tuesday",
+    "dayOfWeek": [
+      "Tuesday"
+    ],
     "lat": 41.9436,
     "lon": -87.6639,
     "links": [
@@ -69,7 +76,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60640",
-    "dayOfWeek": "Wednesday",
+    "dayOfWeek": [
+      "Wednesday"
+    ],
     "lat": 41.9752,
     "lon": -87.6681,
     "links": [
@@ -88,13 +97,16 @@
     ]
   },
   {
-    "id": "green-city-lincoln-park-wednesday",
-    "name": "Green City Market (Lincoln Park - Wednesday)",
+    "id": "green-city-lincoln-park",
+    "name": "Green City Market (Lincoln Park)",
     "address": "1817 N. Clark St.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60614",
-    "dayOfWeek": "Wednesday",
+    "dayOfWeek": [
+      "Wednesday",
+      "Saturday"
+    ],
     "lat": 41.9161,
     "lon": -87.6354,
     "links": [
@@ -115,7 +127,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60625",
-    "dayOfWeek": "Wednesday",
+    "dayOfWeek": [
+      "Wednesday"
+    ],
     "lat": 41.9708,
     "lon": -87.6796,
     "links": [
@@ -136,7 +150,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60640",
-    "dayOfWeek": "Wednesday",
+    "dayOfWeek": [
+      "Wednesday"
+    ],
     "lat": 41.9632,
     "lon": -87.6622,
     "links": [
@@ -155,34 +171,15 @@
     ]
   },
   {
-    "id": "lincoln-square",
-    "name": "Lincoln Square Farmers Market",
-    "address": "2301 W. Leland Ave.",
-    "city": "Chicago",
-    "state": "IL",
-    "zip": "60625",
-    "dayOfWeek": "Thursday",
-    "lat": 41.9669,
-    "lon": -87.6868,
-    "links": [
-      {
-        "type": "instagram",
-        "url": "https://chicago.suntimes.com/food-drink/2026-farmers-market-chicago-hours#"
-      },
-      {
-        "type": "website",
-        "url": "https://chicago.suntimes.com/food-drink/2026-farmers-market-chicago-hours#"
-      }
-    ]
-  },
-  {
     "id": "chicago-nettelhorst",
     "name": "Chicago Nettelhorst French Market",
     "address": "3252 N. Broadway",
     "city": "Chicago",
     "state": "IL",
     "zip": "60657",
-    "dayOfWeek": "Saturday",
+    "dayOfWeek": [
+      "Saturday"
+    ],
     "lat": 41.9416,
     "lon": -87.6443,
     "links": [
@@ -201,34 +198,15 @@
     ]
   },
   {
-    "id": "green-city-lincoln-park-saturday",
-    "name": "Green City Market (Lincoln Park - Saturday)",
-    "address": "1817 N. Clark St.",
-    "city": "Chicago",
-    "state": "IL",
-    "zip": "60614",
-    "dayOfWeek": "Saturday",
-    "lat": 41.9161,
-    "lon": -87.6354,
-    "links": [
-      {
-        "type": "instagram",
-        "url": "https://www.google.com/maps/search/?api=1&query=1817%20N.%20Clark%20St.%2C%20Chicago%2C%20IL%2060614"
-      },
-      {
-        "type": "website",
-        "url": "https://www.google.com/maps/search/?api=1&query=1817%20N.%20Clark%20St.%2C%20Chicago%2C%20IL%2060614"
-      }
-    ]
-  },
-  {
     "id": "lincoln-park",
     "name": "Lincoln Park Farmers Market",
     "address": "Enter at Armitage & Orchard",
     "city": "Chicago",
     "state": "IL",
     "zip": "60614",
-    "dayOfWeek": "Saturday",
+    "dayOfWeek": [
+      "Saturday"
+    ],
     "lat": 41.9181,
     "lon": -87.6464,
     "links": [
@@ -249,7 +227,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60618",
-    "dayOfWeek": "Saturday",
+    "dayOfWeek": [
+      "Saturday"
+    ],
     "lat": 41.9562,
     "lon": -87.6791,
     "links": [
@@ -274,7 +254,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60626",
-    "dayOfWeek": "Sunday",
+    "dayOfWeek": [
+      "Sunday"
+    ],
     "lat": 42.0084,
     "lon": -87.6658,
     "links": [
@@ -299,7 +281,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60618",
-    "dayOfWeek": "Sunday",
+    "dayOfWeek": [
+      "Sunday"
+    ],
     "lat": 41.9367,
     "lon": -87.6806,
     "links": [
@@ -316,7 +300,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60618",
-    "dayOfWeek": "Saturday",
+    "dayOfWeek": [
+      "Saturday"
+    ],
     "lat": 41.9606,
     "lon": -87.6977,
     "links": [
@@ -341,7 +327,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60646",
-    "dayOfWeek": "Saturday",
+    "dayOfWeek": [
+      "Saturday"
+    ],
     "lat": 41.9996,
     "lon": -87.7618,
     "links": [
@@ -362,7 +350,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60618",
-    "dayOfWeek": "Sunday",
+    "dayOfWeek": [
+      "Sunday"
+    ],
     "lat": 41.9535,
     "lon": -87.7247,
     "links": [
@@ -387,7 +377,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60630",
-    "dayOfWeek": "Sunday",
+    "dayOfWeek": [
+      "Sunday"
+    ],
     "lat": 41.9686,
     "lon": -87.7624,
     "links": [
@@ -412,7 +404,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60647",
-    "dayOfWeek": "Sunday",
+    "dayOfWeek": [
+      "Sunday"
+    ],
     "lat": 41.9292,
     "lon": -87.7013,
     "links": [
@@ -433,7 +427,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60625",
-    "dayOfWeek": "Sunday",
+    "dayOfWeek": [
+      "Sunday"
+    ],
     "lat": 41.9824,
     "lon": -87.7144,
     "links": [
@@ -458,7 +454,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60641",
-    "dayOfWeek": "Sunday",
+    "dayOfWeek": [
+      "Sunday"
+    ],
     "lat": 41.9553,
     "lon": -87.7622,
     "links": [
@@ -479,7 +477,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60611",
-    "dayOfWeek": "Tuesday",
+    "dayOfWeek": [
+      "Tuesday"
+    ],
     "lat": 41.8973,
     "lon": -87.6212,
     "links": [
@@ -500,7 +500,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60606",
-    "dayOfWeek": "Tuesday",
+    "dayOfWeek": [
+      "Tuesday"
+    ],
     "lat": 41.8774,
     "lon": -87.6398,
     "links": [
@@ -519,13 +521,16 @@
     ]
   },
   {
-    "id": "growing-solutions-farm-wednesday",
-    "name": "Growing Solutions Farm - Onsite Stand (Wednesday)",
+    "id": "growing-solutions-farm-onsite-stand",
+    "name": "Growing Solutions Farm - Onsite Stand",
     "address": "2200 W. Campbell Park Drive",
     "city": "Chicago",
     "state": "IL",
     "zip": "60612",
-    "dayOfWeek": "Wednesday",
+    "dayOfWeek": [
+      "Wednesday",
+      "Friday"
+    ],
     "lat": 41.8681,
     "lon": -87.6817,
     "links": [
@@ -550,7 +555,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60606",
-    "dayOfWeek": "Wednesday",
+    "dayOfWeek": [
+      "Wednesday"
+    ],
     "lat": 41.8895,
     "lon": -87.6231,
     "links": [
@@ -575,7 +582,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60611",
-    "dayOfWeek": "Thursday",
+    "dayOfWeek": [
+      "Thursday"
+    ],
     "lat": 41.8974,
     "lon": -87.6239,
     "links": [
@@ -596,7 +605,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60602",
-    "dayOfWeek": "Thursday",
+    "dayOfWeek": [
+      "Thursday"
+    ],
     "lat": 41.8832,
     "lon": -87.6302,
     "links": [
@@ -615,38 +626,15 @@
     ]
   },
   {
-    "id": "growing-solutions-farm-friday",
-    "name": "Growing Solutions Farm - Onsite Stand (Friday)",
-    "address": "2200 W. Campbell Park Drive",
-    "city": "Chicago",
-    "state": "IL",
-    "zip": "60612",
-    "dayOfWeek": "Friday",
-    "lat": 41.8681,
-    "lon": -87.6817,
-    "links": [
-      {
-        "type": "facebook",
-        "url": "https://www.google.com/maps/search/?api=1&query=2200%20W.%20Campbell%20Park%20Drive%2C%20Chicago%2C%20IL%2060612"
-      },
-      {
-        "type": "instagram",
-        "url": "https://www.google.com/maps/search/?api=1&query=2200%20W.%20Campbell%20Park%20Drive%2C%20Chicago%2C%20IL%2060612"
-      },
-      {
-        "type": "website",
-        "url": "https://www.google.com/maps/search/?api=1&query=2200%20W.%20Campbell%20Park%20Drive%2C%20Chicago%2C%20IL%2060612"
-      }
-    ]
-  },
-  {
     "id": "division-street",
     "name": "Division Street Farmers Market",
     "address": "100 W. Division St.",
     "city": "Chicago",
     "state": "IL",
     "zip": "60610",
-    "dayOfWeek": "Saturday",
+    "dayOfWeek": [
+      "Saturday"
+    ],
     "lat": 41.9038,
     "lon": -87.6315,
     "links": [
@@ -671,7 +659,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60607",
-    "dayOfWeek": "Saturday",
+    "dayOfWeek": [
+      "Saturday"
+    ],
     "lat": 41.8804,
     "lon": -87.6501,
     "links": [
@@ -692,7 +682,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60605",
-    "dayOfWeek": "Saturday",
+    "dayOfWeek": [
+      "Saturday"
+    ],
     "lat": 41.8744,
     "lon": -87.6291,
     "links": [
@@ -713,7 +705,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60607",
-    "dayOfWeek": "Sunday",
+    "dayOfWeek": [
+      "Sunday"
+    ],
     "lat": 41.8646,
     "lon": -87.6477,
     "links": [
@@ -738,7 +732,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60644",
-    "dayOfWeek": "Thursday",
+    "dayOfWeek": [
+      "Thursday"
+    ],
     "lat": 41.8879,
     "lon": -87.7656,
     "links": [
@@ -763,7 +759,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60644",
-    "dayOfWeek": "Thursday",
+    "dayOfWeek": [
+      "Thursday"
+    ],
     "lat": 41.8872,
     "lon": -87.7618,
     "links": [
@@ -788,7 +786,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60612",
-    "dayOfWeek": "Saturday",
+    "dayOfWeek": [
+      "Saturday"
+    ],
     "lat": 41.8841,
     "lon": -87.7064,
     "links": [
@@ -809,7 +809,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60623",
-    "dayOfWeek": "Sunday",
+    "dayOfWeek": [
+      "Sunday"
+    ],
     "lat": 41.8572,
     "lon": -87.7135,
     "links": [
@@ -826,7 +828,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60622",
-    "dayOfWeek": "Sunday",
+    "dayOfWeek": [
+      "Sunday"
+    ],
     "lat": 41.908,
     "lon": -87.6767,
     "links": [
@@ -847,7 +851,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60628",
-    "dayOfWeek": "Wednesday",
+    "dayOfWeek": [
+      "Wednesday"
+    ],
     "lat": 41.6924,
     "lon": -87.6046,
     "links": [
@@ -868,7 +874,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60628",
-    "dayOfWeek": "Thursday",
+    "dayOfWeek": [
+      "Thursday"
+    ],
     "lat": 41.7131,
     "lon": -87.5959,
     "links": [
@@ -889,7 +897,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60637",
-    "dayOfWeek": "Saturday",
+    "dayOfWeek": [
+      "Saturday"
+    ],
     "lat": 41.7842,
     "lon": -87.5882,
     "links": [
@@ -914,7 +924,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60633",
-    "dayOfWeek": "Saturday",
+    "dayOfWeek": [
+      "Saturday"
+    ],
     "lat": 41.6534,
     "lon": -87.5349,
     "links": [
@@ -935,7 +947,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60617",
-    "dayOfWeek": "Saturday",
+    "dayOfWeek": [
+      "Saturday"
+    ],
     "lat": 41.7317,
     "lon": -87.5358,
     "links": [
@@ -956,7 +970,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60615",
-    "dayOfWeek": "Sunday",
+    "dayOfWeek": [
+      "Sunday"
+    ],
     "lat": 41.8094,
     "lon": -87.6166,
     "links": [
@@ -977,7 +993,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60615",
-    "dayOfWeek": "Sunday",
+    "dayOfWeek": [
+      "Sunday"
+    ],
     "lat": 41.7979,
     "lon": -87.5878,
     "links": [
@@ -1002,7 +1020,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60636",
-    "dayOfWeek": "Thursday",
+    "dayOfWeek": [
+      "Thursday"
+    ],
     "lat": 41.7865,
     "lon": -87.6713,
     "links": [
@@ -1023,7 +1043,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60621",
-    "dayOfWeek": "Saturday",
+    "dayOfWeek": [
+      "Saturday"
+    ],
     "lat": 41.7881,
     "lon": -87.6444,
     "links": [
@@ -1048,7 +1070,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60638",
-    "dayOfWeek": "Saturday",
+    "dayOfWeek": [
+      "Saturday"
+    ],
     "lat": 41.7942,
     "lon": -87.7825,
     "links": [
@@ -1073,7 +1097,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60609",
-    "dayOfWeek": "Saturday",
+    "dayOfWeek": [
+      "Saturday"
+    ],
     "lat": 41.8122,
     "lon": -87.6663,
     "links": [
@@ -1094,7 +1120,9 @@
     "city": "Chicago",
     "state": "IL",
     "zip": "60643",
-    "dayOfWeek": "Sunday",
+    "dayOfWeek": [
+      "Sunday"
+    ],
     "lat": 41.7212,
     "lon": -87.6677,
     "links": [
