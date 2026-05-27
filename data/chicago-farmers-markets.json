@@ -17,27 +17,6 @@
     ]
   },
   {
-    "id": "lincoln-square",
-    "name": "Lincoln Square Farmers Market",
-    "address": "2301 W. Leland Ave.",
-    "city": "Chicago",
-    "state": "IL",
-    "zip": "60625",
-    "dayOfWeek": "Tuesday",
-    "lat": 41.9669,
-    "lon": -87.6868,
-    "links": [
-      {
-        "type": "instagram",
-        "url": "https://chicago.suntimes.com/food-drink/2026-farmers-market-chicago-hours#"
-      },
-      {
-        "type": "website",
-        "url": "https://chicago.suntimes.com/food-drink/2026-farmers-market-chicago-hours#"
-      }
-    ]
-  },
-  {
     "id": "low-line",
     "name": "Low-Line Market",
     "address": "3410 N. Southport Ave.",
