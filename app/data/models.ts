@@ -20,6 +20,7 @@ export interface FarmersMarket {
   zip: string;
   lat: number;
   lon: number;
+  dayOfWeek: string[];
 }
 
 interface Metro {
