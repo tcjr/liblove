@@ -110,6 +110,11 @@ export default class FarmersMarketsComponent extends Component<FarmersMarketsSig
               {{this.selectedMarket.zip}}
             </address>
 
+            <ul>
+              {{#each this.selectedMarket.dayOfWeek as |day|}}
+                <li>{{day}}</li>
+              {{/each}}
+            </ul>
           </div>
         {{/if}}
       </div>
