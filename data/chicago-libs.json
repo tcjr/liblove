@@ -970,5 +970,17 @@
     "img": "wrightwood-ashburn.jpg",
     "lat": 41.738,
     "lon": -87.7025
+  },
+  {
+    "id": "obama-presidential-center",
+    "name": "Obama Presidential Center",
+    "address": "6001 S. Stony Island Ave.",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": "60637",
+    "phone": "",
+    "img": "obama-presidential-center.jpg",
+    "lat": 41.786021,
+    "lon": -87.586482
   }
 ]
